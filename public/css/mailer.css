@@ -1,0 +1,23 @@
+
+.mail{
+	background: rgb(246, 246, 246);
+	color: rgb(82, 82, 82);
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, serif, EmojiFont;
+	font-size: 16px; height: 100%; 
+	line-height: 1.6em;
+	margin: 0px;
+	padding: 0px;
+	width: 100% !important;
+}
+.mail-title{
+	border-collapse:collapse; color:#9bb0cf; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:14px; font-weight:bold; line-height:1; margin:0; padding-bottom:20px; text-align:center; vertical-align:top;
+	background: #3863A0;
+	text-align: center;
+
+}
+.mail-body{
+	
+}
+.mail-button{
+	background:white; border:2px solid #3dbe8b; border-radius:5px; color:#3DBE8B; display:inline-block; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:16px; font-weight:bold; line-height:1; margin:0; padding:20px 0; text-align:center; text-decoration:none; text-transform:uppercase; width:60%
+}
