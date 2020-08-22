@@ -231,7 +231,7 @@ class UserController extends Controller
             'password.min' => config('consts')['MESSAGES']['PASSWORD_LENGTH'],
             'password.max' => config('consts')['MESSAGES']['PASSWORD_MAXLENGTH'],
             'password.unique' => config('consts')['MESSAGES']['PASSWORD_EXIST'],
-  //          'username.unique' => config('consts')['MESSAGES']['PASSWORD_EXIST'],
+        //          'username.unique' => config('consts')['MESSAGES']['PASSWORD_EXIST'],
             'username.max' => config('consts')['MESSAGES']['USERNAME_MAXERROR'],
             'required' => config('consts')['MESSAGES']['REQUIRED']
         );
@@ -739,8 +739,8 @@ class UserController extends Controller
             $ret = FALSE;
         }
         $action = 'register';
-//        $filename = str_replace('/', '\\', $filename);
-//        $request = $action . '*' . str_replace('/', '\\', $filename);
+        //        $filename = str_replace('/', '\\', $filename);
+        //        $request = $action . '*' . str_replace('/', '\\', $filename);
         $request = $action . '*' . $filename;
         fwrite($fp, $request);
         $contents = '';
@@ -799,8 +799,8 @@ class UserController extends Controller
                                     ->with('type',$type)->withInput();
         }
         $action = 'register';
-//        $filename = str_replace('/', '\\', $filename);
-//        $request = $action . '*' . str_replace('/', '\\', $filename);
+        //        $filename = str_replace('/', '\\', $filename);
+        //        $request = $action . '*' . str_replace('/', '\\', $filename);
         $request = $action . '*' . $filename;
         fwrite($fp, $request);
         $contents = '';

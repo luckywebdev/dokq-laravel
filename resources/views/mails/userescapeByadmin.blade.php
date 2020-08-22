@@ -55,14 +55,9 @@
 						<tr>
 							<td colspan="2">
 							    <br><br>
-								一般社団法人読書認定協会<br>
-								藤沢市辻堂元町5-7-3<br>
-								代表理事　　神部　ゆかり<br>
+								一般社団法人読書認定協会<br><br>
                                 {{$actual_link}}
                                 <br>
-                                <?php
-                                 echo config('mail')['from']['address'];
-                                ?>
 							</td>
 						</tr> 
 					</tbody>

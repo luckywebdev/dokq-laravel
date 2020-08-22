@@ -622,9 +622,9 @@ return [
 	'TEACHER' => [
 		'ACTIONS' => [
 			'A' => ['TITLE' => '児童生徒マイ書斎閲覧', 'ACTION' => '/mypage/pupil_view'],
-			'B' => ['TITLE' => '児童マイ書斎連絡帳へ入力','ACTION' => '/teacher/send_notify'],
-			'C' => ['TITLE' => '児童の基本情報データ修正','ACTION' => '/teacher/edit_pupil?mode=edit'],
-			'D' => ['TITLE' => '児童の基本情報データ削除','ACTION' => '/teacher/edit_pupil?mode=delete'],
+			'B' => ['TITLE' => '生徒マイ書斎連絡帳へ入力','ACTION' => '/teacher/send_notify'],
+			'C' => ['TITLE' => '生徒の基本情報データ修正','ACTION' => '/teacher/edit_pupil?mode=edit'],
+			'D' => ['TITLE' => '生徒の基本情報データ削除','ACTION' => '/teacher/edit_pupil?mode=delete'],
 			'E' => ['TITLE' => '合格記録の取り消し','ACTION' => '/teacher/cancel_pass'],
 			'F' => ['TITLE' => 'ログインエラー ロックの解除','ACTION' => '/class/pupil/unlock'],
 			'G' => ['TITLE' => '顔認証エラーを解除し登録画面へ','ACTION' => 'faceverifyerror'],

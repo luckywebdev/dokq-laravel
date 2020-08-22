@@ -355,6 +355,14 @@ button{
 .rank-layout1{
   padding-right:0px;
 }
+
+.f-14 {
+  font-size: 14px !important;
+}
+.f-16 {
+  font-size: 16px !important;
+}
+
 @media (max-width: 768px) {
   .rank-layout1{
     padding-left:15px;

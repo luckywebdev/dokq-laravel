@@ -23,10 +23,10 @@
                     @foreach($newBooks as $newBook)
                     <p><a href="/book/search_one/{{$newBook->id}}">{{$newBook->title}}</a></p>
                     @endforeach
-					<a href="{{url('/book/search/latest1')}}" class="news-block-btn font-blue">もっと見る</a>
 					@endif
 
-					
+					<a href="{{url('/book/search/latest1')}}" class="news-block-btn font-blue">もっと見る</a>
+
 				</div>
 			</div>
 
@@ -39,7 +39,7 @@
 							<ul class="feeds">
 							    @foreach($notices as $notice)
 								<li>
-									<a href="#">
+									<!-- <a href="#"> -->
 										<div class="col1">
 											<div class="date">
 												  {{date_format($notice->updated_at,"Y")."-".date_format($notice->updated_at,"m")."-".date_format($notice->updated_at,"d")}}
@@ -54,7 +54,7 @@
 												</div>
 											</div>
 										</div>
-									</a>
+									<!-- </a> -->
 								</li>
 								@endforeach
 							</ul>
@@ -247,7 +247,7 @@
 						for(x in res){
 							var notice_res = res[x];
 							content += '<li>';
-							content += '<a href="#">';
+							// content += '<a href="#">';
 							content += '<div class="col1">';
 							content += '<div class="date">';
 							var notice_date = notice_res.updated_at.split(" ")[0];
@@ -263,7 +263,7 @@
 							content += '</div>';
 							content += '</div>';
 							content += '</div>';
-							content += '</a>';
+							// content += '</a>';
 							content += '</li>';
 						}
 						content += '</ul>';
@@ -286,7 +286,7 @@
 						for(x in res){
 							var notice_res = res[x];
 							content += '<li>';
-							content += '<a href="#">';
+							// content += '<a href="#">';
 							content += '<div class="col1">';
 							content += '<div class="date">';
 							var notice_date = notice_res.updated_at.split(" ")[0];
@@ -302,7 +302,7 @@
 							content += '</div>';
 							content += '</div>';
 							content += '</div>';
-							content += '</a>';
+							// content += '</a>';
 							content += '</li>';
 						}
 						content += '</ul>';

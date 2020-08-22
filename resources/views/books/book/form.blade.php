@@ -34,10 +34,10 @@
         </div>
     @endif
 	<div class="form-body">
-		<h4 class="form-section warning"><strong>@if(isset($book)) 本の基本情報を編集 @else 本の基本情報を入力ます @endif</strong></h4>
+		<h4 class="form-section warning"><strong>@if(isset($book)) 本の基本情報を編集 @else 本の基本情報を入力します @endif</strong></h4>
 		<div class="row top-border">
 			<div class="col-md-12 margin-bottom-5 {{ $errors->has('type') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-7 text-md-left"><strong>1.&nbsp;&nbsp;&nbsp;&nbsp;本の種類</strong></label>
+				<label class="control-label col-md-7 text-md-left f-14"><strong>1.&nbsp;&nbsp;&nbsp;&nbsp;本の種類</strong></label>
 				<div class="col-md-5">
 					<input type="hidden" id="book_form_flag" name="book_form_flag"/>
 					<select class="bs-select" name="type" id="type" style="height:33px !important">
@@ -59,7 +59,7 @@
 				</div>
 			</div>
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('title') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-7 text-md-left"><strong>2.&nbsp;&nbsp;&nbsp;&nbsp;本のタイトル（全角）</strong></label>
+				<label class="control-label col-md-7 text-md-left f-14"><strong>2.&nbsp;&nbsp;&nbsp;&nbsp;本のタイトル（全角）</strong></label>
 				<div class="col-md-5">
 					<input type="text" name="title" value="{{ old('title')!='' ? old('title'):( isset($book)? $book->title: '') }}" class="form-control" id="input_1" placeholder="雪国">
 					@if ($errors->has('title'))
@@ -70,7 +70,7 @@
 				</div>
 			</div>
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('title_furi') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-7 text-md-left"><strong>3.&nbsp;&nbsp;&nbsp;&nbsp;本のタイトルのふりがな（全角）</strong></label>
+				<label class="control-label col-md-7 text-md-left f-14"><strong>3.&nbsp;&nbsp;&nbsp;&nbsp;本のタイトルのふりがな（全角）</strong></label>
 				<div class="col-md-5">
 					<input type="text" name="title_furi" value="{{ old('title_furi')!='' ? old('title_furi'): (isset($book)? $book->title_furi: '') }}" class="form-control" placeholder="ゆきぐに" id="input_2">
 					@if ($errors->has('title_furi'))
@@ -82,7 +82,7 @@
 			</div>
 
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('firstname_nick') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-7 text-md-left"><strong>4.&nbsp;&nbsp;&nbsp;&nbsp;著者名（全角）</strong></label>
+				<label class="control-label col-md-7 text-md-left f-14"><strong>4.&nbsp;&nbsp;&nbsp;&nbsp;著者名（全角）</strong></label>
 				<div class="col-md-2">姓:<input type="text" name="firstname_nick" value="{{ old('firstname_nick')!='' ? old('firstname_nick'): (isset($book)? $book->firstname_nick: '' )}}" class="form-control" placeholder="川端" id="firstname_nick">
 					@if ($errors->has('firstname_nick'))
 						<span class="form-control-feedback">
@@ -104,7 +104,7 @@
 				</div>
 			</div>
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('firstname_yomi') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-7 text-md-left"><strong>5.&nbsp;&nbsp;&nbsp;&nbsp;著者名のふりがな（全角）</strong></label>
+				<label class="control-label col-md-7 text-md-left f-14"><strong>5.&nbsp;&nbsp;&nbsp;&nbsp;著者名のふりがな（全角）</strong></label>
 				<div class="col-md-2">
 					姓:<input type="text" name="firstname_yomi" value="{{ old('firstname_yomi')!='' ? old('firstname_yomi'): (isset($book)? $book->firstname_yomi: '' )}}" class="form-control" placeholder="かわばた" id="firstname_yomi">
 					@if ($errors->has('firstname_yomi'))
@@ -123,7 +123,7 @@
 				</div>
 			</div>
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('isbn') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-7 text-md-left"><strong>6.&nbsp;&nbsp;&nbsp;&nbsp;ISBN（半角数字）</strong></label>
+				<label class="control-label col-md-7 text-md-left f-14"><strong>6.&nbsp;&nbsp;&nbsp;&nbsp;ISBN（半角数字）</strong></label>
 				<div class="col-md-5">
 					<input type="text" name="isbn" id="input_5" value="{{ old('isbn')!='' ? old('isbn'): (isset($book)? $book->isbn: '') }}" class="form-control" placeholder="410100101">
 					@if ($errors->has('isbn'))
@@ -150,7 +150,7 @@
 				
 			</div>
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('publish') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-7 text-md-left"><strong>7.&nbsp;&nbsp;&nbsp;&nbsp;出版社（全角）</strong></label>
+				<label class="control-label col-md-7 text-md-left f-14"><strong>7.&nbsp;&nbsp;&nbsp;&nbsp;出版社（全角）</strong></label>
 				<div class="col-md-5">
 					<input type="text" name="publish" value="{{ old('publish') ? old('publish'): (isset($book)? $book->publish: '') }}" class="calc form-control" maxlength="128"  id="input_6" placeholder="新潮文庫">
                     @if ($errors->has('publish'))
@@ -161,7 +161,7 @@
 				</div>
 			</div>
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('categories') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-7 text-md-left"><strong>8.&nbsp;&nbsp;&nbsp;&nbsp;分類・ジャンル(４つまで選べます)</strong></label>
+				<label class="control-label col-md-7 text-md-left f-14"><strong>8.&nbsp;&nbsp;&nbsp;&nbsp;分類・ジャンル(４つまで選べます)</strong></label>
 				<div class="col-md-5">
 					<select class="form-control select2me calc" name="categories[]" id="categories[]" multiple placeholder="選択..." style="min-width:100px;">
 						<option></option>
@@ -185,7 +185,7 @@
 				</div>
 			</div>
 			<div class="col-md-12 margin-bottom-5 {{ $errors->has('recommend') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-7 text-md-left"><strong>9.&nbsp;&nbsp;&nbsp;&nbsp;推奨年代、難易度</strong></label>
+				<label class="control-label col-md-7 text-md-left f-14"><strong>9.&nbsp;&nbsp;&nbsp;&nbsp;推奨年代、難易度</strong></label>
 				<div class="col-md-5">
 					<select name="recommend" class="form-control select2me calc"  placeholder="選択..." style="height:33px !important">
 						<option></option>
@@ -202,13 +202,13 @@
 			</div>
 			@if(Auth::user()->isAdmin())
 			<div class="col-md-12  margin-bottom-5">
-				<label class="control-label col-md-7 text-md-left"><strong>10.&nbsp;&nbsp;&nbsp;&nbsp;表紙画像のファイルを添付してください。</strong></label>
+				<label class="control-label col-md-7 text-md-left f-14"><strong>10.&nbsp;&nbsp;&nbsp;&nbsp;表紙画像　（協会が編集）</strong></label>
 				<div class="col-md-5">
 					<textarea id="image_url" name="image_url" rows="3" style="width: 100%">{{(isset($book)? $book->image_url: '')}}</textarea>
 				</div>
 			</div>
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('url') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-7 text-md-left"><strong>11.&nbsp;&nbsp;&nbsp;&nbsp;楽天ブックスで見る。</strong></label>
+				<label class="control-label col-md-7 text-md-left f-14"><strong>11.&nbsp;&nbsp;&nbsp;&nbsp;外部ネット書店名（協会が編集）</strong></label>
 				<div class="col-md-5">
 					<textarea id="rakuten_url" name="rakuten_url" rows="3" style="width: 100%">{{(isset($book)? $book->rakuten_url: '')}}</textarea>
 				</div>
@@ -227,24 +227,24 @@
 			</div>	
 			@else
 			<div class="col-md-12  margin-bottom-5">
-				<label class="control-label col-md-7 text-md-left"><strong>10.&nbsp;&nbsp;&nbsp;&nbsp;表紙画像のファイルを添付してください。</strong></label>
+				<label class="control-label col-md-7 text-md-left f-14"><strong>10.&nbsp;&nbsp;&nbsp;&nbsp;表紙画像　（協会が編集）</strong></label>
 				<div class="col-md-5">
-					協会側でのみ編集可能
+					
 				</div>
 			</div>
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('url') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-7 text-md-left"><strong>11.&nbsp;&nbsp;&nbsp;&nbsp;楽天ブックスで見る。</strong></label>
+				<label class="control-label col-md-7 text-md-left f-14"><strong>11.&nbsp;&nbsp;&nbsp;&nbsp;外部ネット書店名（協会が編集）</strong></label>
 				<div class="col-md-5">
-				協会側でのみ編集可能
+				
 				</div>
 			</div>				
 			@endif			
 		<h4 class="form-section warning">
 			<strong>本の内容量を測定して、読Q本ポイントを算出します。</strong>
-			<label class="control-label warning col-md-12 text-md-left">※ 本文の総字数をカウント済みの場合は、12～15番をとばして、16番に直接入力してください。</label>
+			<label class="control-label warning col-md-12 text-md-left font-weight-bold">※ 本文の総字数をカウント済みの場合は、12～15番をとばして、16番に直接入力してください。</label>
 		</h4>
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('pages') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-7 text-md-left"><strong>12.&nbsp;&nbsp;&nbsp;&nbsp;本文の最終ページは、何ページですか。（あとがき等は除きます）</strong></label>
+				<label class="control-label col-md-7 text-md-left f-14"><strong>12.&nbsp;&nbsp;&nbsp;&nbsp;本文の最終ページは、何ページですか。（あとがき等は除きます）</strong></label>
 				<div class="form-group col-md-5">
 					<div class="col-md-1"><h4>p</h4></div>
 					<div class="col-md-9 spin">
@@ -260,11 +260,11 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12  margin-bottom-5">
-				<label class="control-label col-md-7 text-md-left"><strong>13.&nbsp;&nbsp;&nbsp;&nbsp;1ページ内に最大で何文字入るかを測定します。</strong></label>
+				<label class="control-label col-md-7 text-md-left f-14"><strong>13.&nbsp;&nbsp;&nbsp;&nbsp;1ページ内に最大で何文字入るかを測定します。</strong></label>
 				<div class="col-md-5"></div>
 			</div>
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('max_rows') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-6 col-md-offset-1 text-md-left">a.&nbsp;&nbsp;&nbsp;&nbsp;行数…　１ページの中には最大で何行ありますか。</label>
+				<label class="control-label col-md-6 col-md-offset-1 text-md-left font-weight-bold">a.&nbsp;&nbsp;&nbsp;&nbsp;行数…　１ページの中には最大で何行ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
 						<input type="number" min="0" name="max_rows" value="{{ old('max_rows')!='' ? old('max_rows'): (isset($book)? $book->max_rows: '') }}" class="param calc form-control" maxlength="3" id="input_9">
@@ -278,7 +278,7 @@
 				</div>
 			</div>
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('max_chars') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-6 col-md-offset-1 text-md-left">b.&nbsp;&nbsp;&nbsp;&nbsp;字数…　１行の中には最大で何文字ありますか。</label>
+				<label class="control-label col-md-6 col-md-offset-1 text-md-left font-weight-bold">b.&nbsp;&nbsp;&nbsp;&nbsp;字数…　１行の中には最大で何文字ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
 						<input type="number" min="0" name="max_chars" value="{{ old('max_chars')!='' ? old('max_chars'): (isset($book)? $book->max_chars: '') }}" class="param calc form-control" maxlength="3" id="input_10">
@@ -294,10 +294,10 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12  margin-bottom-5">
-				<label class="control-label col-md-12 text-md-left"><strong>14.&nbsp;&nbsp;&nbsp;&nbsp;空白部分(挿絵、目次などを含む)があるページ数を数えます。</strong></label>				
+				<label class="control-label col-md-12 text-md-left f-14"><strong>14.&nbsp;&nbsp;&nbsp;&nbsp;空白部分(挿絵、目次などを含む)があるページ数を数えます。</strong></label>				
 			</div>
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('entire_blanks') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-11 col-md-offset-1 text-md-left">a.&nbsp;&nbsp;&nbsp;&nbsp;空白ページ、全面イラストページ、目次、解説などのページは、何ページありますか。</label>
+				<label class="control-label col-md-11 col-md-offset-1 text-md-left font-weight-bold">a.&nbsp;&nbsp;&nbsp;&nbsp;空白ページ、全面イラストページ、目次、解説などのページは、何ページありますか。</label>
 				<div class="col-md-7"></div>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
@@ -312,7 +312,7 @@
 				</div>
 			</div>
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('quarter_filled') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-11 col-md-offset-1 text-md-left">b.&nbsp;&nbsp;&nbsp;&nbsp;4分の3が空白やイラストで、4分の１に字が書かれているページは、何ページありますか。</label>
+				<label class="control-label col-md-11 col-md-offset-1 text-md-left font-weight-bold">b.&nbsp;&nbsp;&nbsp;&nbsp;4分の3が空白やイラストで、4分の１に字が書かれているページは、何ページありますか。</label>
 				<div class="col-md-7"></div>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
@@ -327,7 +327,7 @@
 				</div>
 			</div>
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('half_blanks') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-11 col-md-offset-1 text-md-left">c.&nbsp;&nbsp;&nbsp;&nbsp;半分が空白やイラストで、半分に字が書かれているページは、何ページありますか。</label>
+				<label class="control-label col-md-11 col-md-offset-1 text-md-left font-weight-bold">c.&nbsp;&nbsp;&nbsp;&nbsp;半分が空白やイラストで、半分に字が書かれているページは、何ページありますか。</label>
 				<div class="col-md-7"></div>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
@@ -342,7 +342,7 @@
 				</div>
 			</div>	
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('quarter_blanks') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-11 col-md-offset-1 text-md-left">d.&nbsp;&nbsp;&nbsp;&nbsp;4分の１が空白やイラストで、4分の３に字が書かれているページは何ページありますか。</label>
+				<label class="control-label col-md-11 col-md-offset-1 text-md-left font-weight-bold">d.&nbsp;&nbsp;&nbsp;&nbsp;4分の１が空白やイラストで、4分の３に字が書かれているページは何ページありますか。</label>
 				<div class="col-md-7"></div>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
@@ -360,12 +360,12 @@
 		
 		<div class="row">
 			<div class="col-md-12  margin-bottom-5">
-				<label class="control-label col-md-12 text-md-left"><strong>15.&nbsp;&nbsp;&nbsp;&nbsp;モデルページを使用して、１ページ内のおおよその平均字数を測定します。</strong></label>
-				<label class="control-label col-md-11 col-md-offset-1 text-md-left">※モデルページ(p30、p50、p70、p90、p110)に空白部分が多い場合は、<br>次のページを使用してください。</label>
-				<label class="control-label col-md-11 col-md-offset-1 text-md-left">※行単位で文字量を測定します。(字が少ない行は字数０、字が多い行は最大数であると換算)</label>				
+				<label class="control-label col-md-12 text-md-left f-14"><strong>15.&nbsp;&nbsp;&nbsp;&nbsp;モデルページを使用して、１ページ内のおおよその平均字数を測定します。</strong></label>
+				<label class="control-label col-md-11 col-md-offset-1 text-md-left font-weight-bold">※モデルページ(p30、p50、p70、p90、p110)に空白部分が多い場合は、<br>次のページを使用してください。</label>
+				<label class="control-label col-md-11 col-md-offset-1 text-md-left font-weight-bold">※行単位で文字量を測定します。(字が少ない行は字数０、字が多い行は最大数であると換算)</label>				
 			</div>
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('p30') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-6 col-md-offset-1 text-md-left">a.&nbsp;&nbsp;&nbsp;&nbsp;p30の中に、字数が半分以下の行は、何行ありますか。</label>
+				<label class="control-label col-md-6 col-md-offset-1 text-md-left font-weight-bold">a.&nbsp;&nbsp;&nbsp;&nbsp;p30の中に、字数が半分以下の行は、何行ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
 					<input type="number" min="0" name="p30" value="{{ old('p30')!='' ? old('p30'): (isset($book)? $book->p30: '') }}" class="param calc form-control" maxlength="3" id="input_15">
@@ -379,7 +379,7 @@
 				</div>
 			</div>
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('p50') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-6 col-md-offset-1 text-md-left">b.&nbsp;&nbsp;&nbsp;&nbsp;P50の中に、字数が半分以下の行は、何行ありますか。</label>
+				<label class="control-label col-md-6 col-md-offset-1 text-md-left font-weight-bold">b.&nbsp;&nbsp;&nbsp;&nbsp;P50の中に、字数が半分以下の行は、何行ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
 					<input type="number" min="0" name="p50" value="{{ old('p50')!='' ? old('p50'): (isset($book)? $book->p50: '') }}" class="param calc form-control" maxlength="3" id="input_16">
@@ -393,7 +393,7 @@
 				</div>
 			</div>
 			<div class="col-md-12  margin-bottom-5  {{ $errors->has('p70') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-6 col-md-offset-1 text-md-left">c.&nbsp;&nbsp;&nbsp;&nbsp;P70の中に、字数が半分以下の行は、何行ありますか。</label>
+				<label class="control-label col-md-6 col-md-offset-1 text-md-left font-weight-bold">c.&nbsp;&nbsp;&nbsp;&nbsp;P70の中に、字数が半分以下の行は、何行ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
 					<input type="number" min="0" name="p70" value="{{ old('p70')!='' ? old('p70'): (isset($book)? $book->p70: '') }}" class="param calc form-control" maxlength="3" id="input_17">
@@ -407,7 +407,7 @@
 				</div>
 			</div>
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('p90') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-6 col-md-offset-1 text-md-left">d.&nbsp;&nbsp;&nbsp;&nbsp;P90の中に、字数が半分以下の行は、何行ありますか。</label>
+				<label class="control-label col-md-6 col-md-offset-1 text-md-left font-weight-bold">d.&nbsp;&nbsp;&nbsp;&nbsp;P90の中に、字数が半分以下の行は、何行ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
 					<input type="number" min="0" name="p90" value="{{ old('p90')!='' ? old('p90'): (isset($book)? $book->p90: '') }}" class="param calc form-control" maxlength="3" id="input_18">
@@ -421,7 +421,7 @@
 				</div>
 			</div>
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('p110') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-6 col-md-offset-1 text-md-left">e.&nbsp;&nbsp;&nbsp;&nbsp;P110の中に、字数が半分以下の行は、何行ありますか。</label>
+				<label class="control-label col-md-6 col-md-offset-1 text-md-left font-weight-bold">e.&nbsp;&nbsp;&nbsp;&nbsp;P110の中に、字数が半分以下の行は、何行ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
 					<input type="number" min="0" name="p110" value="{{ old('p110')!='' ? old('p110'): (isset($book)? $book->p110: '') }}" class="param calc form-control" maxlength="3" id="input_19">
@@ -438,7 +438,7 @@
 		
 		<div class="row">			
 			<div class="col-md-12  margin-bottom-5 {{ $errors->has('total_chars') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-7 text-md-left"><strong>16.&nbsp;&nbsp;&nbsp;&nbsp;総字数・・・・・・・・・・・・・・・・・・</strong></label>
+				<label class="control-label col-md-7 text-md-left f-14"><strong>16.&nbsp;&nbsp;&nbsp;&nbsp;総字数・・・・・・・・・・・・・・・・・・</strong></label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
 					<input type="number" value="{{ old('total_chars')!='' ? old('total_chars'): (isset($book)? $book->total_chars: '') }}" name="total_chars" id="total_chars" readonly class="form-control" maxlength="6">

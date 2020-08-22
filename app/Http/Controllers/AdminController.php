@@ -265,6 +265,15 @@ class AdminController extends Controller
             $rule['p70'] = 'required';
             $rule['p90'] = 'required';
             $rule['p110'] = 'required';
+            $book_chk = Books::where('active', 0)
+                        ->where('isbn', $request->input('isbn'))->get();
+            if($book_chk && count($book_chk) > 0){
+                Books::where('active', 0)
+                        ->where('isbn', $request->input('isbn'))
+                        ->update(['isbn' => '']);
+
+            }
+
             if($request->input('book_id')!=""){
                 $rule['isbn'] = 'required|unique:books,isbn,'. $request->input('book_id');
             }else{
@@ -275,6 +284,14 @@ class AdminController extends Controller
             $rule['total_chars'] = 'required';
             $isbn = $request->input('isbn');
             if(isset($isbn) && $isbn != ''){
+                $book_chk = Books::where('active', 0)
+                            ->where('isbn', $isbn)->get();
+                if($book_chk && count($book_chk) > 0){
+                    Books::where('active', 0)
+                            ->where('isbn', $isbn)
+                            ->update(['isbn' => '']);
+
+                }
                 if($request->input('book_id')!=""){
                     $rule['isbn'] = 'required|unique:books,isbn,'. $request->input('book_id');
                 }else{
@@ -2423,6 +2440,14 @@ class AdminController extends Controller
         );
         $isbn = $request->input('isbn');
         if(isset($isbn) && $isbn != ''){
+            $book_chk = Books::where('active', 0)
+                        ->where('isbn', $isbn)->get();
+            if($book_chk && count($book_chk) > 0){
+                Books::where('active', 0)
+                        ->where('isbn', $isbn)
+                        ->update(['isbn' => '']);
+
+            }
             if($request->input('id')!=""){
                 $rule['isbn'] = 'required|unique:books,isbn,'. $request->input('id');
             }else{

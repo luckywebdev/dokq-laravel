@@ -21,7 +21,7 @@
 		background: #3863A0;
 		text-align: center;">
 				<h1 style="text-align: center;">
-				   読Q 返信
+					読Qへお問合せをいただきありがとうございます。
 				</h1>
 			</div>
 			<div style="padding: 20px">
@@ -31,32 +31,30 @@
 							<td colspan="2">
 								{{$user->name}}　様
 								<br><br>
-								いつも読Qをご利用いただきありがとうございます。
+								読Qへお問合せをいただき、まことにありがとうございます。
 							</td>
 						</tr>
 						<tr>
 							<td colspan="2">
-                            お問い合わせの内容<br>
+                            お問合せいただいた内容<br>
                             {{$user->content}}
 							</td>
 						</tr>
 						 <tr>
 						    <td colspan="2"><br>
                             返信内容<br>
-                            {{$user->post}}
+							{{$user->post}}
+							<br><br>
+							以上、今後とも、読Qをよろしくお願い申し上げます。
 						    </td>
 						</tr>
 						<tr>
 							<td colspan="2">
 							    <br><br>
-								一般社団法人読書認定協会<br>
-								藤沢市辻堂元町5-7-3<br>
-								代表理事　　神部　ゆかり<br>
+								一般社団法人読書認定協会<br><br>
+								
                                 {{$actual_link}}
                                 <br>
-                                <?php
-                                 echo config('mail')['from']['address'];
-                                ?>
 							</td>
 						</tr> 
 					</tbody>

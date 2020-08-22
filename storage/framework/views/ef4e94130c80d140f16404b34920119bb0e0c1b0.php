@@ -21,10 +21,10 @@
                     <?php $__currentLoopData = $newBooks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $newBook): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <p><a href="/book/search_one/<?php echo e($newBook->id); ?>"><?php echo e($newBook->title); ?></a></p>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-					<a href="<?php echo e(url('/book/search/latest1')); ?>" class="news-block-btn font-blue">もっと見る</a>
 					<?php endif; ?>
 
-					
+					<a href="<?php echo e(url('/book/search/latest1')); ?>" class="news-block-btn font-blue">もっと見る</a>
+
 				</div>
 			</div>
 
@@ -37,7 +37,7 @@
 							<ul class="feeds">
 							    <?php $__currentLoopData = $notices; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notice): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 								<li>
-									<a href="#">
+									<!-- <a href="#"> -->
 										<div class="col1">
 											<div class="date">
 												  <?php echo e(date_format($notice->updated_at,"Y")."-".date_format($notice->updated_at,"m")."-".date_format($notice->updated_at,"d")); ?>
@@ -54,7 +54,7 @@
 												</div>
 											</div>
 										</div>
-									</a>
+									<!-- </a> -->
 								</li>
 								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							</ul>
@@ -248,7 +248,7 @@
 						for(x in res){
 							var notice_res = res[x];
 							content += '<li>';
-							content += '<a href="#">';
+							// content += '<a href="#">';
 							content += '<div class="col1">';
 							content += '<div class="date">';
 							var notice_date = notice_res.updated_at.split(" ")[0];
@@ -264,7 +264,7 @@
 							content += '</div>';
 							content += '</div>';
 							content += '</div>';
-							content += '</a>';
+							// content += '</a>';
 							content += '</li>';
 						}
 						content += '</ul>';
@@ -287,7 +287,7 @@
 						for(x in res){
 							var notice_res = res[x];
 							content += '<li>';
-							content += '<a href="#">';
+							// content += '<a href="#">';
 							content += '<div class="col1">';
 							content += '<div class="date">';
 							var notice_date = notice_res.updated_at.split(" ")[0];
@@ -303,7 +303,7 @@
 							content += '</div>';
 							content += '</div>';
 							content += '</div>';
-							content += '</a>';
+							// content += '</a>';
 							content += '</li>';
 						}
 						content += '</ul>';

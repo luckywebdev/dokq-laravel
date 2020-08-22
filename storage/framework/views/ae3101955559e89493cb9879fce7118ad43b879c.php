@@ -1,7 +1,5 @@
-@extends('auth.layout')
-
-@section('styles')
-<link rel="stylesheet" type="text/css" href="{{asset('css/pages/news.css')}}">
+<?php $__env->startSection('styles'); ?>
+<link rel="stylesheet" type="text/css" href="<?php echo e(asset('css/pages/news.css')); ?>">
 <style>
     .arrow{
         display: none!important;
@@ -17,14 +15,14 @@
         *width: 100%; 
     }
 </style>
-@stop
+<?php $__env->stopSection(); ?>
 	
-@section('contents')
+<?php $__env->startSection('contents'); ?>
 <!--<div class="container register">-->
 	<div class="page-content">
 		<form class="form-horizontal" method="get" role="form" action=" route('authregister/0/1')">
-			<input type="hidden" name="role" id="role" value="{{$role}}">
-			<input type="hidden" name="data" id="data" value="{{$data}}">
+			<input type="hidden" name="role" id="role" value="<?php echo e($role); ?>">
+			<input type="hidden" name="data" id="data" value="<?php echo e($data); ?>">
 			<input required type="hidden" id="pdfheight" name="pdfheight" value="">
 
 			<div class="row">
@@ -42,11 +40,11 @@
 <!-- <div >	
 	<div  style="margin-bottom:5px: height: 70vh">
 		<form class="form-horizontal" method="get" role="form" action=" route('authregister/0/1')">
-			<input type="hidden" name="role" id="role" value="{{$role}}">
-			<input type="hidden" name="data" id="data" value="{{$data}}">
+			<input type="hidden" name="role" id="role" value="<?php echo e($role); ?>">
+			<input type="hidden" name="data" id="data" value="<?php echo e($data); ?>">
 			<input required type="hidden" id="pdfheight" name="pdfheight" value="">
 
-			<embed width="100%" height="{{session('pdfheight')}}" name="plugin" id="plugin" src="<?php echo asset($helpdoc)?>" type="application/pdf" internalinstanceid="87">
+			<embed width="100%" height="<?php echo e(session('pdfheight')); ?>" name="plugin" id="plugin" src="<?php echo asset($helpdoc)?>" type="application/pdf" internalinstanceid="87">
 			<iframe src="<?php echo asset($helpdoc)?>" width="100%" height="600" title="" scrolling="no"></iframe>
 		</form>
 	</div>
@@ -59,9 +57,9 @@
 	<div style="margin:0px"></div>
 	
 </div> -->
-@stop
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
 	<script type="text/javascript">	
 		$("#plugin").css("height", $(window).height()- 55);
 		
@@ -83,4 +81,5 @@
 		     
 	    })
 	</script>
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('auth.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

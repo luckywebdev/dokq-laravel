@@ -644,8 +644,8 @@ class RegisterController extends Controller
                     $user->username = substr($username,0,strlen($username)-1).'k';
                 else if ($role == config('consts')['USER']['ROLE']['AUTHOR']) 
                     $user->username = substr($username,0,strlen($username)-1).'c';
-                else
-                    $user->username = substr($username,0,strlen($username)-1);
+                // else
+                //     $user->username = substr($username,0,strlen($username)-1);
             }
         }
 
