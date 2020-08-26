@@ -14356,7 +14356,7 @@ class MypageController extends Controller{
         if(is_null($settlement_check) || (!is_null($settlement_check) && $settlement_check < 1)){
             if($index == null){
                 // Auth::login($user);
-                return Redirect::to('/mypage/settlement_certi_view/'.$user->id.'/'.$user->certi_type);     
+                return Redirect::to('/mypage/settlement_certi_view/'.$user->user_id.'/'.$user->index);     
             }
             elseif($index == 1 || $index == 2){
                 return Redirect::to('/mypage/preview_certi/'.$index);           

@@ -114,6 +114,8 @@ var TableManaged = function () {
                 "orderable": false
             }, {
                 "orderable": false
+            }, {
+                "orderable": false
             }]
             
         });

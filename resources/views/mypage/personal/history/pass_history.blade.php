@@ -70,7 +70,7 @@
 									<td>{{$passed_quiz_record->Book->fullname_yomi()}}</td>
 									<td>dq{{$passed_quiz_record->book_id}}</td>
 									<td>{{floor($passed_quiz_record->point*100)/100}}</td>
-									<td>{{$passed_quiz_record->finished_date}}</td>
+									<td>{{date_format(date_add(date_create($passed_quiz_record->created_date), date_interval_create_from_date_string($passed_quiz_record->passed_test_time."seconds")), "Y-m-d H:i:s")}}</td>
 									<td><a href="{{ url("/mypage/other_view/".$passed_quiz_record->org_id) }}" class="font-blue-madison">{{$passed_quiz_record->Org_User->username}}</a></td>
 									@if(!$otherview_flag) <td><input type="checkbox" class="make-switch onebook" data-size="small" id="{{$passed_quiz_record->id}}" @if (($passed_quiz_record->is_public) == 1)checked @endif ></td> @endif
 								</tr>

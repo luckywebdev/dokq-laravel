@@ -426,6 +426,15 @@ button{
   }
   
 } 
+
+.hidden {
+  display: none !important;
+}
+
+#sample_test1_2_wrapper .table-scrollable {
+  border: none !important;
+}
+
 @media (max-width: 1250px) {
   .test_content{
      width: 100%;
