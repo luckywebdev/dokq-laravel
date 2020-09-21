@@ -192,7 +192,7 @@ class UserQuizesHistory extends Model
                  ->leftJoin('users','users.id','=','userquizes_history.user_id')
                  ->join('books', 'userquizes_history.book_id', DB::raw('books.id and books.active <> 7'))
                  ->where('userquizes_history.user_id', '=',$user_id)
-                ->whereBetween('created_date', array(Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0), Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)))
+                ->whereBetween('created_date', array(Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0), Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)))
                 ->where( function ($q) {
                     $q->Where(function ($q1) {
                         $q1->where('userquizes_history.type', '=', 0)->where('userquizes_history.status', '=', 1);                    

@@ -610,7 +610,7 @@ class BookController extends Controller
             }
             else{
                 $current_season = BookController::CurrentSeaon(now());
-                $books = $books->whereBetween('user_quizes.created_date', array(Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0), Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)));
+                $books = $books->whereBetween('user_quizes.created_date', array(Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0), Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)));
             }
         }     
         
@@ -681,7 +681,7 @@ class BookController extends Controller
         $wishlist = Angate::where('book_id', '=', $id)->where('value','=', 1)->get();
         $wishlist1 = Angate::where('book_id', '=', $id)->where('value','=', 1)->count();
         $current_season = BookController::CurrentSeaon(now());
-        $wishlist2 = Angate::where('book_id', '=', $id)->where('value','=', 1)->where("updated_at", ">=", Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0))->where("updated_at", "<=", Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59))->count();
+        $wishlist2 = Angate::where('book_id', '=', $id)->where('value','=', 1)->where("updated_at", ">=", Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0))->where("updated_at", "<=", Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59))->count();
         if(Auth::check())
             $already = WishLists::where('user_id', '=' , Auth::user()->id)->where('book_id', '=', $id)->count();
         else
@@ -760,10 +760,10 @@ class BookController extends Controller
                 from 
                 (SELECT book_id,count(book_id) as tester_number
                 from angate
-                where angate.value='1' and "."updated_at between '".Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59)."'
+                where angate.value='1' and "."updated_at between '".Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59)."'
                 and book_id in (select books.id
                 from books
-                where books.active='6' and "."replied_date3 between '".Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59)."')
+                where books.active='6' and "."replied_date3 between '".Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59)."')
                 group by book_id 
                 order by tester_number desc) as table2
                 group by table2.tester_number
@@ -779,7 +779,7 @@ class BookController extends Controller
              break;
            }           
         }
-        $total1 = Books::where("active", 6)->where("replied_date3", ">=", Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0))->where("replied_date3", "<=", Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59))->count();
+        $total1 = Books::where("active", 6)->where("replied_date3", ">=", Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0))->where("replied_date3", "<=", Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59))->count();
         $sql="(select tester_number
                 from 
                 (SELECT book_id,count(book_id) as tester_number

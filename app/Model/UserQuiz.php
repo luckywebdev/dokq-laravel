@@ -146,7 +146,7 @@ class UserQuiz extends Model
                 ->join('books', 'user_quizes.book_id', DB::raw('books.id and books.active <> 7'))  
                  ->leftJoin('users','users.id','=','user_quizes.user_id')
                  ->where('user_quizes.user_id', '=',$user_id)
-                ->whereBetween('user_quizes.created_date', array(Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0), Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)))
+                ->whereBetween('user_quizes.created_date', array(Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0), Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)))
                 ->where( function ($q) {
                     $q->Where(function ($q1) {
                         $q1->where('user_quizes.type', '=', 0)->where('user_quizes.status', '=', 1);                    
@@ -284,7 +284,7 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
             if($role == config('consts')['USER']['ROLE']['PUPIL'])
                 $users = $users->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear']-1, 4, 1,0,0,0), Carbon::create($current_season['end_thisyear']-1, 3, 31,23,59,59)));
             else
-                $users = $users->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear']-1, 1, 1,0,0,0), Carbon::create($current_season['end_thisyear']-1, 12, 31,23,59,59)));
+                $users = $users->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear']-1, 4, 1,0,0,0), Carbon::create($current_season['end_thisyear']-1, 3, 31,23,59,59)));
         
         return $users;
     }
@@ -352,12 +352,12 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
             if($role == config('consts')['USER']['ROLE']['PUPIL'])
                 $users = $users->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear'], 4, 1,0,0,0), Carbon::create($current_season['end_thisyear'], 3, 31,23,59,59)));
             else
-                $users = $users->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear'], 1, 1,0,0,0), Carbon::create($current_season['end_thisyear'], 12, 31,23,59,59)));
+                $users = $users->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear'], 4, 1,0,0,0), Carbon::create($current_season['end_thisyear'], 3, 31,23,59,59)));
         elseif($term == 22)//calc the point of last year
             if($role == config('consts')['USER']['ROLE']['PUPIL'])
                 $users = $users->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear']-1, 4, 1,0,0,0), Carbon::create($current_season['end_thisyear']-1, 3, 31,23,59,59)));
             else
-                $users = $users->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear']-1, 1, 1,0,0,0), Carbon::create($current_season['end_thisyear']-1, 12, 31,23,59,59)));
+                $users = $users->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear']-1, 4, 1,0,0,0), Carbon::create($current_season['end_thisyear']-1, 3, 31,23,59,59)));
         
         return $users;
     }
@@ -608,12 +608,12 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
             if($role == config('consts')['USER']['ROLE']['PUPIL'])
                 $users = $users->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear'], 4, 1,0,0,0), Carbon::create($current_season['end_thisyear'], 3, 31,23,59,59)));
             else
-                $users = $users->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear'], 1, 1,0,0,0), Carbon::create($current_season['end_thisyear'], 12, 31,23,59,59)));
+                $users = $users->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear'], 4, 1,0,0,0), Carbon::create($current_season['end_thisyear'], 3, 31,23,59,59)));
         elseif($term == 22)//calc the point of last year
             if($role == config('consts')['USER']['ROLE']['PUPIL'])
                 $users = $users->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear']-1, 4, 1,0,0,0), Carbon::create($current_season['end_thisyear']-1, 3, 31,23,59,59)));
             else
-                $users = $users->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear']-1, 1, 1,0,0,0), Carbon::create($current_season['end_thisyear']-1, 12, 31,23,59,59)));
+                $users = $users->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear']-1, 4, 1,0,0,0), Carbon::create($current_season['end_thisyear']-1, 3, 31,23,59,59)));
         
         return $users;
     }
@@ -664,14 +664,14 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
                                 ->where('u.role', config('consts')['USER']['ROLE']['PUPIL']);
                 }else{
                     if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59))
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-13), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-13), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 12, 31), "Y-m-d")));
                     else
                     {
                         if($term == 23){
-                            $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-12), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 3, 31), "Y-m-d")));
+                            $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-12), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 12, 31), "Y-m-d")));
                         }
                         else{
-                            $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-12), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 3, 31), "Y-m-d")));
+                            $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-12), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 12, 31), "Y-m-d")));
                         }
                     }
                 }
@@ -685,9 +685,9 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
                                 ->where('u.role', config('consts')['USER']['ROLE']['PUPIL']);
                 }else{
                     if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59))
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-16), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-13), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-16), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-13), 12, 31), "Y-m-d")));
                     else
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-15), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-12), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-15), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-12), 12, 31), "Y-m-d")));
                 }
                 break;
             case 3:
@@ -704,9 +704,9 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
                 break;
             case 5:
                 if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59))
-                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-16), 3, 31), "Y-m-d")));
+                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-16), 12, 31), "Y-m-d")));
                 else
-                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-15), 3, 31), "Y-m-d")));
+                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-15), 12, 31), "Y-m-d")));
                 break;
             case 6:
                 $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-29), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-20), 12, 31), "Y-m-d")));
@@ -750,9 +750,9 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
                                 ->where('u.role', config('consts')['USER']['ROLE']['PUPIL']);
                 }else{
                     if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59))
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-13), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-13), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 12, 31), "Y-m-d")));
                     else
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-12), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-12), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 12, 31), "Y-m-d")));
                 }
                 break;
             case 2:
@@ -764,9 +764,9 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
                                 ->where('u.role', config('consts')['USER']['ROLE']['PUPIL']);
                 }else{
                     if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59))
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-16), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-13), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-16), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-13), 12, 31), "Y-m-d")));
                     else
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-15), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-12), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-15), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-12), 12, 31), "Y-m-d")));
                 }
                 break;
             case 3:
@@ -785,9 +785,9 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
                 break;
             case 5:
                 if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59))
-                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-16), 3, 31), "Y-m-d")));
+                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-16), 12, 31), "Y-m-d")));
                 else
-                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-15), 3, 31), "Y-m-d")));
+                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-15), 12, 31), "Y-m-d")));
                 break;
             case 6:
                 $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-29), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-20), 12, 31), "Y-m-d")));
@@ -829,9 +829,9 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
                                 ->where('u.role', config('consts')['USER']['ROLE']['PUPIL']);
                 }else{
                     if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59))
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-13), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-13), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 12, 31), "Y-m-d")));
                     else
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-12), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-12), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 12, 31), "Y-m-d")));
                 }
                 break;
             case 2:
@@ -843,9 +843,9 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
                                 ->where('u.role', config('consts')['USER']['ROLE']['PUPIL']);
                 }else{
                     if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59))
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-16), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-13), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-16), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-13), 12, 31), "Y-m-d")));
                     else
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-15), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-12), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-15), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-12), 12, 31), "Y-m-d")));
                 }
                 break;
             case 3:
@@ -862,9 +862,9 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
                 break;
             case 5:
                 if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59))
-                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-16), 3, 31), "Y-m-d")));
+                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-16), 12, 31), "Y-m-d")));
                 else
-                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-15), 3, 31), "Y-m-d")));
+                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-15), 12, 31), "Y-m-d")));
                 break;
             case 6:
                 $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-29), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-20), 12, 31), "Y-m-d")));
@@ -880,7 +880,7 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
                $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-59), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-50), 12, 31), "Y-m-d")));
                 break;
             case 10:
-                $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-69), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-60), 12, 31), "Y-m-d")));
+                $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-69),1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-60), 12, 31), "Y-m-d")));
                 break;
             case 11:
                 $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-79), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-70), 12, 31), "Y-m-d")));
@@ -906,9 +906,9 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
                                 ->where('u.role', config('consts')['USER']['ROLE']['PUPIL']);
                 }else{
                     if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59))
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-13), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-13), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 12, 31), "Y-m-d")));
                     else
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-12), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-12), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 12, 31), "Y-m-d")));
                 }
                 break;
             case 2:
@@ -920,9 +920,9 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
                                 ->where('u.role', config('consts')['USER']['ROLE']['PUPIL']);
                 }else{
                     if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59))
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-16), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-13), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-16), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-13), 12, 31), "Y-m-d")));
                     else
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-15), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-12), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-15), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-12), 12, 31), "Y-m-d")));
                 }
                 break;
             case 3:
@@ -941,9 +941,9 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
                 break;
             case 5:
                 if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59))
-                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-16), 3, 31), "Y-m-d")));
+                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-16), 12, 31), "Y-m-d")));
                 else
-                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-15), 3, 31), "Y-m-d")));
+                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-15), 12, 31), "Y-m-d")));
                 break;
             case 6:
                 $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-29), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-20), 12, 31), "Y-m-d")));
@@ -983,13 +983,13 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
                                 ->where('u.role', config('consts')['USER']['ROLE']['PUPIL']);
                 }else{
                     if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59))
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-13), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-13), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 12, 31), "Y-m-d")));
                     else{
                         if($term == 23){
-                            $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-12), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 3, 31), "Y-m-d")));
+                            $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-12), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 12, 31), "Y-m-d")));
                         }
                         else{
-                            $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-12), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 3, 31), "Y-m-d")));
+                            $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-12), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 12, 31), "Y-m-d")));
                         }
 
                     }
@@ -1004,9 +1004,9 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
                                 ->where('u.role', config('consts')['USER']['ROLE']['PUPIL']);
                 }else{
                     if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59))
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-16), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-13), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-16), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-13), 12, 31), "Y-m-d")));
                     else
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-15), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-12), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-15), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-12), 12, 31), "Y-m-d")));
                 }
                 break;
             case 3:
@@ -1023,9 +1023,9 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
                 break;
             case 5:
                 if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59))
-                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-16), 3, 31), "Y-m-d")));
+                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-16), 12, 31), "Y-m-d")));
                 else
-                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-15), 3, 31), "Y-m-d")));
+                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-15), 12, 31), "Y-m-d")));
                 break;
             case 6:
                 $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-29), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-20), 12, 31), "Y-m-d")));
@@ -1065,9 +1065,9 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
                                 ->where('u.role', config('consts')['USER']['ROLE']['PUPIL']);
                 }else{
                     if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59))
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-13), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-13), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 12, 31), "Y-m-d")));
                     else
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-12), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-12), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate(Date("Y"), 12, 31), "Y-m-d")));
                 }
                 break;
             case 2:
@@ -1079,9 +1079,9 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
                                 ->where('u.role', config('consts')['USER']['ROLE']['PUPIL']);
                 }else{
                     if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59))
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-16), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-13), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-16), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-13), 12, 31), "Y-m-d")));
                     else
-                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-15), 4, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-12), 3, 31), "Y-m-d")));
+                        $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-15), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-12), 12, 31), "Y-m-d")));
                 }
                 break;
             case 3:
@@ -1100,9 +1100,9 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
                 break;
             case 5:
                 if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59))
-                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-16), 3, 31), "Y-m-d")));
+                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-16), 12, 31), "Y-m-d")));
                 else
-                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-15), 3, 31), "Y-m-d")));
+                    $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-19), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-15), 12, 31), "Y-m-d")));
                 break;
             case 6:
                 $users = $users->whereBetween("birthday", array(date_format(Carbon::createFromDate((Date("Y")-29), 1, 1), "Y-m-d"),date_format(Carbon::createFromDate((Date("Y")-20), 12, 31), "Y-m-d")));

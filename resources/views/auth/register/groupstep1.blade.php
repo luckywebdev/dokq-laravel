@@ -105,9 +105,11 @@
 				<label class="control-label col-md-2 text-md-right" for="group_yomi" style="align-self:center">よみがな(全角）:</label>
 				<div class="col-md-9">
 					@if ($data!=null)
-					<input required type="text" name="group_yomi" value="{{ $data->group_yomi }}" class="big-form-control popover-help"  data-placement="right" data-trigger="hover" data-content="ひらがな" id="group_yomi" placeholder="ふじさわしりつしょうなんしょうがっこう">
+					<input required type="text" name="group_yomi" pattern="^[ぁ-ん]+$ , [\u3041-\u309F]*" title="全角ひらがなでご入力ください。" value="{{ $data->group_yomi }}" class="big-form-control popover-help"  data-placement="right" data-trigger="hover" data-content="ひらがな" id="group_yomi" placeholder="ふじさわしりつしょうなんしょうがっこう">
+					<!-- <input required type="text" name="group_yomi" value="{{ $data->group_yomi }}" class="big-form-control popover-help"  data-placement="right" data-trigger="hover" data-content="ひらがな" id="group_yomi" placeholder="ふじさわしりつしょうなんしょうがっこう"> -->
 					@else
-					<input required type="text" name="group_yomi" value="{{ old('group_yomi') }}" class="big-form-control popover-help"  data-placement="right" data-trigger="hover" data-content="ひらがな" id="group_yomi" placeholder="ふじさわしりつしょうなんしょうがっこう">
+					<input required type="text" name="group_yomi" pattern="^[ぁ-ん]+$ , [\u3041-\u309F]*" title="全角ひらがなでご入力ください。" value="{{ old('group_yomi') }}" class="big-form-control popover-help"  data-placement="right" data-trigger="hover" data-content="ひらがな" id="group_yomi" placeholder="ふじさわしりつしょうなんしょうがっこう">
+					<!-- <input required type="text" name="group_yomi" value="{{ old('group_yomi') }}" class="big-form-control popover-help"  data-placement="right" data-trigger="hover" data-content="ひらがな" id="group_yomi" placeholder="ふじさわしりつしょうなんしょうがっこう"> -->
 					@endif
 <!--					<span class="help-block">よみがな</span>-->
 					@if ($errors->has('group_yomi'))
@@ -350,6 +352,9 @@
 		        "mask":"9999"
 	        });
 	    }
+		// $("#group_yomi").change(function () {
+			
+		// })
  		var handleSpinners = function () {
         
 	        $('.spinner-input').parent().parent().spinner({value:0, min: 0});

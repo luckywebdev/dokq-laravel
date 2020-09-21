@@ -325,7 +325,7 @@ class MypageController extends Controller{
                         from user_quizes 
                         inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                         where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) 
-                                and created_date between '".Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)."' group by user_id) as table1 
+                                and created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)."' group by user_id) as table1 
                         on users.id=table1.user_id where users.id='".Auth::id()."' or (";
             $threesql_temp="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag from users 
                     left join (select user_id, SUM(user_quizes.point) AS sum 
@@ -484,8 +484,8 @@ class MypageController extends Controller{
                         $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                     });
                 })
-                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0))
-                ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],12, 31,23,59,59))
+                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0))
+                ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],3, 31,23,59,59))
                 ->where('user_id','=',Auth::id())
                 ->get();
 
@@ -494,7 +494,7 @@ class MypageController extends Controller{
                             from user_quizes 
                             inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                             where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                    and created_date between '".Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)."' group by user_id) as table1 
+                                    and created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)."' group by user_id) as table1 
                             on users.id=table1.user_id where users.id='".Auth::id()."' or (";
 
             $sql_this[2]=$sql_temp2." users.id in (select users.id from users,
@@ -526,8 +526,8 @@ class MypageController extends Controller{
                         $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                     });
                 })
-                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0))
-                ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59))
+                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0))
+                ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59))
                 ->where('user_quizes.user_id','=',Auth::id())
                 ->get();
 
@@ -536,7 +536,7 @@ class MypageController extends Controller{
                             from user_quizes 
                             inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                             where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                    and created_date between '".Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59)."' group by user_id) as table1 
+                                    and created_date between '".Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59)."' group by user_id) as table1 
                             on users.id=table1.user_id where users.id='".Auth::id()."' or (";
 
             $sql_last[2]=$sql_temp3." users.id in (select users.id from users,
@@ -905,8 +905,8 @@ class MypageController extends Controller{
                         $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                     });
                 })
-                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0))
-                ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],12, 31,23,59,59))
+                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0))
+                ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],3, 31,23,59,59))
                 ->where('user_quizes.user_id','=',Auth::id())
                 ->get();
 
@@ -915,7 +915,7 @@ class MypageController extends Controller{
                             from user_quizes 
                             inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                             where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                    and created_date between '".Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)."' group by user_id) as table1 
+                                    and created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)."' group by user_id) as table1 
                             on users.id=table1.user_id where users.id='".Auth::id()."' or (";
 
             $sql_this[2]=$sql_temp2." users.id in (select users.id from users,
@@ -947,8 +947,8 @@ class MypageController extends Controller{
                         $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                     });
                 })
-                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0))
-                ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59))
+                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0))
+                ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59))
                 ->where('user_quizes.user_id','=',Auth::id())
                 ->get();
 
@@ -957,7 +957,7 @@ class MypageController extends Controller{
                             from user_quizes 
                             inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                             where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                    and created_date between '".Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59)."' group by user_id) as table1 
+                                    and created_date between '".Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59)."' group by user_id) as table1 
                             on users.id=table1.user_id where users.id='".Auth::id()."' or (";
 
             $sql_last[2]=$sql_temp3." users.id in (select users.id from users,
@@ -1153,7 +1153,7 @@ class MypageController extends Controller{
                         from user_quizes 
                         inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                         where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) 
-                                and created_date between '".Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)."' group by user_id) as table1 
+                                and created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)."' group by user_id) as table1 
                         on users.id=table1.user_id where users.id='".Auth::id()."' or (";
             $threesql_temp="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag from users 
                     left join (select user_id, SUM(user_quizes.point) AS sum 
@@ -1313,8 +1313,8 @@ class MypageController extends Controller{
                         $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                     });
                 })
-                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0))
-                ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],12, 31,23,59,59))
+                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0))
+                ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],3, 31,23,59,59))
                 ->where('user_quizes.user_id','=',Auth::id())
                 ->get();
 
@@ -1323,7 +1323,7 @@ class MypageController extends Controller{
                             from user_quizes 
                             inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                             where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                    and created_date between '".Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)."' group by user_id) as table1 
+                                    and created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)."' group by user_id) as table1 
                             on users.id=table1.user_id where users.id='".Auth::id()."' or (";
 
             $sql_this[2]=$sql_temp2." users.id in (select users.id from users,
@@ -1355,8 +1355,8 @@ class MypageController extends Controller{
                         $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                     });
                 })
-                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0))
-                ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59))
+                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0))
+                ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59))
                 ->where('user_quizes.user_id','=',Auth::id())
                 ->get();
 
@@ -1365,7 +1365,7 @@ class MypageController extends Controller{
                             from user_quizes 
                             inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                             where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                    and created_date between '".Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59)."' group by user_id) as table1 
+                                    and created_date between '".Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59)."' group by user_id) as table1 
                             on users.id=table1.user_id where users.id='".Auth::id()."' or (";
 
             $sql_last[2]=$sql_temp3." users.id in (select users.id from users,
@@ -1569,7 +1569,7 @@ class MypageController extends Controller{
                         from user_quizes 
                         inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                         where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) 
-                                and created_date between '".Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)."' group by user_id) as table1 
+                                and created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)."' group by user_id) as table1 
                         on users.id=table1.user_id where users.id='".Auth::id()."' or (";
             $threesql_temp="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag from users 
                     left join (select user_id, SUM(user_quizes.point) AS sum 
@@ -1729,8 +1729,8 @@ class MypageController extends Controller{
                         $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                     });
                 })
-                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0))
-                ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],12, 31,23,59,59))
+                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0))
+                ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],3, 31,23,59,59))
                 ->where('user_quizes.user_id','=',Auth::id())
                 ->get();
 
@@ -1739,7 +1739,7 @@ class MypageController extends Controller{
                             from user_quizes 
                             inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                             where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                    and created_date between '".Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)."' group by user_id) as table1 
+                                    and created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)."' group by user_id) as table1 
                             on users.id=table1.user_id where users.id='".Auth::id()."' or (";
 
             $sql_this[2]=$sql_temp2." users.id in (select users.id from users,
@@ -1771,8 +1771,8 @@ class MypageController extends Controller{
                         $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                     });
                 })
-                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0))
-                ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59))
+                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0))
+                ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59))
                 ->where('user_quizes.user_id','=',Auth::id())
                 ->get();
 
@@ -1781,7 +1781,7 @@ class MypageController extends Controller{
                             from user_quizes 
                             inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                             where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                    and created_date between '".Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59)."' group by user_id) as table1 
+                                    and created_date between '".Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59)."' group by user_id) as table1 
                             on users.id=table1.user_id where users.id='".Auth::id()."' or (";
 
             $sql_last[2]=$sql_temp3." users.id in (select users.id from users,
@@ -2283,8 +2283,8 @@ class MypageController extends Controller{
                             $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                         });
                     })
-                    ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0))
-                    ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],12, 31,23,59,59))
+                    ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0))
+                    ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],3, 31,23,59,59))
                     ->where('user_quizes.user_id','=',Auth::id())
                     ->get();
 
@@ -2293,7 +2293,7 @@ class MypageController extends Controller{
                                 from user_quizes 
                                 inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
                                 where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                        and created_date between '".Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)."' group by user_id) as table1 
+                                        and created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)."' group by user_id) as table1 
                                 on users.id=table1.user_id where users.id='".Auth::id()."' or (";
 
                 $sql_this[2]=$sql_temp2." users.id in (select users.id from users,
@@ -2325,8 +2325,8 @@ class MypageController extends Controller{
                             $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                         });
                     })
-                    ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0))
-                    ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59))
+                    ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0))
+                    ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59))
                     ->where('user_quizes.user_id','=',Auth::id())
                     ->get();
 
@@ -2335,7 +2335,7 @@ class MypageController extends Controller{
                                 from user_quizes 
                                 inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
                                 where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                        and created_date between '".Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59)."' group by user_id) as table1 
+                                        and created_date between '".Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59)."' group by user_id) as table1 
                                 on users.id=table1.user_id where users.id='".Auth::id()."' or (";
 
                 $sql_last[2]=$sql_temp3." users.id in (select users.id from users,
@@ -3286,8 +3286,8 @@ class MypageController extends Controller{
                         $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                     });
                 })
-                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0))
-                ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],12, 31,23,59,59))
+                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0))
+                ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],3, 31,23,59,59))
                 ->where('user_quizes.user_id','=',Auth::id())
                 ->get();
 
@@ -3296,7 +3296,7 @@ class MypageController extends Controller{
                             from user_quizes 
                             inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                             where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                    and created_date between '".Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)."' group by user_id) as table1 
+                                    and created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)."' group by user_id) as table1 
                             on users.id=table1.user_id where users.id='".Auth::id()."' or (";
 
             $sql_this[2]=$sql_temp2." users.id in (select users.id from users,
@@ -3328,8 +3328,8 @@ class MypageController extends Controller{
                         $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                     });
                 })
-                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0))
-                ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59))
+                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0))
+                ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59))
                 ->where('user_quizes.user_id','=',Auth::id())
                 ->get();
 
@@ -3338,7 +3338,7 @@ class MypageController extends Controller{
                             from user_quizes 
                             inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                             where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                    and created_date between '".Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59)."' group by user_id) as table1 
+                                    and created_date between '".Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59)."' group by user_id) as table1 
                             on users.id=table1.user_id where users.id='".Auth::id()."' or (";
 
             $sql_last[2]=$sql_temp3." users.id in (select users.id from users,
@@ -5490,7 +5490,7 @@ class MypageController extends Controller{
                         from user_quizes 
                         inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                         where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) 
-                                and created_date between '".Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)."' group by user_id) as table1 
+                                and created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)."' group by user_id) as table1 
                         on users.id=table1.user_id where users.id='".$id."' or (";
             $threesql_temp="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".$id."',1,0) as flag from users 
                     left join (select user_id, SUM(user_quizes.point) AS sum 
@@ -6054,8 +6054,8 @@ class MypageController extends Controller{
                         $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                     });
                 })
-                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0))
-                ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],12, 31,23,59,59))
+                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0))
+                ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],3, 31,23,59,59))
                 ->where('user_quizes.user_id','=',$id)
                 ->get();
 
@@ -6064,7 +6064,7 @@ class MypageController extends Controller{
                             from user_quizes 
                             inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                             where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                    and created_date between '".Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)."' group by user_id) as table1 
+                                    and created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)."' group by user_id) as table1 
                             on users.id=table1.user_id where users.id='".$id."' or (";
 
             $sql_this[2]=$sql_temp2." users.id in (select users.id from users,
@@ -6096,8 +6096,8 @@ class MypageController extends Controller{
                         $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                     });
                 })
-                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0))
-                ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59))
+                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0))
+                ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59))
                 ->where('user_quizes.user_id','=',$id)
                 ->get();
 
@@ -6106,7 +6106,7 @@ class MypageController extends Controller{
                             from user_quizes 
                             inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                             where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                    and created_date between '".Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59)."' group by user_id) as table1 
+                                    and created_date between '".Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59)."' group by user_id) as table1 
                             on users.id=table1.user_id where users.id='".$id."' or (";
 
             $sql_last[2]=$sql_temp3." users.id in (select users.id from users,
@@ -8482,7 +8482,7 @@ class MypageController extends Controller{
             ->select('user_id',DB::raw('SUM(user_quizes.point) AS sum'))
             ->join('users','users.id','=','user_quizes.user_id')
             ->join('books', 'user_quizes.book_id', DB::raw('books.id and books.active <> 7'))
-            ->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0), Carbon::create($current_season['end_thisyear'],12,31,23,59,59)))
+            ->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0), Carbon::create($current_season['end_thisyear'],3,31,23,59,59)))
             ->where('user_id','=',$id)
             ->where( function ($q) {
                 $q->Where(function ($q1) {
@@ -8499,7 +8499,7 @@ class MypageController extends Controller{
             ->select('user_id',DB::raw('SUM(user_quizes.point) AS sum'))
             ->join('users','users.id','=','user_quizes.user_id')
             ->join('books', 'user_quizes.book_id', DB::raw('books.id and books.active <> 7'))
-            ->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0), Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59)))
+            ->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0), Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59)))
             ->where('user_id','=',$id)
             ->where( function ($q) {
                 $q->Where(function ($q1) {
@@ -9356,7 +9356,7 @@ class MypageController extends Controller{
                             from user_quizes 
                             inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                             where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) 
-                                    and created_date between '".Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59)."' group by user_id) as table1 
+                                    and created_date between '".Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59)."' group by user_id) as table1 
                             on users.id=table1.user_id where users.id='".$id."' or (";
                 $threesql_temp="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".$id."',1,0) as flag from users 
                         left join (select user_id, SUM(user_quizes.point) AS sum 
@@ -9744,7 +9744,7 @@ class MypageController extends Controller{
                 ->select('user_id',DB::raw('SUM(user_quizes.point) AS sum'))
                 ->join('users','users.id','=','user_quizes.user_id')
                 ->join('books', 'user_quizes.book_id', DB::raw('books.id and books.active <> 7'))
-                ->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0), Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)))
+                ->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0), Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)))
                 //->where('users.role','=',$role)
                 ->where('user_id','=',$id)
                 ->where( function ($q) {
@@ -9759,7 +9759,7 @@ class MypageController extends Controller{
                 ->select('user_id',DB::raw('SUM(user_quizes.point) AS sum'))
                 ->join('users','users.id','=','user_quizes.user_id')
                 ->join('books', 'user_quizes.book_id', DB::raw('books.id and books.active <> 7'))
-                ->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0), Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59)))
+                ->whereBetween('user_quizes.created_date',array(Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0), Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59)))
                 //->where('users.role','=',$role)
                 ->where('user_id','=',$id)
                 ->where( function ($q) {
@@ -10371,7 +10371,7 @@ class MypageController extends Controller{
                         $q1->where('userquizes_history.type', '=', 2)->where('userquizes_history.status', '=', 4);
                     });
                 })
-                ->whereBetween("created_date", array(Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0), Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)))
+                ->whereBetween("created_date", array(Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0), Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)))
                 ->sum("userquizes_history.point");
         }
         
@@ -11359,7 +11359,7 @@ class MypageController extends Controller{
                             from user_quizes 
                             inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                             where (user_quizes.type = 2 and user_quizes.status = 3)
-                                    and created_date between '".Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)."' group by user_id) as table1 
+                                    and created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)."' group by user_id) as table1 
                             on users.id=table1.user_id where users.id='".Auth::id()."' or (";
 
             $sql[2]=$sql_temp."  users.id in (select users.id from users,
@@ -11478,8 +11478,8 @@ class MypageController extends Controller{
                         $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                     });
                 })
-                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0))
-                ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],12, 31,23,59,59))
+                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0))
+                ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],3, 31,23,59,59))
                 ->where('user_quizes.user_id','=',Auth::id())
                 ->get();
 
@@ -11488,7 +11488,7 @@ class MypageController extends Controller{
                                 from user_quizes 
                                 inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
                                 where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                        and created_date between '".Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)."' group by user_id) as table1 
+                                        and created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)."' group by user_id) as table1 
                                 on users.id=table1.user_id where users.id='".Auth::id()."' or (";
 
             $sql_this[2]=$sql_temp2." users.id in (select users.id from users,
@@ -11520,8 +11520,8 @@ class MypageController extends Controller{
                         $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                     });
                 })
-                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0))
-                ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59))
+                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0))
+                ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59))
                 ->where('user_quizes.user_id','=',Auth::id())
                 ->get();
 
@@ -11530,7 +11530,7 @@ class MypageController extends Controller{
                                 from user_quizes 
                                 inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
                                 where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                        and created_date between '".Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59)."' group by user_id) as table1 
+                                        and created_date between '".Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59)."' group by user_id) as table1 
                                 on users.id=table1.user_id where users.id='".Auth::id()."' or (";
 
             $sql_last[2]=$sql_temp3." users.id in (select users.id from users,
@@ -12540,7 +12540,7 @@ class MypageController extends Controller{
                             from user_quizes 
                             inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                             where (user_quizes.type = 2 and user_quizes.status = 3)
-                                    and created_date between '".Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)."' group by user_id) as table1 
+                                    and created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)."' group by user_id) as table1 
                             on users.id=table1.user_id where users.id='".Auth::id()."' or (";
 
             $sql[2]=$sql_temp."  users.id in (select users.id from users,
@@ -12656,8 +12656,8 @@ class MypageController extends Controller{
                         $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                     });
                 })
-                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0))
-                ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],12, 31,23,59,59))
+                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0))
+                ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],3, 31,23,59,59))
                 ->where('user_quizes.user_id','=',Auth::id())
                 ->get();
 
@@ -12666,7 +12666,7 @@ class MypageController extends Controller{
                                 from user_quizes 
                                 inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
                                 where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                        and created_date between '".Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)."' group by user_id) as table1 
+                                        and created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)."' group by user_id) as table1 
                                 on users.id=table1.user_id where users.id='".Auth::id()."' or (";
 
             $sql_this[2]=$sql_temp2." users.id in (select users.id from users,
@@ -12698,8 +12698,8 @@ class MypageController extends Controller{
                         $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                     });
                 })
-                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0))
-                ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59))
+                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0))
+                ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59))
                 ->where('user_quizes.user_id','=',Auth::id())
                 ->get();
 
@@ -12708,7 +12708,7 @@ class MypageController extends Controller{
                                 from user_quizes 
                                 inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
                                 where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                        and created_date between '".Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59)."' group by user_id) as table1 
+                                        and created_date between '".Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59)."' group by user_id) as table1 
                                 on users.id=table1.user_id where users.id='".Auth::id()."' or (";
 
             $sql_last[2]=$sql_temp3." users.id in (select users.id from users,
@@ -14959,10 +14959,10 @@ class MypageController extends Controller{
             if($rankperiod == 1){
             }
             else if($rankperiod == 2){
-                $ranks = $ranks->whereBetween("user_quizes.created_date", array(Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0), Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)));
+                $ranks = $ranks->whereBetween("user_quizes.created_date", array(Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0), Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)));
             }
             else if($rankperiod == 3){
-                $ranks = $ranks->whereBetween("user_quizes.created_date", array(Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0), Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59)));
+                $ranks = $ranks->whereBetween("user_quizes.created_date", array(Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0), Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59)));
             }
             
         }
@@ -14976,12 +14976,12 @@ class MypageController extends Controller{
             }
             else if($rankyear == 2){
                 if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59))
-                    $ranks = $ranks->whereBetween("users.birthday", array(date_format(Carbon::createFromDate((Date("Y")-29), 1, 1), "Y-m-d"), date_format(Carbon::createFromDate((Date("Y")-20), 3, 31), "Y-m-d")));
+                    $ranks = $ranks->whereBetween("users.birthday", array(date_format(Carbon::createFromDate((Date("Y")-29), 4, 1), "Y-m-d"), date_format(Carbon::createFromDate((Date("Y")-20), 3, 31), "Y-m-d")));
                 else
-                    $ranks = $ranks->whereBetween("users.birthday", array(date_format(Carbon::createFromDate((Date("Y")-29), 1, 1), "Y-m-d"), date_format(Carbon::createFromDate((Date("Y")-19), 3, 31), "Y-m-d")));
+                    $ranks = $ranks->whereBetween("users.birthday", array(date_format(Carbon::createFromDate((Date("Y")-29), 4, 1), "Y-m-d"), date_format(Carbon::createFromDate((Date("Y")-19), 3, 31), "Y-m-d")));
             }
             else if($rankyear == 3){
-                $ranks = $ranks->whereBetween("users.birthday", array(date_format(Carbon::createFromDate((Date("Y")-39), 1, 1), "Y-m-d"), date_format(Carbon::createFromDate((Date("Y")-30), 12, 31), "Y-m-d")));
+                $ranks = $ranks->whereBetween("users.birthday", array(date_format(Carbon::createFromDate((Date("Y")-39), 4, 1), "Y-m-d"), date_format(Carbon::createFromDate((Date("Y")-30), 4, 31), "Y-m-d")));
             }
             else if($rankyear == 4){
                 $ranks = $ranks->whereBetween("users.birthday", array(date_format(Carbon::createFromDate((Date("Y")-49), 1, 1), "Y-m-d"), date_format(Carbon::createFromDate((Date("Y")-40), 12, 31), "Y-m-d")));
@@ -15809,7 +15809,7 @@ class MypageController extends Controller{
                                 from user_quizes 
                                 inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
                                 where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) 
-                                        and created_date between '".Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)."' group by user_id) as table1 
+                                        and created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)."' group by user_id) as table1 
                                 on users.id=table1.user_id where users.id='".$id."' or (";
                     $threesql_temp="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".$id."',1,0) as flag from users 
                             left join (select user_id, SUM(user_quizes.point) AS sum 
@@ -15992,8 +15992,8 @@ class MypageController extends Controller{
                                     $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                                 });
                             })
-                            ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0))
-                            ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],12, 31,23,59,59))
+                            ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0))
+                            ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],3, 31,23,59,59))
                             ->where('user_quizes.user_id','=',$id)
                             ->get();
                        
@@ -16002,7 +16002,7 @@ class MypageController extends Controller{
                                     from user_quizes 
                                     inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
                                     where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1))
-                                            and created_date between '".Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)."' group by user_id) as table1 
+                                            and created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)."' group by user_id) as table1 
                                     on users.id=table1.user_id where users.id='".$id."' or (";
 
                         $myquizPoints_this2 = MypageController::Get_RankPoint1($sql_temp2.$sql[2]);
@@ -16019,8 +16019,8 @@ class MypageController extends Controller{
                                     $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
                                 });
                             })
-                            ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0))
-                            ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59))
+                            ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0))
+                            ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59))
                             ->where('user_quizes.user_id','=',$id)
                             ->get();
                        
@@ -16029,7 +16029,7 @@ class MypageController extends Controller{
                                     from user_quizes 
                                     inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
                                     where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1))
-                                            and created_date between '".Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59)."' group by user_id) as table1 
+                                            and created_date between '".Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59)."' group by user_id) as table1 
                                     on users.id=table1.user_id where users.id='".$id."' or (";
 
                         $myquizPoints_last2 = MypageController::Get_RankPoint1($sql_temp3.$sql[2]);

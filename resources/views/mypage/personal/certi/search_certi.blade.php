@@ -172,7 +172,7 @@
 			<div class="row">
 				<div class="col-md-6 col-md-offset-5">
 					<button type="button" id = "total_btn" class="btn btn-warning pull-left" disabled style="margin-bottom:8px;">完了してプレビューと支払</button>
-					<button type="button" class="btn btn-info pull-right" onclick="javascript:history.go(-1)" style="margin-bottom:8px;">戻　る</button>
+					<button type="button" class="btn btn-info pull-right back_btn" style="margin-bottom:8px;">全てキャンセルして戻る</button>
 					<!-- <button type="button" class="btn btn-danger pull-right">キャンセル</button> -->
 				</div>
 			</div>
@@ -261,7 +261,9 @@
 				certi_list.forEach(item => {
 					items.push(Number(item[7].trim()));
 				})
-            	
+				
+				localStorage.removeItem('certi_list');
+				certi_list = [];
             	$("#items").val(items);
             	$("#search_form").attr("method", "post");
                                                       
@@ -371,6 +373,12 @@
 				else{
 
 				}
+			})
+
+			$(".back_btn").click(function() {
+				localStorage.removeItem('certi_list');
+				certi_list = [];
+				location.href = "{{url('/mypage/create_certi')}}";
 			})
 		});
 

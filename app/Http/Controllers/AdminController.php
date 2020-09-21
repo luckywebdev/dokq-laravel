@@ -1656,10 +1656,10 @@ class AdminController extends Controller
             if($rankperiod == 1){
             }
             else if($rankperiod == 2){
-                $ranks = $ranks->whereBetween("user_quizes.created_date", array(Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0), Carbon::create($current_season['end_thisyear'],12, 31,23,59,59)));
+                $ranks = $ranks->whereBetween("user_quizes.created_date", array(Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0), Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)));
             }
             else if($rankperiod == 3){
-                $ranks = $ranks->whereBetween("user_quizes.created_date", array(Carbon::create($current_season['begin_thisyear']-1,1, 1,0,0,0), Carbon::create($current_season['end_thisyear']-1,12, 31,23,59,59)));
+                $ranks = $ranks->whereBetween("user_quizes.created_date", array(Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0), Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59)));
             }
             
         }
@@ -1678,19 +1678,19 @@ class AdminController extends Controller
                     $ranks = $ranks->whereBetween("users.birthday", array(date_format(Carbon::createFromDate((Date("Y")-29), 1, 1), "Y-m-d"), date_format(Carbon::createFromDate((Date("Y")-19), 3, 31), "Y-m-d")));
             }
             else if($rankyear == 3){
-                $ranks = $ranks->whereBetween("users.birthday", array(date_format(Carbon::createFromDate((Date("Y")-39), 1, 1), "Y-m-d"), date_format(Carbon::createFromDate((Date("Y")-30), 12, 31), "Y-m-d")));
+                $ranks = $ranks->whereBetween("users.birthday", array(date_format(Carbon::createFromDate((Date("Y")-39), 4, 1), "Y-m-d"), date_format(Carbon::createFromDate((Date("Y")-30), 3, 31), "Y-m-d")));
             }
             else if($rankyear == 4){
-                $ranks = $ranks->whereBetween("users.birthday", array(date_format(Carbon::createFromDate((Date("Y")-49), 1, 1), "Y-m-d"), date_format(Carbon::createFromDate((Date("Y")-40), 12, 31), "Y-m-d")));
+                $ranks = $ranks->whereBetween("users.birthday", array(date_format(Carbon::createFromDate((Date("Y")-49), 4, 1), "Y-m-d"), date_format(Carbon::createFromDate((Date("Y")-40), 3, 31), "Y-m-d")));
             }
             else if($rankyear == 5){
-                $ranks = $ranks->whereBetween("users.birthday", array(date_format(Carbon::createFromDate((Date("Y")-59), 1, 1), "Y-m-d"), date_format(Carbon::createFromDate((Date("Y")-50), 12, 31), "Y-m-d")));
+                $ranks = $ranks->whereBetween("users.birthday", array(date_format(Carbon::createFromDate((Date("Y")-59), 4, 1), "Y-m-d"), date_format(Carbon::createFromDate((Date("Y")-50), 3, 31), "Y-m-d")));
             }
             else if($rankyear == 6){
-                $ranks = $ranks->whereBetween("users.birthday", array(date_format(Carbon::createFromDate((Date("Y")-69), 1, 1), "Y-m-d"), date_format(Carbon::createFromDate((Date("Y")-60), 12, 31), "Y-m-d")));
+                $ranks = $ranks->whereBetween("users.birthday", array(date_format(Carbon::createFromDate((Date("Y")-69), 4, 1), "Y-m-d"), date_format(Carbon::createFromDate((Date("Y")-60), 3, 31), "Y-m-d")));
             }
             else if($rankyear == 7){
-                $ranks = $ranks->whereBetween("users.birthday", array(date_format(Carbon::createFromDate((Date("Y")-79), 1, 1), "Y-m-d"), date_format(Carbon::createFromDate((Date("Y")-70), 12, 31), "Y-m-d")));
+                $ranks = $ranks->whereBetween("users.birthday", array(date_format(Carbon::createFromDate((Date("Y")-79), 4, 1), "Y-m-d"), date_format(Carbon::createFromDate((Date("Y")-70), 3, 31), "Y-m-d")));
             }
             else if($rankyear == 8){
                 $ranks = $ranks->where("users.birthday", '<=', date_format(Carbon::createFromDate((Date("Y")-80), 12, 31), "Y-m-d"));
