@@ -23,7 +23,7 @@ Route::get('/csrftoken','Auth\UserController@csrftokenAPI');
 //Login
 Route::get('/auth/login', 'Auth\LoginController@index')->name('auth/login');
 Route::post('/auth/dologin', 'Auth\LoginController@login')->name('auth/dologin');
-Route::get('/login', 'Auth\UserController@loginAPI');
+Route::get('/login', 'Auth\UserController@loginAPI')->name('login');
 
 //Forgot Password
 Route::get('/auth/forgot_pwd', 'Auth\ForgotPasswordController@index');
