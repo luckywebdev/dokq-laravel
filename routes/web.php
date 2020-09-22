@@ -14,7 +14,6 @@ include_once 'web_builder.php';
 Route::pattern('slug', '[a-z0-9- _]+');
 /* when logout, visible 16~135 rows*/
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/top', 'HomeController@top')->name('top');
 Route::get('/get_notice', 'HomeController@get_notice');
 Route::post('/alerttomember', 'HomeController@alerttomember');
 
@@ -23,7 +22,7 @@ Route::get('/csrftoken','Auth\UserController@csrftokenAPI');
 //Login
 Route::get('/auth/login', 'Auth\LoginController@index')->name('auth/login');
 Route::post('/auth/dologin', 'Auth\LoginController@login')->name('auth/dologin');
-Route::get('/login', 'Auth\UserController@loginAPI')->name('login');
+Route::get('/login', 'Auth\UserController@loginAPI');
 
 //Forgot Password
 Route::get('/auth/forgot_pwd', 'Auth\ForgotPasswordController@index');
@@ -144,7 +143,9 @@ Route::get('/mypage/settlement_certi_view/{userid}/{index}', 'MypageController@s
 
 /* when login, visible after this rows*/
 Route::group(['middleware' => 'auth'], function(){
-Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+    Route::get('/top', 'HomeController@top')->name('top');
+
+    Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
 //    Route::get('/auth/reg/step2', 'Auth\UserController@getStep2');  
 //    Route::post('/auth/reg/step2', 'Auth\UserController@postStep2');  
