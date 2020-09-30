@@ -147,9 +147,9 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
-//    Route::get('/auth/reg/step2', 'Auth\UserController@getStep2');  
-//    Route::post('/auth/reg/step2', 'Auth\UserController@postStep2');  
-//    Route::get('/auth/reg/step3', 'Auth\UserController@getStep3');  
+    //    Route::get('/auth/reg/step2', 'Auth\UserController@getStep2');  
+    //    Route::post('/auth/reg/step2', 'Auth\UserController@postStep2');  
+    //    Route::get('/auth/reg/step3', 'Auth\UserController@getStep3');  
     // Route::get('/ask', 'HelpController@viwAsk');  
 
     Route::post('/class/register', 'Auth\UserController@regClass');
@@ -158,7 +158,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/group/reg/step3_suc', 'Auth\UserController@getStep3_suc'); 
     Route::get('/group/reg/step4', 'Auth\UserController@getStep4'); 
 
-///////////////////group account////////////
+    ///////////////////group account////////////
     Route::post('/class_top','ClassController@index' );
     Route::get('/class/{id}/top','ClassController@toppage' );
     Route::get('/group/basic_info', 'GroupController@editGroup');
@@ -180,12 +180,12 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/group/teacher/delete', 'GroupController@deleteTeacher');
     Route::get('/group/rank/{type}', 'GroupController@ViewGroupRank');
     Route::post('/group/selClassAjax', 'GroupController@selClassAjax');
-///////////////////teacher account////////////////////////////
+    ///////////////////teacher account////////////////////////////
     Route::get('/class/rank/{type}','ClassController@viewClassRank' );
     Route::get('/class/search_pupil','ClassController@search_pupil');
     Route::post('/class/search_pupil/check','ClassController@searchPupilCheck');
     Route::get('/class/pupil/unlock', 'ClassController@pupil_unlock');
-//////////////////////role of teacher/////////////////////////
+    //////////////////////role of teacher/////////////////////////
     Route::get('/teacher/reg_pupil', 'TeacherController@reg_pupil');
     Route::get('/teacher/edit_pupil','TeacherController@edit_pupil');
     
@@ -207,7 +207,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/teacher/checkSamePupil', 'TeacherController@checkSameUser');
     Route::post('/teacher/record/delete', 'TeacherController@deleteRecord');
 
-//////////////////////common////////////////////////////
+    //////////////////////common////////////////////////////
     Route::get('/mypage/top', 'MypageController@index');//render mypage
     Route::get('/mypage/top/setpublic', 'MypageController@setPublic');
     Route::post('/mypage/top/setpublic/{type}', 'MypageController@setPublic');
@@ -218,7 +218,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/mypage/pupil_view/{id}', 'MypageController@pupil_view');
     Route::get('/mypage/face_verify', 'MypageController@viewFaceVerify');
     Route::get('/mypage/face_verify/{index}', 'MypageController@viewFaceVerify');
-  //  Route::get('/mypage/signin', 'MypageController@signin');
+    //  Route::get('/mypage/signin', 'MypageController@signin');
     Route::post('/mypage/signin', 'MypageController@signin');
     Route::post('/mypage/signin_teacher', 'MypageController@signinTeacher');
     Route::get('/mypage/signin_teacher', 'MypageController@signinTeacher');
@@ -316,7 +316,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/mypage/my_profile/update','MypageController@update_my_profile');
     Route::get('/mypage/pupil_history','MypageController@pupil_history');
     
-////book indexing.//////////////
+    ////book indexing.//////////////
     Route::get('/book/register', 'BookController@register');
     Route::get('/book/register/caution', 'BookController@caution');
     Route::post('/book/create_update', 'BookController@create_update');
