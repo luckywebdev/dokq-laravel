@@ -42,7 +42,7 @@
 			<div class="row" style="margin-top:50px;">
 				<div class="offset-md-4 col-md-4" style="font-size:16px; text-align: center">
 
-					<!-- <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+					<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 						<input type="hidden" name="cmd" value="_s-xclick">
 						<input type="hidden" name="hosted_button_id" value="BLJNCVJUQAQWQ">
 						<table class="text-center" width="100%" style="padding: 2%">
@@ -54,8 +54,8 @@
 						<input type="hidden" name="currency_code" value="JPY">
 						<input type="image" src="https://www.paypalobjects.com/ja_JP/JP/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - オンラインでより安全・簡単にお支払い">
 						<img alt="" border="0" src="https://www.paypalobjects.com/ja_JP/i/scr/pixel.gif" width="1" height="1">
-					</form> -->
-					<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+					</form>
+					<!-- <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
 						<input type="hidden" name="cmd" value="_s-xclick">
 						<input type="hidden" name="hosted_button_id" value="MBHHQEFCXKU4U">
 						<table>
@@ -68,7 +68,7 @@
 						<input type="image" src="https://www.sandbox.paypal.com/ja_JP/JP/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - オンラインでより安全・簡単にお支払い">
 						<img alt="" border="0" src="https://www.sandbox.paypal.com/ja_JP/i/scr/pixel.gif" width="1" height="1">
 					</form>
-
+ -->
 				</div>
 
 
