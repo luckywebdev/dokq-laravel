@@ -76,7 +76,7 @@
 							<tr>
 								<td><?php echo e($key+1); ?></td>
 								<td><?php if(Date("Y") - Date("Y", strtotime($rank->birthday)) >= 15): ?>
-										<?php if($rank->firstname != '' && $rank->firstname !== null): ?> 
+										<?php if($rank->firstname != '' && $rank->firstname !== null && $rank->fullname_is_public == 1): ?> 
 											<a href="<?php echo e(url('mypage/other_view/' . $rank->id)); ?>" class="font-blue"><?php echo e($rank->firstname); ?> <?php echo e($rank->lastname); ?></a>
 										<?php else: ?>
 											<a href="<?php echo e(url('mypage/other_view/' . $rank->id)); ?>" class="font-blue"> <?php echo e($rank->username); ?></a>
@@ -133,7 +133,7 @@
 							<tr>
 								<td><?php echo e($key+1); ?></td>
 								<td><?php if(Date("Y") - Date("Y", strtotime($rank->birthday)) >= 15): ?>
-										<?php if($rank->firstname != '' && $rank->firstname !== null): ?> 
+										<?php if($rank->firstname != '' && $rank->firstname !== null && $rank->fullname_is_public == 1): ?> 
 											<a href="<?php echo e(url('mypage/other_view/' . $rank->id)); ?>" class="font-blue"><?php echo e($rank->firstname); ?> <?php echo e($rank->lastname); ?></a>
 										<?php else: ?>
 											<a href="<?php echo e(url('mypage/other_view/' . $rank->id)); ?>" class="font-blue"> <?php echo e($rank->username); ?></a>

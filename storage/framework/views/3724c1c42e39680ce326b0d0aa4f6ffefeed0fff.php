@@ -121,8 +121,8 @@
 			</div>
 		</div>
 		<form action=<?php echo e(url('/group/rank/2')); ?> id="selectGrade" name="rank2-form" method = "GET">
-					<input type="hidden" name="_token" value="<?php echo e(csrf_field()); ?>">
-					<input type="hidden" name="id" id="id" value=""/>
+					<!-- <input type="hidden" name="_token" value="<?php echo e(csrf_field()); ?>"> -->
+					<input type="hidden" name="ids" id="ids" value=""/>
 					<input type="hidden" name="grade" id="grade" value=""/>
 					<input type="hidden" name="group_id" id="group_id" value=""/>
 					<input type="hidden" name="sel_year" id="sel_year" value=""/>
@@ -138,8 +138,8 @@
 			<?php endif; ?>
 			ComponentsDropdowns.init();
 			$("select").change(function(){
-//				alert($(":selected").attr("id"));
-				$("#id").val($(":selected").attr("id"));
+				// alert($(":selected").attr("grade"));
+				$("#ids").val($(":selected").attr("id"));
 				$("#grade").val($(":selected").attr("grade"));
 				$("#group_id").val($(":selected").attr("gid"));
 				$("#sel_year").val($(":selected").attr("syear"));

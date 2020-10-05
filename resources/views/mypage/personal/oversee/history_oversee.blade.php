@@ -65,7 +65,8 @@
 							<tr class="info text-md-center">
 								<td>{{ $history->created_date }}</td>
 								<td @if($history->finished_date == "") style="color:#f00" @endif>@if($history->finished_date == "") （検定中） @else {{ $history->finished_date }} @endif</td>
-								<td><a href="{{ url("/mypage/other_view/" . $history->user_id) }}" class="font-blue-madison">{{ $history->User->fullname() }}</a></td>
+								<td><a href="{{ url("/mypage/other_view/" . $history->user_id) }}" class="font-blue-madison">@if($history->User->fullname_is_phblic) {{ $history->User->fullname() }} @else {{ $history->User->username }} @endif
+								</a></td>
 								<td><a @if($history->Book->active >= 3) href="{{ url("/book/" . $history->Book->id . "/detail") }}" @endif class="font-blue-madison">{{ $history->Book->title }}</a></td>
 								<td><a @if($history->Book->active >= 3) href="{{ url("/book/" . $history->Book->id . "/detail") }}" @endif class="font-blue-madison">dq{{ $history->Book->id }}</a></td>
 								<td>@if($history->status == 3) 合格 @elseif($history->status == 4) 不 @else （検定中） @endif</td>

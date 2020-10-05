@@ -57,9 +57,9 @@
 						<input type="hidden" name="cmd" value="_s-xclick">
 						<input type="hidden" name="hosted_button_id" value="MBHHQEFCXKU4U">
 						<table>
-						<tr><td><input type="hidden" name="on0" value="Pay_each_time">都度払込</td></tr><tr><td><select name="os0">
-							<option value="create_certi_expand">読書認定書 作成または期間延長 ¥300 JPY</option>
-							<option value="unpaid">未払い金の支払い ¥300 JPY</option>
+						<tr><td><input type="hidden" name="on0" value="Pay_each_time">Pay_each_time</td></tr><tr><td><select name="os0">
+							<option value="create_certi_expand">create_certi_expand ¥300 JPY</option>
+							<option value="unpaid">unpaid ¥300 JPY</option>
 						</select> </td></tr>
 						</table>
 						<input type="hidden" name="currency_code" value="JPY">

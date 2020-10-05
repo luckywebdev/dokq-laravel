@@ -54,7 +54,7 @@
 									<th class="col-md-1">著者</th>
 									<th class="col-md-2">著者名ひらがな</th>
 									<th class="col-md-1">読Q本</th>
-									<th class="col-md-2">得たポイント</th>
+									<th class="col-md-2">読Q本ポイント</th>
 									<th class="col-md-2">登録者表示名</th>
 								</tr>
 							</thead>

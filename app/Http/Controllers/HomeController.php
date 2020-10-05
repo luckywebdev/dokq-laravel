@@ -185,14 +185,14 @@ class HomeController extends Controller
             $messages = Messages::where(DB::raw("concat(',',to_id, ',')"),'like','%,'.Auth::user()->id.',%')->where('type',1)->orderBy("updated_at", "desc")->take(3)->get();
             
             //get classes on current year
-            if(Auth::user()->isTeacher()){
+            if(Auth::user()->isTeacher() && Auth::user()->School){
                 //$classes = Auth::user()->School->classes->where('teacher_id',Auth::id());
                 $classes = Auth::user()->School->classes->where('teacher_id',Auth::user()->id);
             }
-            elseif(Auth::user()->isRepresen() || Auth::user()->isItmanager()){
+            elseif((Auth::user()->isRepresen() || Auth::user()->isItmanager()) && Auth::user()->School){
                  
                  $classes = Auth::user()->School->classes;
-            }elseif(Auth::user()->isOther()){
+            }elseif(Auth::user()->isOther() && Auth::user()->School){
                  
                  $classes = Auth::user()->School->classes;
             }

@@ -315,7 +315,7 @@ class GroupController extends Controller
         $user = User::find($other_id);
         $id = $user->id;
         if($user->role == config('consts')['USER']['ROLE']['GROUP']){
-            $id = $user->org_id;
+            // $id = $user->org_id;
             $schoolUser =$user;
         }elseif($user->role == config('consts')['USER']['ROLE']['TEACHER'] || $user->role == config('consts')['USER']['ROLE']['REPRESEN']  || $user->role == config('consts')['USER']['ROLE']['ITMANAGER']  || $user->role == config('consts')['USER']['ROLE']['OTHER']){
             $id = $user->org_id;
@@ -544,9 +544,10 @@ class GroupController extends Controller
             else{
                 if ($request->has('grade')){
                     $grade = $request->input('grade');
-                    $selected_grade['id'] = $request->input('id');
+                    $selected_grade['id'] = $request->input('ids');
                     $year = $request->input('sel_year');
-                    $id =  $request->input('group_id');
+                    $group_id =  $request->input('group_id');
+                    $id = $request->input('group_id');
                 }
                 else{
                     $grade = $grades[0]->grade;
@@ -1022,23 +1023,38 @@ order by sumpoint desc */
         return $avgYear ? $avgYear->avgpoint : 0;
     }
 
-    private function Calc_sum($class_id, $period, $year, $current_season) {
+    static function Calc_sum($class_id, $period, $year, $current_season) {
         $startAt = ''; $endAt = '';
         if ($period == 'year') {
             $startAt = Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0);
             $endAt =  Carbon::create($current_season['end_thisyear'],3, 31,23,59,59);
         } else if ($period == 'spring'){
-            $startAt = Carbon::create($current_season['end_thisyear'],4, 1,0,0,0);
-            $endAt = Carbon::create($current_season['end_thisyear'],6, 30,23,59,59);
+            $startAt = Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0);
+            $endAt = Carbon::create($current_season['begin_thisyear'],6, 30,23,59,59);
         } else if ($period == 'summer'){
-            $startAt = Carbon::create($current_season['end_thisyear'],7, 1,0,0,0);
-            $endAt = Carbon::create($current_season['end_thisyear'],9, 30,23,59,59);
+            $startAt = Carbon::create($current_season['begin_thisyear'],7, 1,0,0,0);
+            $endAt = Carbon::create($current_season['begin_thisyear'],9, 30,23,59,59);
         } else if ($period == 'autumn'){
-            $startAt = Carbon::create($current_season['end_thisyear'],10, 1,0,0,0);
-            $endAt = Carbon::create($current_season['end_thisyear'],12, 31,23,59,59);
+            $startAt = Carbon::create($current_season['begin_thisyear'],10, 1,0,0,0);
+            $endAt = Carbon::create($current_season['begin_thisyear'],12, 31,23,59,59);
         } else if ($period == 'winter'){
             $startAt = Carbon::create($current_season['begin_thisyear'],1, 1,0,0,0);
-            $endAt = Carbon::create($current_season['end_thisyear'],3, 31,23,59,59);
+            $endAt = Carbon::create($current_season['begin_thisyear'],3, 31,23,59,59);
+        } else if ($period == 'year-1'){
+            $startAt = Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0);
+            $endAt =  Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59);
+        } else if ($period == 'year-2') {
+            $startAt = Carbon::create($current_season['begin_thisyear']-2,4, 1,0,0,0);
+            $endAt =  Carbon::create($current_season['end_thisyear']-2,3, 31,23,59,59);
+        } else if ($period == 'year-3') {
+            $startAt = Carbon::create($current_season['begin_thisyear']-3,4, 1,0,0,0);
+            $endAt =  Carbon::create($current_season['end_thisyear']-3,3, 31,23,59,59);
+        } else if ($period == 'year-4') {
+            $startAt = Carbon::create($current_season['begin_thisyear']-4,4, 1,0,0,0);
+            $endAt =  Carbon::create($current_season['end_thisyear']-4,3, 31,23,59,59);
+        } else if ($period == 'year-5') {
+            $startAt = Carbon::create($current_season['begin_thisyear']-5,4, 1,0,0,0);
+            $endAt =  Carbon::create($current_season['end_thisyear']-5,3, 31,23,59,59);
         }
 
        /* select c.group_id, c.grade, c.class_number, sum(b.point) as sumpoint 
@@ -1076,7 +1092,7 @@ order by sumpoint desc */
         return $avgYear ? floor($avgYear->sumpoint*100)/100 : 0;
     }
 
-    private function Calc_pupils($class_id, $period, $year) {
+    static function Calc_pupils($class_id, $period, $year) {
         
 
         $avgYear = DB::table("classes as c")
@@ -1313,65 +1329,82 @@ order by sumpoint desc */
     }
 
     /* Calculate school average point and rank schools according to the range*/
-    static function Calc_school_avg($groupId, $period){
+    static function Calc_school_avg($groupId, $period ){
 
-        $classes = array();
-        if($groupId !== null && $groupId != -1 &&  User::find($groupId))
-            $classes = User::find($groupId)->classes;
-        if (count($classes) == 0) return 0;
+        // $classes = array();
+        // if($groupId !== null && $groupId != -1 &&  User::find($groupId))
+        //     $classes = User::find($groupId)->classes;
+        // if (count($classes) == 0) return 0;
 
-        $k = 0;
-        for ($i = 0; $i < count($classes); $i ++){
-            for ($j = 0; $j < count($classes[$i]->Pupils); $j ++) 
-                $pupils[$k++] = $classes[$i]->Pupils[$j];
-        }
+        // $k = 0;
+        // for ($i = 0; $i < count($classes); $i ++){
+        //     for ($j = 0; $j < count($classes[$i]->Pupils); $j ++) 
+        //         $pupils[$k++] = $classes[$i]->Pupils[$j];
+        // }
 
-        if ($k == 0) return 0;
-        $sum = 0;
+        // if ($k == 0) return 0;
+        // $sum = 0;
+        // $current_season = GroupController::CurrentSeaon_Pupil1(now());
+        // for ($i = 0; $i < count($pupils); $i++){
+
+        //     if ($period == 'year'){
+        //         $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['begin_thisyear'],4,1,$current_season['end_thisyear'],3,31);
+        //     }
+        //     else if ($period == 'spring'){
+        //         $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['begin_thisyear'],4,1,$current_season['begin_thisyear'],6,30);
+        //     }
+        //     else if ($period == 'summer'){
+        //         $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['begin_thisyear'],7,1,$current_season['begin_thisyear'],9,30);
+        //     }
+        //     else if ($period == 'autumn'){
+        //         $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['begin_thisyear'],10,1,$current_season['begin_thisyear'],12,31);
+        //     }
+        //     else if ($period == 'winter'){
+        //         $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['begin_thisyear'],1,1,$current_season['begin_thisyear'],3,31);
+        //     }
+        //     else if ($period == 'all'){
+        //         $quizes = $pupils[$i]->SuccessPoints;
+        //     }
+        //     else if ($period == 'year-1'){
+        //         $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['begin_thisyear']-1,4,1,$current_season['end_thisyear']-1,3,31);
+        //     }
+        //     else if ($period == 'year-2'){
+        //         $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['begin_thisyear']-2,4,1,$current_season['end_thisyear']-2,3,31);
+        //     }
+        //     else if ($period == 'year-3'){
+        //         $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['begin_thisyear']-3,4,1,$current_season['end_thisyear']-3,3,31);
+        //     }
+        //     else if ($period == 'year-4'){
+        //         $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['begin_thisyear']-4,4,1,$current_season['end_thisyear']-4,3,31);
+        //     }
+        //     else if ($period == 'year-5'){
+        //         $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['begin_thisyear']-5,4,1,$current_season['end_thisyear']-5,3,31);
+        //     }
+        //     if (count(get_object_vars($quizes)) == 0) continue;
+        //     $sum += $quizes->sum('user_quizes.point'); 
+        // }
+
+        // if (count($pupils) == 0) $sum = 0;
+        // else $sum /= count($pupils);
+
+        // return round($sum, 2);
+
         $current_season = GroupController::CurrentSeaon_Pupil1(now());
-        for ($i = 0; $i < count($pupils); $i++){
+        $year = $current_season['begin_thisyear'];
+        $classes = Classes::where('group_id', $groupId)
+            ->where('year', $year)->whereNotNull('class_number')->where("active", "=", 1)->get();
 
-            if ($period == 'year'){
-                $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['begin_thisyear'],4,1,$current_season['end_thisyear'],3,31);
-            }
-            else if ($period == 'spring'){
-                $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['begin_thisyear'],4,1,$current_season['begin_thisyear'],6,30);
-            }
-            else if ($period == 'summer'){
-                $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['begin_thisyear'],7,1,$current_season['begin_thisyear'],9,30);
-            }
-            else if ($period == 'autumn'){
-                $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['begin_thisyear'],10,1,$current_season['begin_thisyear'],12,31);
-            }
-            else if ($period == 'winter'){
-                $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['end_thisyear'],1,1,$current_season['end_thisyear'],3,31);
-            }
-            else if ($period == 'all'){
-                $quizes = $pupils[$i]->SuccessPoints;
-            }
-            else if ($period == 'year-1'){
-                $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['begin_thisyear']-1,4,1,$current_season['end_thisyear']-1,3,31);
-            }
-            else if ($period == 'year-2'){
-                $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['begin_thisyear']-2,4,1,$current_season['end_thisyear']-2,3,31);
-            }
-            else if ($period == 'year-3'){
-                $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['begin_thisyear']-3,4,1,$current_season['end_thisyear']-3,3,31);
-            }
-            else if ($period == 'year-4'){
-                $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['begin_thisyear']-4,4,1,$current_season['end_thisyear']-4,3,31);
-            }
-            else if ($period == 'year-5'){
-                $quizes = $pupils[$i]->SuccessQuizPoints1($current_season['begin_thisyear']-5,4,1,$current_season['end_thisyear']-5,3,31);
-            }
-            if (count(get_object_vars($quizes)) == 0) continue;
-            $sum += $quizes->sum('user_quizes.point'); 
+        $sum = 0; $grade_pupils = 0;
+       
+        for ($i = 0; $i < count($classes); $i++){
+            
+            $sum += GroupController::Calc_sum($classes[$i]->id, $period, $year, $current_season);
+            $grade_pupils += GroupController::Calc_pupils($classes[$i]->id, $period, $year);
         }
-
-        if (count($pupils) == 0) $sum = 0;
-        else $sum /= count($pupils);
-
-        return round($sum, 2);
+      
+        if (count($classes) == 0) return 0;
+        elseif($grade_pupils == 0) return 0;
+        return round($sum / $grade_pupils, 2);
 
     }
 

@@ -63,7 +63,8 @@
 							<tr class="info text-md-center">
 								<td><?php echo e($history->created_date); ?></td>
 								<td <?php if($history->finished_date == ""): ?> style="color:#f00" <?php endif; ?>><?php if($history->finished_date == ""): ?> （検定中） <?php else: ?> <?php echo e($history->finished_date); ?> <?php endif; ?></td>
-								<td><a href="<?php echo e(url("/mypage/other_view/" . $history->user_id)); ?>" class="font-blue-madison"><?php echo e($history->User->fullname()); ?></a></td>
+								<td><a href="<?php echo e(url("/mypage/other_view/" . $history->user_id)); ?>" class="font-blue-madison"><?php if($history->User->fullname_is_phblic): ?> <?php echo e($history->User->fullname()); ?> <?php else: ?> <?php echo e($history->User->username); ?> <?php endif; ?>
+								</a></td>
 								<td><a <?php if($history->Book->active >= 3): ?> href="<?php echo e(url("/book/" . $history->Book->id . "/detail")); ?>" <?php endif; ?> class="font-blue-madison"><?php echo e($history->Book->title); ?></a></td>
 								<td><a <?php if($history->Book->active >= 3): ?> href="<?php echo e(url("/book/" . $history->Book->id . "/detail")); ?>" <?php endif; ?> class="font-blue-madison">dq<?php echo e($history->Book->id); ?></a></td>
 								<td><?php if($history->status == 3): ?> 合格 <?php elseif($history->status == 4): ?> 不 <?php else: ?> （検定中） <?php endif; ?></td>

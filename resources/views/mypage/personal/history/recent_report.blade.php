@@ -124,7 +124,7 @@
 								現在までの各期　目標達成率　（同学年全国平均との比較）
 							</div>
 						</div>
-						<div class="portlet-body  col-md-12">
+						<div class="portlet-body  col-md-12 text-center" style="padding-top: 20px">
 							<canvas id="bar" width="617" height="300" style="width: 617px; height: 300px;"></canvas>
 							<div class="legend">
 								<div style="position: absolute; width: 70px; height: 40px; top: 14px; right: 13px; background-color: rgb(255, 255, 255); opacity: 0.85;"> </div>
@@ -154,7 +154,7 @@
 							</div>
 						</div>
 						@else
-							@if($user->active != 2)
+							@if($user->active != 2 && !in_array($user->role, [2, 4, 5, 6, 7]))
 							<div class="portlet-title">
 								<div class="caption">
 									3カ月間で獲得するポイント推移<span style="font-size:12px">（同年代全国平均との比較）</span>
@@ -494,7 +494,7 @@
 							</div>
 						</div>
 					</div>
-					@if($user->active != 2)
+					@if($user->active != 2 && !in_array($user->role, [2, 4, 5, 6, 7]))
 					<h4 class="font-blue">マイ読書量順位</h4>
 					<div class="portlet box green">
 						<div class="portlet-title">
@@ -562,8 +562,8 @@
 	</div>
 @stop
 @section('scripts')
-<script src="{{asset('plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('js/charts/Chart.js')}}"></script>
+	<script src="{{asset('plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
+	<script src="{{asset('js/charts/Chart.js')}}"></script>
 	<!-- BEGIN PAGE LEVEL PLUGINS -->
 	<script src="{{asset('plugins/flot/jquery.flot.min.js')}}"></script>
 	<script src="{{asset('plugins/flot/jquery.flot.resize.min.js')}}"></script>
@@ -578,10 +578,10 @@
 	<script src="{{asset('js/charts-flotcharts.js')}}"></script>
 	<script src="{{asset('js/components-dropdowns.js')}}"></script>
 	<link rel="stylesheet" href="{{asset('css/jqwidgets/styles/jqx.base.css')}}" type="text/css" />
-<script type="text/javascript" src="{{asset('css/jqwidgets/jqxcore.js')}}"></script>
-<script type="text/javascript" src="{{asset('css/jqwidgets/jqxdraw.js')}}"></script>
-<script type="text/javascript" src="{{asset('css/jqwidgets/jqxchart.core.js')}}"></script>
-<script type="text/javascript" src="{{asset('css/jqwidgets/jqxdata.js')}}"></script>
+	<script type="text/javascript" src="{{asset('css/jqwidgets/jqxcore.js')}}"></script>
+	<script type="text/javascript" src="{{asset('css/jqwidgets/jqxdraw.js')}}"></script>
+	<script type="text/javascript" src="{{asset('css/jqwidgets/jqxchart.core.js')}}"></script>
+	<script type="text/javascript" src="{{asset('css/jqwidgets/jqxdata.js')}}"></script>
 	<!-- END PAGE LEVEL PLUGINS -->
 	<script type="text/javascript">
 		@if ($type == 0)
@@ -901,7 +901,6 @@
 			for(var i = 0; i < p_interval_num; i++)
 				points_data.push({x_point:i * points_interval, value_member:numofLevel[i]});
 			points_data.push({x_point:-1, value_member:top_member + 1});
-			//그라프가 꼭맞을 때 그 수값이 그라프안으로 들어가는 현상을 막기위해 그보다 큰 bar를 하나 보이지 않게 그린다.
 			showBar("horizontal-chart1",points_data, points_interval, member_interval, my_points,myrank1+"位/"+myrank_pupils1+"人");
 
 /////////////////////////////////////////////////////////
@@ -932,7 +931,6 @@
 			for(var i = 0; i < p_interval_num; i++)
 				points_data.push({x_point:i * points_interval, value_member:numofLevel[i]});
 			points_data.push({x_point:-1, value_member:top_member + 1});
-			//그라프가 꼭맞을 때 그 수값이 그라프안으로 들어가는 현상을 막기위해 그보다 큰 bar를 하나 보이지 않게 그린다.
 			showBar("horizontal-chart2",points_data, points_interval, member_interval, my_points,myrank2+"位/"+myrank_pupils2+"人");
 
 		@endif

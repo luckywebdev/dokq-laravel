@@ -434,7 +434,7 @@
 								<td class="col-md-8" ><a style="text-decoration:none;" href="<?php echo e(url('mypage/history_all')); ?>">読Q活動の全履歴を見る</a></td>
 								<td class="col-md-4">非公開</td>
 							</tr>
-							<?php if($user->active != 2): ?>
+							<?php if($user->active != 2 && !in_array($user->role, [4, 5, 6, 7])): ?>
 							<tr>
 								<!--<td><a style="text-decoration:none;" href="<?php echo e(url('mypage/pass_history')); ?>">合格履歴を見る</a></td>
 								<td><input type="checkbox" <?php if($passed_records_is_public == 1): ?>checked <?php endif; ?> class="make-switch" id="passed_records_is_public" data-size="small"></td>-->
@@ -498,7 +498,7 @@
 
 
 				<div class="col-md-6 column">
-					<?php if($user->active != 2): ?>
+					<?php if($user->active != 2 && !in_array($user->role, [4, 5, 6, 7])): ?>
 					<div class="portlet box blue">
 						<div class="portlet-title">
 							<div class="caption col-md-9 col-xs-9" style="text-align:left;padding-bottom:5px;">

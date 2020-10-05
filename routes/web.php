@@ -365,7 +365,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/book/test/mode_recog', 'BookController@viewRecogMode');
     Route::post('/book/test/start', 'BookController@startTest');
     //Route::get('/book/test/start', 'BookController@startTest');
-    //Route::get('/book/test/quiz', 'BookController@viewTestQuiz');
+    Route::get('/book/test/quiz', 'BookController@viewTestQuiz');
     Route::post('/book/test/testquizajax', 'BookController@testQuizAjax');
     Route::post('/book/test/quiz', 'BookController@viewTestQuiz');
     Route::post('/book/test/success', 'BookController@viewTestSuccess');

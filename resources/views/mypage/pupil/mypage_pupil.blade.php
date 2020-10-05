@@ -510,7 +510,7 @@
 								 <span class="show-xs" style="text-align:left;font-size:12px">(同年代全国平均との比較)</span>
 								</div>	
 							</div>
-							<div class="portlet-body col-md-12">
+							<div class="portlet-body col-md-12 text-center" style="padding-top: 20px">
 								<canvas id="bar" width="617" height="300" style="width: 617px; height: 300px;"></canvas>
 								<div class="legend">
 									<div style="position: absolute; width: 70px; height: 40px; top: 14px; right: 13px; background-color: rgb(255, 255, 255); opacity: 0.85;"> </div>
@@ -844,17 +844,17 @@
 		@if ($user->role == config('consts')['USER']['ROLE']['PUPIL'] && $user->active == 1)
 			@if($type == 0)
 				var barChartData = {
-					labels : [{{$cur_season[0]['year']}} + "年度 {{$cur_season[0]['season']}}"  ,{{$cur_season[1]['year']}} + "年度 {{$cur_season[1]['season']}}",{{$cur_season[2]['year']}} + "年度 {{$cur_season[2]['season']}}",{{$cur_season[3]['year']}} + "年度 {{$cur_season[3]['season']}}"],
+					labels : [{{$cur_season[0]['year']}} + "年度 {{$cur_season[0]['season']}}"  ,{{$cur_season[1]['year']}} + "年度 {{$cur_season[1]['season']}}",{{$cur_season[2]['year']}} + "年度 {{$cur_season[2]['season']}}",{{$cur_season[3]['year']}} + "年度 {{$cur_season[3]['season']}}", {{$cur_season[4]['year']}} + "年度 {{$cur_season[4]['season']}}" , {{$cur_season[5]['year']}} + "年度 {{$cur_season[5]['season']}}" , {{$cur_season[6]['year']}} + "年度 {{$cur_season[6]['season']}}" , {{$cur_season[7]['year']}} + "年度 {{$cur_season[7]['season']}}" ],
 					datasets : [
 						{
 							fillColor : "#d0cece",
 							strokeColor : "#d0cece",
-							data : [{{$myavgPoints[0][0]}},{{$myavgPoints[1][0]}},{{$myavgPoints[2][0]}},{{$myavgPoints[3][0]}}]
+							data : [{{$myavgPoints[0][0]}},{{$myavgPoints[1][0]}},{{$myavgPoints[2][0]}},{{$myavgPoints[3][0]}},{{$myavgPoints[4][0]}},{{$myavgPoints[5][0]}},{{$myavgPoints[6][0]}},{{$myavgPoints[7][0]}}]
 						},
 						{
 							fillColor : "#f8cbad",
 							strokeColor : "#f8cbad",
-							data : [{{$myavgPoints[0][1]}},{{$myavgPoints[1][1]}},{{$myavgPoints[2][1]}},{{$myavgPoints[3][1]}}]
+							data : [{{$myavgPoints[0][1]}},{{$myavgPoints[1][1]}},{{$myavgPoints[2][1]}},{{$myavgPoints[3][1]}},{{$myavgPoints[4][1]}},{{$myavgPoints[5][1]}},{{$myavgPoints[6][1]}},{{$myavgPoints[7][1]}}]
 						}
 					]
 					

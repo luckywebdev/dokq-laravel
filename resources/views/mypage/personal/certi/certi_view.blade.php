@@ -34,7 +34,7 @@
 @section('contents')
 	<div class="page-content-wrapper">
 		<div class="page-content">
-			<h3 class="page-title">読書認定書 @if(!$certi_preview->passcode )プレビ @endif</h3>
+			<h3 class="page-title">読書認定書 @if(!$certi_preview->passcode )プレビュー @endif</h3>
 			
 			<div class="row" id = "include">
 				<div class="offset-md-3 col-md-6">
@@ -55,12 +55,14 @@
 									
 									<div class="col-md-12">
 										<h4 class="text-md-center">読書認定書</h4>
-										<h5 class="text-md-center">@if($certi_preview->passcode )（パスコード：　{{$certi_preview->passcode}}）@endif</h5>
+										<h5 class="text-md-center">（パスコード： @if($certi_preview->passcode )　{{$certi_preview->passcode}} @else {{"       "}} @endif)</h5>
 									</div>
 									<div class="col-md-12 text-md-left">&nbsp;</div>
-									<div class="col-md-12 text-md-left">{{$user->fullname()}}　様</div>
-									<div class="col-md-12 text-md-left">(読Qネーム：　{{$user->username}})</div>
-									<div class="col-md-12 text-md-left">※ ここにお名前と読Qネームが入力されます。</div>
+									<div class="col-md-12 text-md-left">@if($certi_preview->passcode ) {{$user->fullname()}} @else {{ "〇〇 〇〇" }}　@endif 様</div>
+									<div class="col-md-12 text-md-left">(読Qネーム：　@if($certi_preview->passcode ){{$user->username}}@else{{ "〇〇〇〇" }}@endif )</div>
+										@if(!$certi_preview->passcode )
+											<div class="col-md-12 text-md-left">※ ここにお名前と読Qネームが入力されます。</div>
+										@endif
 									<div class="offset-md-7 col-md-5 text-md-right" style="background-image: url({{asset('/img/sign1.png')}});background-repeat: no-repeat;background-position: center center;height:100px">
 										<br><br>
 										<span style="float:right;">一般社団法人読書認定協会</span>
@@ -86,8 +88,10 @@
 									<div class="col-md-12 text-md-left">&nbsp;</div>
 									<div class="col-md-12 text-md-right">以上</div>
 									<div class="col-md-12 text-md-center">
-										※ これでよろしければ、決済ボタンをクリックして、お支払いをお願いいたします。<br />
-										決済後、マイ書斎連絡帳へパスコードを通知します。
+										@if(!$certi_preview->passcode )
+											※ これでよろしければ、決済ボタンをクリックして、お支払いをお願いいたします。<br />
+											決済後、マイ書斎連絡帳へパスコードを通知します。
+										@endif
 									</div>
 
 								</div>
@@ -111,12 +115,14 @@
 									<!-- <div class="col-md-12 text-md-left" style="font-size:10px;">読書認定級</div> -->
 									<div class="col-md-12">
 										<h4 class="text-md-center">読書認定書</h4>
-										<h5 class="text-md-center">（@if($certi_preview->passcode )（パスコード：　{{$certi_preview->passcode}}）@endif</h5>
+										<h5 class="text-md-center">（パスコード： @if($certi_preview->passcode )　{{$certi_preview->passcode}} @else {{"       "}} @endif)</h5>
 									</div>
 									<div class="col-md-12 text-md-left">&nbsp;</div>
-									<div class="col-md-12 text-md-left">{{$user->fullname()}}　様</div>
-									<div class="col-md-12 text-md-left">(読Qネーム：　{{$user->username}})</div>
-									<div class="col-md-12 text-md-left">※ ここにお名前と読Qネームが入力されます。</div>
+									<div class="col-md-12 text-md-left">@if($certi_preview->passcode ) {{$user->fullname()}} @else {{ "〇〇 〇〇" }}　@endif　様</div>
+									<div class="col-md-12 text-md-left">(読Qネーム：　@if($certi_preview->passcode ){{$user->username}}@else{{ "〇〇〇〇" }}@endif)</div>
+										@if(!$certi_preview->passcode )
+											<div class="col-md-12 text-md-left">※ ここにお名前と読Qネームが入力されます。</div>
+										@endif
 									<div class="offset-md-7 col-md-5 text-md-right" style="background-image: url({{asset('/img/sign1.png')}});background-repeat: no-repeat;background-position: center center;height:100px">
 										<br><br>
 										<span style="float:right;">一般社団法人読書認定協会</span>
@@ -207,8 +213,10 @@
 										@endif
 									</div>
 									<div class="col-md-12 text-md-center">
-										※ これでよろしければ、決済ボタンをクリックして、お支払いをお願いいたします。<br />
-										決済後、マイ書斎連絡帳へパスコードを通知します。
+										@if(!$certi_preview->passcode )
+											※ これでよろしければ、決済ボタンをクリックして、お支払いをお願いいたします。<br />
+											決済後、マイ書斎連絡帳へパスコードを通知します。
+										@endif
 									</div>
 
 								</div>
@@ -231,13 +239,14 @@
 									<!-- <div class="col-md-12 text-md-left" style="font-size:10px;">読書認定級</div> -->
 									<div class="col-md-12">
 										<h4 class="text-md-center">読書認定書</h4>
-										<h5 class="text-md-center">@if($certi_preview->passcode )（パスコード：　{{$certi_preview->passcode}}）@endif</h5>
+										<h5 class="text-md-center">（パスコード： @if($certi_preview->passcode )　{{$certi_preview->passcode}} @else {{"       "}} @endif)</h5>
 									</div>
 									<div class="col-md-12 text-md-left">&nbsp;</div>
-									<div class="col-md-12 text-md-left">{{$user->fullname()}}　様</div>
-									<div class="col-md-12 text-md-left">(読Qネーム：　{{$user->username}})</div>
-									<div class="col-md-12 text-md-left">※ ここにお名前と読Qネームが入力されます。</div>
-
+									<div class="col-md-12 text-md-left">@if($certi_preview->passcode ) {{$user->fullname()}} @else {{ "〇〇 〇〇" }}　@endif　様</div>
+									<div class="col-md-12 text-md-left">(読Qネーム：　@if($certi_preview->passcode ){{$user->username}}@else{{ "〇〇〇〇" }}@endif)</div>
+										@if(!$certi_preview->passcode )
+											<div class="col-md-12 text-md-left">※ ここにお名前と読Qネームが入力されます。</div>
+										@endif
 									<div class="offset-md-7 col-md-5 text-md-right" style="background-image: url({{asset('/img/sign1.png')}});background-repeat: no-repeat;background-position: center center;height:100px">
 										<br><br>
 										<span style="float:right;">一般社団法人読書認定協会</span>
@@ -271,8 +280,10 @@
 										@endif
 									</div>
 									<div class="col-md-12 text-md-center" style="margin-top:20px;">
-										※ これでよろしければ、決済ボタンをクリックして、お支払いをお願いいたします。<br />
-										決済後、マイ書斎連絡帳へパスコードを通知します。
+										@if(!$certi_preview->passcode )
+											※ これでよろしければ、決済ボタンをクリックして、お支払いをお願いいたします。<br />
+											決済後、マイ書斎連絡帳へパスコードを通知します。
+										@endif
 									</div>
 								</div>
 							</div>
@@ -294,12 +305,14 @@
 									       <!-- <div class="col-md-12 text-md-left" style="font-size:10px;">読書認定級</div> -->
 									<div class="col-md-12">
 										<h4 class="text-md-center">読書認定書</h4>
-										<h5 class="text-md-center">@if($certi_preview->passcode )（パスコード：　{{$certi_preview->passcode}}）@endif</h5>
+										<h5 class="text-md-center">（パスコード： @if($certi_preview->passcode )　{{$certi_preview->passcode}} @else {{"       "}} @endif)</h5>
 									</div>
 									<div class="col-md-12 text-md-left">&nbsp;</div>
-									<div class="col-md-12 text-md-left">{{$user->fullname()}}　様</div>
-									<div class="col-md-12 text-md-left">(読Qネーム：　{{$user->username}})</div>
-									<div class="col-md-12 text-md-left">※ ここにお名前と読Qネームが入力されます。</div>
+									<div class="col-md-12 text-md-left">@if($certi_preview->passcode ) {{$user->fullname()}} @else {{ "〇〇 〇〇" }}　@endif　様</div>
+									<div class="col-md-12 text-md-left">(読Qネーム：　@if($certi_preview->passcode ){{$user->username}}@else{{ "〇〇〇〇" }}@endif)</div>
+										@if(!$certi_preview->passcode )
+											<div class="col-md-12 text-md-left">※ ここにお名前と読Qネームが入力されます。</div>
+										@endif
 									<div class="col-md-12 text-md-left">&nbsp;</div>
 									<div class="offset-md-7 col-md-5 text-md-right" style="background-image: url({{asset('/img/sign1.png')}});background-repeat: no-repeat;background-position: center center;height:100px">
 										<br><br>
@@ -331,28 +344,32 @@
 										@endif
 									</div>
 									<div class="col-md-12 text-md-center" style="margin-top:20px;">
-										※ これでよろしければ、決済ボタンをクリックして、お支払いをお願いいたします。<br />
-										決済後、マイ書斎連絡帳へパスコードを通知します。
+										@if(!$certi_preview->passcode )
+											※ これでよろしければ、決済ボタンをクリックして、お支払いをお願いいたします。<br />
+											決済後、マイ書斎連絡帳へパスコードを通知します。
+										@endif
 									</div>
 								</div>
 							</div>
 						</div>
 					@endif
 				</div>
-				<input type="hidden" id="index" value="{{ $index }}">
+				<!-- <input type="hidden" id="index" value="{{ $index }}"> -->
 				<div class="col-md-3" style="margin-top:20px;">
 					<div class="col-md-12 col-xs-6" style="text-align:right;">
                     
 						<form class="form-horizontal" method="post" role="form" action="{{url('/mypage/certi_print')}}">
 						 {{csrf_field()}}
 						 <input type="hidden" id="id" name="id" value="{{$user->id}}">
+						 <input type="hidden" id="index" name="index" value="{{ $index }}">
+
 						 @if ($certi_preview->passcode )
 						<button id = "non-printable" type="button" class="btn btn-success pull-right print">印　刷</button>
 						@endif
 						</form>
 					</div>
 					<div class="col-xs-6 show-xs" style="text-align:right;">
-						<button type="button" class="btn btn-info pull-right" onclick="javascript:history.go(-1)">戻　るa</button>
+						<button type="button" class="btn btn-info pull-right" onclick="javascript:history.go(-1)">戻　る</button>
 						@if(Auth::check() && Auth::user()->id == $user->id)
 						<button type="button" class="btn btn-success pull-right btn-press" style="margin-right: 1%">決  済</button>
 						@endif

@@ -64,7 +64,7 @@
                                 <td class="align-middle col-md-1"><?php echo e(date_diff(date_create($user->birthday ), date_create('today'))->y); ?></td>
                                 <td class="align-middle col-md-1"><?php echo e($user->level); ?></td>
 								<td class="align-middle col-md-1"><?php echo e($user->address1."  ".$user->address2); ?></td>
-								<td class="align-middle col-md-1"><?php echo e($user->passcode); ?></td>
+								<td class="align-middle col-md-1"><?php echo e($user->passcodes); ?></td>
 								<td class="align-middle col-md-1"><?php echo e($user->pay_point); ?></td>
 								
 							</tr>

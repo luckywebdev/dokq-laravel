@@ -147,7 +147,7 @@
 
 			<div class="row selected_row hidden">
 				<div class="col-md-12">						
-					<div class="col-md-3"><h5>読書認定</h5></div>
+					<div class="col-md-3"><h5>読書認定リスト</h5></div>
 				</div>						
 			</div>
 
@@ -283,6 +283,7 @@
 					$("#sample_test1").addClass("hidden");
 					$(".search_row").addClass("hidden");
 					$(".next_btn").removeAttr('disabled');
+					$(":text").val("");
 					$("#sample_test1_wrapper .table-scrollable").css("border", "none");
 				}
 				if($("#sample_test1").hasClass('hidden') && $("#sample_test1_2").hasClass('hidden')){
@@ -318,6 +319,7 @@
 				}
 				if($("#sample_test1").hasClass('hidden') && $("#sample_test1_2").hasClass('hidden')){
 					$(".next_btn").removeAttr('disabled');
+					$(":text").val("");
 					$("#total_btn").attr('disabled', true);
 				}
 			});
@@ -351,6 +353,7 @@
 						$(".search_row").addClass("hidden");
 						$("#sample_test1_wrapper .table-scrollable").css("border", "none");
 						$(".next_btn").removeAttr('disabled');
+						$(":text").val("");
 					}
 					console.log(certi_list);
 					if($("#sample_test1_2").hasClass("hidden")){

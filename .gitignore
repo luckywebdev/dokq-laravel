@@ -14,3 +14,8 @@ _ide_helper.php
 _ide_helper_models.php
 /mix-manifest.json
 public/assets/jtable_data/
+storage/framework/views/36b3135701c906dfbdd5d7104955e60a49fd9822.php
+storage/framework/views/f3ace7f51b18fcf30187de95a62c582ea0391993.php
+storage/logs/laravel-2020-09-30.log
+storage/logs/laravel-2020-08-24.log
+.gitignore

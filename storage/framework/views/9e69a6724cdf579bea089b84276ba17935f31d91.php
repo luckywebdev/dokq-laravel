@@ -116,9 +116,9 @@
 			
 			if(user_active == 1){
 				$("#userdata_tag").attr('disabled', true);
-				var str="<a href='/admin/data_card_org/"+user_id+"' style='color:#757b87;'>データ画面へ遷移</a>"	
-				$("#userdata_tag").html(str);
 			}
+			var str="<a href='/admin/data_card_org/"+user_id+"' style='color:#757b87;'>データ画面へ遷移</a>"	
+				$("#userdata_tag").html(str);
 
 	     };
         

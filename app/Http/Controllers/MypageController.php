@@ -295,7 +295,7 @@ class MypageController extends Controller{
                         inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                         where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) and ";
             $sql_average_end="' group by user_id) as table1 on users.id=table1.user_id where users.id='".Auth::id()."' or ( users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1))) order by flag desc) as table1"; 
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1))) order by flag desc) as table1"; 
 
             for ($k = 1; $k < 9; $k++) {
                 $date = date_sub(now(), date_interval_create_from_date_string($k * 3 . " months"));
@@ -345,40 +345,40 @@ class MypageController extends Controller{
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[3]= $threesql_temp." users.id in (select users.id from users,
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[3]= $allsql_temp." users.id in (select users.id from users,
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
            
             $sql[4]=$sql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[4]= $threesql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";;
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";;
             $all_sql[4]= $allsql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
           
             $sql[5]=$sql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[5]= $threesql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[5]= $allsql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                            
             $myrankPoints3 = MypageController::Get_RankPoint($sql[3]);
             $myrankPoints4 = MypageController::Get_RankPoint($sql[4]);
@@ -424,10 +424,10 @@ class MypageController extends Controller{
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
             
             $sql[4]=$sql_temp." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
            
             $myquizPoints2 = MypageController::Get_RankPoint($sql[2]);
             $myquizPoints3 = MypageController::Get_RankPoint($sql[3]);
@@ -466,10 +466,10 @@ class MypageController extends Controller{
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql_before[4]=$sql_temp1." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $myquizPoints_before2 = MypageController::Get_RankPoint($sql_before[2]);
             $myquizPoints_before3 = MypageController::Get_RankPoint($sql_before[3]);
@@ -715,7 +715,7 @@ class MypageController extends Controller{
                         inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                         where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) and ";
            $sql_average_end="' group by user_id) as table1 on users.id=table1.user_id where users.id='".Auth::id()."' or (users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1))) order by flag desc) as table1"; 
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1))) order by flag desc) as table1"; 
 
             for ($k = 1; $k < 9; $k++) {
                 $date = date_sub(now(), date_interval_create_from_date_string($k * 3 . " months"));
@@ -766,40 +766,40 @@ class MypageController extends Controller{
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[3]= $threesql_temp." users.id in (select users.id from users,
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[3]= $allsql_temp." users.id in (select users.id from users,
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql[4]=$sql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[4]= $threesql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[4]= $allsql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
           
             $sql[5]=$sql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[5]= $threesql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[5]= $allsql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                                 
             $myrankPoints3 = MypageController::Get_RankPoint($sql[3]);
             $myrankPoints4 = MypageController::Get_RankPoint($sql[4]);
@@ -865,7 +865,6 @@ class MypageController extends Controller{
                 })
                 ->where('created_date','>=',$array_season_obj[1]['begin_season'])
                 ->where('created_date','<=',$array_season_obj[1]['end_season'])
-                ->where('user_id','=',Auth::id())
                 ->get();
 
             $sql_temp1="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag from users 
@@ -1173,40 +1172,40 @@ class MypageController extends Controller{
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[3]= $threesql_temp." users.id in (select users.id from users,
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[3]= $allsql_temp." users.id in (select users.id from users,
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql[4]=$sql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[4]= $threesql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[4]= $allsql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
           
             $sql[5]=$sql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[5]= $threesql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[5]= $allsql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                                 
             $myrankPoints3 = MypageController::Get_RankPoint($sql[3]);
             $myrankPoints4 = MypageController::Get_RankPoint($sql[4]);
@@ -1539,7 +1538,7 @@ class MypageController extends Controller{
                         inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                         where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) and ";
            $sql_average_end="' group by user_id) as table1 on users.id=table1.user_id where users.id='".Auth::id()."' or ( users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1))) order by flag desc) as table1"; 
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1))) order by flag desc) as table1"; 
 
             for ($k = 1; $k < 9; $k++) {
                 $date = date_sub(now(), date_interval_create_from_date_string($k * 3 . " months"));
@@ -1589,40 +1588,40 @@ class MypageController extends Controller{
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[3]= $threesql_temp." users.id in (select users.id from users,
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[3]= $allsql_temp." users.id in (select users.id from users,
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql[4]=$sql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[4]= $threesql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[4]= $allsql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
           
             $sql[5]=$sql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[5]= $threesql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[5]= $allsql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                                 
             $myrankPoints3 = MypageController::Get_RankPoint($sql[3]);
             $myrankPoints4 = MypageController::Get_RankPoint($sql[4]);
@@ -1919,7 +1918,7 @@ class MypageController extends Controller{
                 ->with('work_auth', $work_auth)
                 ->with('advertise', $advertise);
         } else if (Auth::user()->isPupil()) {
-            $type = 1;$tagrgetpoint = 1;$school_rank_city = 0;$group_id=0;$grade =0;
+            $type = 0;$tagrgetpoint = 1;$school_rank_city = 0;$group_id=0;$grade =0;
             $curage = Auth::User()->age();
             $class = DB::table("users")
             ->select('org.group_type', 'classes.grade')
@@ -1945,11 +1944,11 @@ class MypageController extends Controller{
 
                 $group_id = Auth::user()->PupilsClass->group_id;
                 $groups = User::where('role', config('consts')['USER']['ROLE']['GROUP'])
-                ->where('address1', DB::raw('(SELECT address1 FROM users WHERE users.id = "'.$group_id.'")'))
-                ->where('address2', DB::raw('(SELECT address2 FROM users WHERE users.id = "'.$group_id.'")'))
-                ->where('group_type', DB::raw('(SELECT group_type FROM users WHERE users.id = "'.$group_id.'")'))
-                ->where('active', 1)
-                ->get();
+                    ->where('address1', DB::raw('(SELECT address1 FROM users WHERE users.id = "'.$group_id.'")'))
+                    ->where('address2', DB::raw('(SELECT address2 FROM users WHERE users.id = "'.$group_id.'")'))
+                    ->where('group_type', DB::raw('(SELECT group_type FROM users WHERE users.id = "'.$group_id.'")'))
+                    ->where('active', 1)
+                    ->get();
                 $current_sum = MypageController::Calc_school_avg($group_id, 'all');
                 $rank = 0;
                 for ($i = 0; $i < count($groups); $i ++){
@@ -2424,10 +2423,10 @@ class MypageController extends Controller{
                         on classes.group_id=table3.id and classes.grade=table3.grade and classes.year=table3.year)".
                     ") as table1";
                 
-                for ($k = 1; $k < 9; $k++) {
+                for ($k = 0; $k < 8; $k++) {
                     $date = date_sub(now(), date_interval_create_from_date_string($k * 3 . " months"));
-                    $cur_season[8-$k] = MypageController::CurrentSeaon_Pupil($date);
-                    $sql_term1[8-$k]=$sql_average_front."created_date between '".$cur_season[8-$k]['begin_season']."' and '". $cur_season[8-$k]['end_season'].$sql_average_end;
+                    $cur_season[7-$k] = MypageController::CurrentSeaon_Pupil($date);
+                    $sql_term1[7-$k]=$sql_average_front."created_date between '".$cur_season[7-$k]['begin_season']."' and '". $cur_season[7-$k]['end_season'].$sql_average_end;
                 }
                 
                 for($i=0;$i<8;$i++){
@@ -2645,7 +2644,7 @@ class MypageController extends Controller{
                 $allrankPoints3 = MypageController::Get_RankPoint($allpointsql[3]);
                 
                 //if($grade == 0){ //学年 0       
-                    $sql[4]="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag 
+                $sql[4]="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag 
                     from users left join 
                     (select user_id, SUM(user_quizes.point) AS sum 
                     from user_quizes 
@@ -2896,7 +2895,7 @@ class MypageController extends Controller{
                     inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                     where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) and ";
                 $sql_average_end="' group by user_id) as table1 on users.id=table1.user_id where users.id='".Auth::id()."' or (users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1))) order by flag desc) as table1"; 
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1))) order by flag desc) as table1"; 
 
 
                 for ($k = 1; $k < 9; $k++) {
@@ -2947,40 +2946,40 @@ class MypageController extends Controller{
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 $threemonth_sql[3]= $threesql_temp." users.id in (select users.id from users,
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 $all_sql[3]= $allsql_temp." users.id in (select users.id from users,
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 
                 $sql[4]=$sql_temp." users.id in (select users.id from users,
                                 (select users.address1
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 $threemonth_sql[4]= $threesql_temp." users.id in (select users.id from users,
                                 (select users.address1
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 $all_sql[4]= $allsql_temp." users.id in (select users.id from users,
                                 (select users.address1
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
               
                 $sql[5]=$sql_temp." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 $threemonth_sql[5]= $threesql_temp." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 $all_sql[5]= $allsql_temp." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                                     
                 $myrankPoints3 = MypageController::Get_RankPoint($sql[3]);
                 $myrankPoints4 = MypageController::Get_RankPoint($sql[4]);
@@ -3097,7 +3096,7 @@ class MypageController extends Controller{
                         inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                         where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) and ";
             $sql_average_end="' group by user_id) as table1 on users.id=table1.user_id where users.id='".Auth::id()."' or (users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1))) order by flag desc) as table1"; 
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1))) order by flag desc) as table1"; 
 
             for ($k = 1; $k < 9; $k++) {
                 $date = date_sub(now(), date_interval_create_from_date_string($k * 3 . " months"));
@@ -3146,40 +3145,40 @@ class MypageController extends Controller{
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[3]= $threesql_temp." users.id in (select users.id from users,
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where  users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where  users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[3]= $allsql_temp." users.id in (select users.id from users,
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where  users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where  users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql[4]=$sql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[4]= $threesql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and  users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and  users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[4]= $allsql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where  users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where  users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
           
             $sql[5]=$sql_temp." users.id in (select users.id from users
-                            where  users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where  users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[5]= $threesql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[5]= $allsql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                                 
             $myrankPoints3 = MypageController::Get_RankPoint($sql[3]);
             $myrankPoints4 = MypageController::Get_RankPoint($sql[4]);
@@ -3628,7 +3627,7 @@ class MypageController extends Controller{
             $current_season['begin_season']=Carbon::create((Date("Y")), 4, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")), 6, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y');
-            $current_season['end_thisyear'] = Date('Y');
+            $current_season['end_thisyear'] = Date('Y') + 1;
         }else if ($date >= Carbon::create((Date("Y")), 7, 1,0,0,0) && $date <= Carbon::create((Date("Y")), 9, 30,23,59,59)){
             $current_season['from'] = (Date('Y')) . '年夏期' . '7月1日';
             $current_season['to'] = Date('Y') . '年' . '9月30日';
@@ -3640,7 +3639,7 @@ class MypageController extends Controller{
             $current_season['begin_season']=Carbon::create((Date("Y")), 7, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")), 9, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y');
-            $current_season['end_thisyear'] = Date('Y');
+            $current_season['end_thisyear'] = Date('Y') + 1;
         } else if ($date >= Carbon::create((Date("Y")), 10, 1,0,0,0) && $date <= Carbon::create((Date("Y")), 12, 31,23,59,59)){
             $current_season['from'] = (Date('Y')) . '年秋期' . '10月1日';
             $current_season['to'] = Date('Y') . '年' . '12月31日';
@@ -3652,7 +3651,7 @@ class MypageController extends Controller{
             $current_season['begin_season']=Carbon::create((Date("Y")), 10, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")), 12, 31,23,59,59);
             $current_season['begin_thisyear'] = Date('Y');
-            $current_season['end_thisyear'] = Date('Y');
+            $current_season['end_thisyear'] = Date('Y') + 1;
         } else if ($date >= Carbon::create((Date("Y")), 1, 1,0,0,0) && $date <= Carbon::create((Date("Y")), 3, 31,23,59,59)){
             $current_season['from'] = (Date('Y')) . '年冬期' . '1月1日';
             $current_season['to'] = Date('Y') . '年' . '3月31日';
@@ -3663,7 +3662,7 @@ class MypageController extends Controller{
             $current_season['to_num'] = Date('Y') . '.' . '3.31';
             $current_season['begin_season']= Carbon::create((Date("Y")), 1, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")), 3, 31,23,59,59);
-            $current_season['begin_thisyear'] = Date('Y');
+            $current_season['begin_thisyear'] = Date('Y') - 1;
             $current_season['end_thisyear'] = Date('Y');
         }/* else if ($date >= Carbon::create((Date("Y")), 12, 21,0,0,0)){
             $current_season['fromyear'] = Date('Y');
@@ -3694,7 +3693,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 1), 4, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-1), 6, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-1;
-            $current_season['end_thisyear'] = Date('Y')-1;
+            $current_season['end_thisyear'] = Date('Y');
         } else if ($date >= Carbon::create((Date("Y") - 1), 7, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 1), 9, 30,23,59,59)){
             $current_season['from'] = (Date('Y') - 1) . '年夏期' . '7月1日';
             $current_season['to'] = (Date('Y') - 1) . '年' . '9月30日';
@@ -3706,7 +3705,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 1), 7, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-1), 9, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-1;
-            $current_season['end_thisyear'] = Date('Y')-1;
+            $current_season['end_thisyear'] = Date('Y');
         } else if ($date >= Carbon::create((Date("Y") - 1), 10, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 1), 12, 31,23,59,59)){
             $current_season['from'] = (Date('Y') - 1) . '年秋期' . '10月1日';
             $current_season['to'] = (Date('Y') - 1) . '年' . '12月31日';
@@ -3718,7 +3717,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 1), 10, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-1), 12, 31,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-1;
-            $current_season['end_thisyear'] = Date('Y')-1;
+            $current_season['end_thisyear'] = Date('Y');
         } else if($date >= Carbon::create((Date("Y") - 1), 1, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 1), 3, 31,23,59,59)){
             $current_season['from'] = (Date('Y') - 1) . '年冬期' . '1月1日';
             $current_season['to'] = (Date('Y') - 1) . '年' . '3月31日';
@@ -3729,7 +3728,7 @@ class MypageController extends Controller{
             $current_season['to_num'] = (Date('Y') - 1) . '.' . '3.31';
             $current_season['begin_season']= Carbon::create((Date("Y") - 1), 1, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-1), 3, 31,23,59,59);
-            $current_season['begin_thisyear'] = Date('Y')-1;
+            $current_season['begin_thisyear'] = Date('Y')-2;
             $current_season['end_thisyear'] = Date('Y')-1;
         }else if($date >= Carbon::create((Date("Y") - 2), 4, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 2), 6, 30,23,59,59)){
             $current_season['from'] = (Date('Y') - 2) . '年春期' . '4月1日';
@@ -3742,7 +3741,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 2), 4, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-2), 6, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-2;
-            $current_season['end_thisyear'] = Date('Y')-2;
+            $current_season['end_thisyear'] = Date('Y')-1;
         }else if($date >= Carbon::create((Date("Y") - 2), 7, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 2), 9, 30,23,59,59)){
             $current_season['from'] = (Date('Y') - 2) . '年夏期' . '7月1日';
             $current_season['to'] = (Date('Y') - 2) . '年' . '9月30日';
@@ -3754,7 +3753,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 2), 7, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-2), 9, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-2;
-            $current_season['end_thisyear'] = Date('Y')-2;
+            $current_season['end_thisyear'] = Date('Y')-1;
         }else if($date >= Carbon::create((Date("Y") - 2), 10, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 2), 12, 31,23,59,59)){
             $current_season['from'] = (Date('Y') - 2) . '年秋期' . '10月1日';
             $current_season['to'] = (Date('Y') - 2) . '年' . '12月31日';
@@ -3766,7 +3765,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 2), 10, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-2), 12, 31,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-2;
-            $current_season['end_thisyear'] = Date('Y')-2;
+            $current_season['end_thisyear'] = Date('Y')-1;
         }else if($date >= Carbon::create((Date("Y") - 2), 1, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 2), 3, 31,23,59,59)){
             $current_season['from'] = (Date('Y') - 2) . '年冬期' . '1月1日';
             $current_season['to'] = (Date('Y') - 2) . '年' . '3月31日';
@@ -3777,7 +3776,7 @@ class MypageController extends Controller{
             $current_season['to_num'] = (Date('Y') - 2) . '.' . '3.31';
             $current_season['begin_season']= Carbon::create((Date("Y") - 2), 1, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-2), 3, 31,23,59,59);
-            $current_season['begin_thisyear'] = Date('Y')-2;
+            $current_season['begin_thisyear'] = Date('Y')-3;
             $current_season['end_thisyear'] = Date('Y')-2;
         }else if($date >= Carbon::create((Date("Y") - 3), 4, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 3), 6, 30,23,59,59)){
             $current_season['from'] = (Date('Y') - 3) . '年春期' . '4月1日';
@@ -3790,7 +3789,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 3), 4, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-3), 6, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-3;
-            $current_season['end_thisyear'] = Date('Y')-3;
+            $current_season['end_thisyear'] = Date('Y')-2;
         }else if($date >= Carbon::create((Date("Y") - 3), 7, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 3), 9, 30,23,59,59)){
             $current_season['from'] = (Date('Y') - 3) . '年夏期' . '7月1日';
             $current_season['to'] = (Date('Y') - 3) . '年' . '9月30日';
@@ -3802,7 +3801,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 3), 7, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-3), 9, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-3;
-            $current_season['end_thisyear'] = Date('Y')-3;
+            $current_season['end_thisyear'] = Date('Y')-2;
         }else if($date >= Carbon::create((Date("Y") - 3), 10, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 3), 12, 31,23,59,59)){
             $current_season['from'] = (Date('Y') - 3) . '年秋期' . '10月1日';
             $current_season['to'] = (Date('Y') - 3) . '年' . '12月31日';
@@ -3814,7 +3813,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 3), 10, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-3), 12, 31,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-3;
-            $current_season['end_thisyear'] = Date('Y')-3;
+            $current_season['end_thisyear'] = Date('Y')-2;
         }else if($date >= Carbon::create((Date("Y") - 3), 1, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 3), 3, 31,23,59,59)){
             $current_season['from'] = (Date('Y') - 3) . '年冬期' . '1月1日';
             $current_season['to'] = (Date('Y') - 3) . '年' . '3月31日';
@@ -3825,7 +3824,7 @@ class MypageController extends Controller{
             $current_season['to_num'] = (Date('Y') - 3) . '.' . '3.31';
             $current_season['begin_season']= Carbon::create((Date("Y") - 3), 1, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-3), 3, 31,23,59,59);
-            $current_season['begin_thisyear'] = Date('Y')-3;
+            $current_season['begin_thisyear'] = Date('Y')-4;
             $current_season['end_thisyear'] = Date('Y')-3;
         }else if($date >= Carbon::create((Date("Y") - 4), 4, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 4), 6, 30,23,59,59)){
             $current_season['from'] = (Date('Y') - 4) . '年春期' . '4月1日';
@@ -3838,7 +3837,7 @@ class MypageController extends Controller{
              $current_season['begin_season']= Carbon::create((Date("Y") - 4), 4, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-4), 6, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-4;
-            $current_season['end_thisyear'] = Date('Y')-4;
+            $current_season['end_thisyear'] = Date('Y')-3;
         }else if($date >= Carbon::create((Date("Y") - 4), 7, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 4), 9, 30,23,59,59)){
             $current_season['from'] = (Date('Y') - 4) . '年夏期' . '7月1日';
             $current_season['to'] = (Date('Y') - 4) . '年' . '9月30日';
@@ -3850,7 +3849,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 4), 7, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-4), 9, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-4;
-            $current_season['end_thisyear'] = Date('Y')-4;
+            $current_season['end_thisyear'] = Date('Y')-3;
         }else if($date >= Carbon::create((Date("Y") - 4), 10, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 4), 12, 31,23,59,59)){
             $current_season['from'] = (Date('Y') - 4) . '年秋期' . '10月1日';
             $current_season['to'] = (Date('Y') - 4) . '年' . '12月31日';
@@ -3862,7 +3861,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 4), 10, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-4), 12, 31,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-4;
-            $current_season['end_thisyear'] = Date('Y')-4;
+            $current_season['end_thisyear'] = Date('Y')-3;
         }else if($date >= Carbon::create((Date("Y") - 4), 1, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 4), 3, 31,23,59,59)){
             $current_season['from'] = (Date('Y') - 4) . '年冬期' . '1月1日';
             $current_season['to'] = (Date('Y') - 4) . '年' . '3月31日';
@@ -3873,7 +3872,7 @@ class MypageController extends Controller{
             $current_season['to_num'] = (Date('Y') - 4) . '.' . '3.31';
             $current_season['begin_season']= Carbon::create((Date("Y") - 4), 1, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-4), 3, 31,23,59,59);
-            $current_season['begin_thisyear'] = Date('Y')-4;
+            $current_season['begin_thisyear'] = Date('Y')-5;
             $current_season['end_thisyear'] = Date('Y')-4;
         }
 
@@ -3893,7 +3892,7 @@ class MypageController extends Controller{
             $current_season['begin_season']=Carbon::create((Date("Y")), 4, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")), 6, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y');
-            $current_season['end_thisyear'] = Date('Y');
+            $current_season['end_thisyear'] = Date('Y') + 1;
         }else if ($date >= Carbon::create((Date("Y")), 7, 1,0,0,0) && $date <= Carbon::create((Date("Y")), 9, 30,23,59,59)){
             $current_season['from'] = (Date('Y')) . '年夏期' . '7月1日';
             $current_season['to'] = Date('Y') . '年' . '9月30日';
@@ -3905,7 +3904,7 @@ class MypageController extends Controller{
             $current_season['begin_season']=Carbon::create((Date("Y")), 7, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")), 9, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y');
-            $current_season['end_thisyear'] = Date('Y');
+            $current_season['end_thisyear'] = Date('Y') + 1;
         } else if ($date >= Carbon::create((Date("Y")), 10, 1,0,0,0) && $date <= Carbon::create((Date("Y")), 12, 31,23,59,59)){
             $current_season['from'] = (Date('Y')) . '年秋期' . '10月1日';
             $current_season['to'] = Date('Y') . '年' . '12月31日';
@@ -3917,7 +3916,7 @@ class MypageController extends Controller{
             $current_season['begin_season']=Carbon::create((Date("Y")), 10, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")), 12, 31,23,59,59);
             $current_season['begin_thisyear'] = Date('Y');
-            $current_season['end_thisyear'] = Date('Y');
+            $current_season['end_thisyear'] = Date('Y') + 1;
         } else if ($date >= Carbon::create((Date("Y")), 1, 1,0,0,0) && $date <= Carbon::create((Date("Y")), 3, 31,23,59,59)){
             $current_season['from'] = (Date('Y')) . '年冬期' . '1月1日';
             $current_season['to'] = Date('Y') . '年' . '3月31日';
@@ -3928,7 +3927,7 @@ class MypageController extends Controller{
             $current_season['to_num'] = Date('Y') . '.' . '3.31';
             $current_season['begin_season']= Carbon::create((Date("Y")), 1, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")), 3, 31,23,59,59);
-            $current_season['begin_thisyear'] = Date('Y');
+            $current_season['begin_thisyear'] = Date('Y') - 1;
             $current_season['end_thisyear'] = Date('Y');
         }/* else if ($date >= Carbon::create((Date("Y")), 12, 21,0,0,0)){
             $current_season['fromyear'] = Date('Y');
@@ -3959,7 +3958,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 1), 4, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-1), 6, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-1;
-            $current_season['end_thisyear'] = Date('Y')-1;
+            $current_season['end_thisyear'] = Date('Y');
         } else if ($date >= Carbon::create((Date("Y") - 1), 7, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 1), 9, 30,23,59,59)){
             $current_season['from'] = (Date('Y') - 1) . '年夏期' . '7月1日';
             $current_season['to'] = (Date('Y') - 1) . '年' . '9月30日';
@@ -3971,7 +3970,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 1), 7, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-1), 9, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-1;
-            $current_season['end_thisyear'] = Date('Y')-1;
+            $current_season['end_thisyear'] = Date('Y');
         } else if ($date >= Carbon::create((Date("Y") - 1), 10, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 1), 12, 31,23,59,59)){
             $current_season['from'] = (Date('Y') - 1) . '年秋期' . '10月1日';
             $current_season['to'] = (Date('Y') - 1) . '年' . '12月31日';
@@ -3983,7 +3982,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 1), 10, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-1), 12, 31,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-1;
-            $current_season['end_thisyear'] = Date('Y')-1;
+            $current_season['end_thisyear'] = Date('Y');
         } else if($date >= Carbon::create((Date("Y") - 1), 1, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 1), 3, 31,23,59,59)){
             $current_season['from'] = (Date('Y') - 1) . '年冬期' . '1月1日';
             $current_season['to'] = (Date('Y') - 1) . '年' . '3月31日';
@@ -3994,7 +3993,7 @@ class MypageController extends Controller{
             $current_season['to_num'] = (Date('Y') - 1) . '.' . '3.31';
             $current_season['begin_season']= Carbon::create((Date("Y") - 1), 1, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-1), 3, 31,23,59,59);
-            $current_season['begin_thisyear'] = Date('Y')-1;
+            $current_season['begin_thisyear'] = Date('Y')-2;
             $current_season['end_thisyear'] = Date('Y')-1;
         }else if($date >= Carbon::create((Date("Y") - 2), 4, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 2), 6, 30,23,59,59)){
             $current_season['from'] = (Date('Y') - 2) . '年春期' . '4月1日';
@@ -4007,7 +4006,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 2), 4, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-2), 6, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-2;
-            $current_season['end_thisyear'] = Date('Y')-2;
+            $current_season['end_thisyear'] = Date('Y')-1;
         }else if($date >= Carbon::create((Date("Y") - 2), 7, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 2), 9, 30,23,59,59)){
             $current_season['from'] = (Date('Y') - 2) . '年夏期' . '7月1日';
             $current_season['to'] = (Date('Y') - 2) . '年' . '9月30日';
@@ -4019,7 +4018,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 2), 7, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-2), 9, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-2;
-            $current_season['end_thisyear'] = Date('Y')-2;
+            $current_season['end_thisyear'] = Date('Y')-1;
         }else if($date >= Carbon::create((Date("Y") - 2), 10, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 2), 12, 31,23,59,59)){
             $current_season['from'] = (Date('Y') - 2) . '年秋期' . '10月1日';
             $current_season['to'] = (Date('Y') - 2) . '年' . '12月31日';
@@ -4031,7 +4030,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 2), 10, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-2), 12, 31,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-2;
-            $current_season['end_thisyear'] = Date('Y')-2;
+            $current_season['end_thisyear'] = Date('Y')-1;
         }else if($date >= Carbon::create((Date("Y") - 2), 1, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 2), 3, 31,23,59,59)){
             $current_season['from'] = (Date('Y') - 2) . '年冬期' . '1月1日';
             $current_season['to'] = (Date('Y') - 2) . '年' . '3月31日';
@@ -4042,7 +4041,7 @@ class MypageController extends Controller{
             $current_season['to_num'] = (Date('Y') - 2) . '.' . '3.31';
             $current_season['begin_season']= Carbon::create((Date("Y") - 2), 1, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-2), 3, 31,23,59,59);
-            $current_season['begin_thisyear'] = Date('Y')-2;
+            $current_season['begin_thisyear'] = Date('Y')-3;
             $current_season['end_thisyear'] = Date('Y')-2;
         }else if($date >= Carbon::create((Date("Y") - 3), 4, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 3), 6, 30,23,59,59)){
             $current_season['from'] = (Date('Y') - 3) . '年春期' . '4月1日';
@@ -4055,7 +4054,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 3), 4, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-3), 6, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-3;
-            $current_season['end_thisyear'] = Date('Y')-3;
+            $current_season['end_thisyear'] = Date('Y')-2;
         }else if($date >= Carbon::create((Date("Y") - 3), 7, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 3), 9, 30,23,59,59)){
             $current_season['from'] = (Date('Y') - 3) . '年夏期' . '7月1日';
             $current_season['to'] = (Date('Y') - 3) . '年' . '9月30日';
@@ -4067,7 +4066,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 3), 7, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-3), 9, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-3;
-            $current_season['end_thisyear'] = Date('Y')-3;
+            $current_season['end_thisyear'] = Date('Y')-2;
         }else if($date >= Carbon::create((Date("Y") - 3), 10, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 3), 12, 31,23,59,59)){
             $current_season['from'] = (Date('Y') - 3) . '年秋期' . '10月1日';
             $current_season['to'] = (Date('Y') - 3) . '年' . '12月31日';
@@ -4079,7 +4078,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 3), 10, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-3), 12, 31,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-3;
-            $current_season['end_thisyear'] = Date('Y')-3;
+            $current_season['end_thisyear'] = Date('Y')-2;
         }else if($date >= Carbon::create((Date("Y") - 3), 1, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 3), 3, 31,23,59,59)){
             $current_season['from'] = (Date('Y') - 3) . '年冬期' . '1月1日';
             $current_season['to'] = (Date('Y') - 3) . '年' . '3月31日';
@@ -4090,7 +4089,7 @@ class MypageController extends Controller{
             $current_season['to_num'] = (Date('Y') - 3) . '.' . '3.31';
             $current_season['begin_season']= Carbon::create((Date("Y") - 3), 1, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-3), 3, 31,23,59,59);
-            $current_season['begin_thisyear'] = Date('Y')-3;
+            $current_season['begin_thisyear'] = Date('Y')-4;
             $current_season['end_thisyear'] = Date('Y')-3;
         }else if($date >= Carbon::create((Date("Y") - 4), 4, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 4), 6, 30,23,59,59)){
             $current_season['from'] = (Date('Y') - 4) . '年春期' . '4月1日';
@@ -4103,7 +4102,7 @@ class MypageController extends Controller{
              $current_season['begin_season']= Carbon::create((Date("Y") - 4), 4, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-4), 6, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-4;
-            $current_season['end_thisyear'] = Date('Y')-4;
+            $current_season['end_thisyear'] = Date('Y')-3;
         }else if($date >= Carbon::create((Date("Y") - 4), 7, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 4), 9, 30,23,59,59)){
             $current_season['from'] = (Date('Y') - 4) . '年夏期' . '7月1日';
             $current_season['to'] = (Date('Y') - 4) . '年' . '9月30日';
@@ -4115,7 +4114,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 4), 7, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-4), 9, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-4;
-            $current_season['end_thisyear'] = Date('Y')-4;
+            $current_season['end_thisyear'] = Date('Y')-3;
         }else if($date >= Carbon::create((Date("Y") - 4), 10, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 4), 12, 31,23,59,59)){
             $current_season['from'] = (Date('Y') - 4) . '年秋期' . '10月1日';
             $current_season['to'] = (Date('Y') - 4) . '年' . '12月31日';
@@ -4127,7 +4126,7 @@ class MypageController extends Controller{
             $current_season['begin_season']= Carbon::create((Date("Y") - 4), 10, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-4), 12, 31,23,59,59);
             $current_season['begin_thisyear'] = Date('Y')-4;
-            $current_season['end_thisyear'] = Date('Y')-4;
+            $current_season['end_thisyear'] = Date('Y')-3;
         }else if($date >= Carbon::create((Date("Y") - 4), 1, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 4), 3, 31,23,59,59)){
             $current_season['from'] = (Date('Y') - 4) . '年冬期' . '1月1日';
             $current_season['to'] = (Date('Y') - 4) . '年' . '3月31日';
@@ -4138,7 +4137,7 @@ class MypageController extends Controller{
             $current_season['to_num'] = (Date('Y') - 4) . '.' . '3.31';
             $current_season['begin_season']= Carbon::create((Date("Y") - 4), 1, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-4), 3, 31,23,59,59);
-            $current_season['begin_thisyear'] = Date('Y')-4;
+            $current_season['begin_thisyear'] = Date('Y')-5;
             $current_season['end_thisyear'] = Date('Y')-4;
         }
 
@@ -4158,7 +4157,7 @@ class MypageController extends Controller{
             $current_season['begin_season']=Carbon::create((Date("Y")), 4, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")), 6, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y');
-            $current_season['end_thisyear'] = Date('Y')+1;
+            $current_season['end_thisyear'] = Date('Y') + 1;
        }else if ($date >= Carbon::create((Date("Y")), 7, 1,0,0,0) && $date <= Carbon::create((Date("Y")), 9, 30,23,59,59)){
             $current_season['from'] = (Date('Y')) . '年夏期' . '7月1日';
             $current_season['to'] = Date('Y') . '年' . '9月30日';
@@ -4170,7 +4169,7 @@ class MypageController extends Controller{
             $current_season['begin_season']=Carbon::create((Date("Y")), 7, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")), 9, 30,23,59,59);
             $current_season['begin_thisyear'] = Date('Y');
-            $current_season['end_thisyear'] = Date('Y')+1;
+            $current_season['end_thisyear'] = Date('Y') + 1;
         } else if ($date >= Carbon::create((Date("Y")), 10, 1,0,0,0) && $date <= Carbon::create((Date("Y")), 12, 31,23,59,59)){
             $current_season['from'] = (Date('Y')) . '年秋期' . '10月1日';
             $current_season['to'] = Date('Y') . '年' . '12月31日';
@@ -4182,7 +4181,7 @@ class MypageController extends Controller{
             $current_season['begin_season']=Carbon::create((Date("Y")), 10, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")), 12, 31,23,59,59);
             $current_season['begin_thisyear'] = Date('Y');
-            $current_season['end_thisyear'] = Date('Y')+1;
+            $current_season['end_thisyear'] = Date('Y') + 1;
         } else if ($date >= Carbon::create((Date("Y")), 1, 1,0,0,0) && $date <= Carbon::create((Date("Y")), 3, 31,23,59,59)){
             $current_season['from'] = (Date('Y')) . '年冬期' . '1月1日';
             $current_season['to'] = Date('Y') . '年' . '3月31日';
@@ -4193,7 +4192,7 @@ class MypageController extends Controller{
             $current_season['to_num'] = Date('Y') . '.' . '3.31';
             $current_season['begin_season']= Carbon::create((Date("Y")), 1, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")), 3, 31,23,59,59);
-            $current_season['begin_thisyear'] = Date('Y')-1;
+            $current_season['begin_thisyear'] = Date('Y') - 1;
             $current_season['end_thisyear'] = Date('Y');
         } /*else if ($date >= Carbon::create((Date("Y")), 12, 21,0,0,0)){
             $current_season['from'] = (Date('Y')) . '年冬期' . '12月21日';
@@ -4217,7 +4216,7 @@ class MypageController extends Controller{
             $current_season['to_num'] = (Date('Y') - 1) . '.' . '6.30';
             $current_season['begin_season']= Carbon::create((Date("Y") - 1), 4, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-1), 6, 30,23,59,59);
-            $current_season['begin_thisyear'] = Date('Y')-1;
+            $current_season['begin_thisyear'] = Date('Y') - 1;
             $current_season['end_thisyear'] = Date('Y');
         } else if ($date >= Carbon::create((Date("Y") - 1), 7, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 1), 9, 30,23,59,59)){
             $current_season['from'] = (Date('Y') - 1) . '年夏期' . '7月1日';
@@ -4229,7 +4228,7 @@ class MypageController extends Controller{
             $current_season['to_num'] = (Date('Y') - 1). '.' . '9.30';
             $current_season['begin_season']= Carbon::create((Date("Y") - 1), 7, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-1), 9, 30,23,59,59);
-            $current_season['begin_thisyear'] = Date('Y')-1;
+            $current_season['begin_thisyear'] = Date('Y') - 1;
             $current_season['end_thisyear'] = Date('Y');
         } else if ($date >= Carbon::create((Date("Y") - 1), 10, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 1), 12, 31,23,59,59)){
             $current_season['from'] = (Date('Y') - 1) . '年秋期' . '10月1日';
@@ -4241,7 +4240,7 @@ class MypageController extends Controller{
             $current_season['to_num'] = (Date('Y') - 1) . '.' . '12.31';
             $current_season['begin_season']= Carbon::create((Date("Y") - 1), 10, 1,0,0,0);
             $current_season['end_season']=Carbon::create((Date("Y")-1), 12, 31,23,59,59);
-            $current_season['begin_thisyear'] = Date('Y')-1;
+            $current_season['begin_thisyear'] = Date('Y') - 1;
             $current_season['end_thisyear'] = Date('Y');
         } else if($date >= Carbon::create((Date("Y") - 1), 1, 1,0,0,0) && $date <= Carbon::create((Date("Y") - 1), 3, 31,23,59,59)){
             $current_season['from'] = (Date('Y') - 2) . '年冬期' . '1月1日';
@@ -5460,7 +5459,7 @@ class MypageController extends Controller{
                         inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                         where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) and ";
             $sql_average_end="' group by user_id) as table1 on users.id=table1.user_id where users.id='".$id."' or (users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1))) order by flag desc) as table1"; 
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1))) order by flag desc) as table1"; 
 
             for ($k = 1; $k < 9; $k++) {
                 $date = date_sub(now(), date_interval_create_from_date_string($k * 3 . " months"));
@@ -5510,40 +5509,40 @@ class MypageController extends Controller{
                             (select users.address1,users.address2
                             from users
                             where users.id='".$id."') as table1
-                           where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                           where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[3]= $threesql_temp." users.id in (select users.id from users,
                             (select users.address1,users.address2
                             from users
                             where users.id='".$id."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[3]= $allsql_temp." users.id in (select users.id from users,
                             (select users.address1,users.address2
                             from users
                             where users.id='".$id."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql[4]=$sql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".$id."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[4]= $threesql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".$id."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[4]= $allsql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".$id."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
           
             $sql[5]=$sql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[5]= $threesql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[5]= $allsql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                                 
             $myrankPoints3 = MypageController::Get_RankPoint($sql[3]);
             $myrankPoints4 = MypageController::Get_RankPoint($sql[4]);
@@ -5987,16 +5986,16 @@ class MypageController extends Controller{
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".$id."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     
             $sql[3]=$sql_temp." users.id in (select users.id from users,
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".$id."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql[4]=$sql_temp." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $myquizPoints2 = MypageController::Get_RankPoint($sql[2]);
             $myquizPoints3 = MypageController::Get_RankPoint($sql[3]);
@@ -6029,16 +6028,16 @@ class MypageController extends Controller{
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".$id."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     
             $sql_before[3]=$sql_temp1." users.id in (select users.id from users,
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".$id."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql_before[4]=$sql_temp1." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $myquizPoints_before2 = MypageController::Get_RankPoint($sql_before[2]);
             $myquizPoints_before3 = MypageController::Get_RankPoint($sql_before[3]);
@@ -6071,16 +6070,16 @@ class MypageController extends Controller{
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".$id."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     
             $sql_this[3]=$sql_temp2." users.id in (select users.id from users,
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".$id."') as table1
-                                 where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                 where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql_this[4]=$sql_temp2." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $myquizPoints_this2 = MypageController::Get_RankPoint($sql_this[2]);
             $myquizPoints_this3 = MypageController::Get_RankPoint($sql_this[3]);
@@ -6113,16 +6112,16 @@ class MypageController extends Controller{
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".$id."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     
             $sql_last[3]=$sql_temp3." users.id in (select users.id from users,
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".$id."') as table1
-                                 where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                 where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql_last[4]=$sql_temp3." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $myquizPoints_last2 = MypageController::Get_RankPoint($sql_last[2]);
             $myquizPoints_last3 = MypageController::Get_RankPoint($sql_last[3]);
@@ -6153,16 +6152,16 @@ class MypageController extends Controller{
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".$id."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     
             $sql_all[3]=$sql_temp4." users.id in (select users.id from users,
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".$id."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql_all[4]=$sql_temp4." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $myquizPoints_all2 = MypageController::Get_RankPoint($sql_all[2]);
             $myquizPoints_all3 = MypageController::Get_RankPoint($sql_all[3]);
@@ -6646,7 +6645,7 @@ class MypageController extends Controller{
                 inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                 where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) and ";
             $sql_average_end="' group by user_id) as table1 on users.id=table1.user_id where users.id='".$id."' or (users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1))) order by flag desc) as table1"; 
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1))) order by flag desc) as table1"; 
 
             for ($k = 1; $k < 9; $k++) {
                 $date = date_sub(now(), date_interval_create_from_date_string($k * 3 . " months"));
@@ -6697,40 +6696,40 @@ class MypageController extends Controller{
                             (select users.address1,users.address2
                             from users
                             where users.id='".$id."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[3]= $threesql_temp." users.id in (select users.id from users,
                             (select users.address1,users.address2
                             from users
                             where users.id='".$id."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[3]= $allsql_temp." users.id in (select users.id from users,
                             (select users.address1,users.address2
                             from users
                             where users.id='".$id."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql[4]=$sql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".$id."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[4]= $threesql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".$id."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[4]= $allsql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".$id."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
           
             $sql[5]=$sql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[5]= $threesql_temp." users.id in (select users.id from users
-                           where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                           where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[5]= $allsql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                                 
             $myrankPoints3 = MypageController::Get_RankPoint($sql[3]);
             $myrankPoints4 = MypageController::Get_RankPoint($sql[4]);
@@ -7222,16 +7221,18 @@ class MypageController extends Controller{
         $today = now();
         $rankingage = 1;
 
-        if($user->isPupil() && $user->active == 1){
+        if($user->isPupil() && $user->active == 1 && $user->ClassOfPupil){
             $groupbyuser = $user->ClassOfPupil->School()->first();
-            if($groupbyuser->group_type == 0)
-                $rankingage = 1; //小学生
-            elseif($groupbyuser->group_type == 1)
-                $rankingage = 2; //中学生
-            elseif($groupbyuser->group_type == 2 || $groupbyuser->group_type == 3)
-                $rankingage = 3; //高校生
-            else
-                $rankingage = 4; //大学生
+            if($groupbyuser != null){
+                if($groupbyuser->group_type == 0)
+                    $rankingage = 1; //小学生
+                elseif($groupbyuser->group_type == 1)
+                    $rankingage = 2; //中学生
+                elseif($groupbyuser->group_type == 2 || $groupbyuser->group_type == 3)
+                    $rankingage = 3; //高校生
+                else
+                    $rankingage = 4; //大学生
+            }
         }
 
         $today_month = now()->format('m');
@@ -8651,14 +8652,16 @@ class MypageController extends Controller{
 
         if($user->isPupil() && $user->active == 1){
             $groupbyuser = $user->ClassOfPupil->School()->first();
-            if($groupbyuser->group_type == 0)
-                $rankingage = 1; //小学生
-            elseif($groupbyuser->group_type == 1)
-                $rankingage = 2; //中学生
-            elseif($groupbyuser->group_type == 2 || $groupbyuser->group_type == 3)
-                $rankingage = 3; //高校生
-            else
-                $rankingage = 4; //大学生
+            if($groupbyuser != null){
+                if($groupbyuser->group_type == 0)
+                    $rankingage = 1; //小学生
+                elseif($groupbyuser->group_type == 1)
+                    $rankingage = 2; //中学生
+                elseif($groupbyuser->group_type == 2 || $groupbyuser->group_type == 3)
+                    $rankingage = 3; //高校生
+                else
+                    $rankingage = 4; //大学生
+            }
         }else{
             $curage = $user->age();
             
@@ -9383,65 +9386,65 @@ class MypageController extends Controller{
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".$id."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 $lastsql[3]=$lastsql_temp." users.id in (select users.id from users,
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".$id."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 
                 $threemonth_sql[3]= $threesql_temp." users.id in (select users.id from users,
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".$id."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 $beforethreemonth_sql[3]= $beforethreesql_temp." users.id in (select users.id from users,
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".$id."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 $all_sql[3]= $allsql_temp." users.id in (select users.id from users,
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".$id."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 
                 $sql[4]=$sql_temp." users.id in (select users.id from users,
                                 (select users.address1
                                 from users
                                 where users.id='".$id."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 $lastsql[4]=$lastsql_temp." users.id in (select users.id from users,
                                 (select users.address1
                                 from users
                                 where users.id='".$id."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 $threemonth_sql[4]= $threesql_temp." users.id in (select users.id from users,
                                 (select users.address1
                                 from users
                                 where users.id='".$id."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 $beforethreemonth_sql[4]= $beforethreesql_temp." users.id in (select users.id from users,
                                 (select users.address1
                                 from users
                                 where users.id='".$id."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 $all_sql[4]= $allsql_temp." users.id in (select users.id from users,
                                 (select users.address1
                                 from users
                                 where users.id='".$id."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
                 $sql[5]=$sql_temp." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 $lastsql[5]=$lastsql_temp." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 $threemonth_sql[5]= $threesql_temp." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 $beforethreemonth_sql[5]= $beforethreesql_temp." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                 $all_sql[5]= $allsql_temp." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                                     
                 $myrankPoints3 = MypageController::Get_RankPoint($sql[3]);
                 $myrankPoints4 = MypageController::Get_RankPoint($sql[4]);
@@ -9492,17 +9495,19 @@ class MypageController extends Controller{
             $myuser.= " 著者";
         }else if($user->isPupil() && $user->active == 1){
             $class = $user->ClassOfPupil;
-            $type = $class->school->group_type;
-            if($type == 0)
-                $myuser.= " 小学";
-            else if($type == 1)
-                $myuser.= " 中学";
-            else if($type == 2)
-                $myuser.= " 中高";
-            else if($type == 3)
-                $myuser.= " 高学";
-            else if($type == 4)
-                $myuser.= " 大学";
+            if($class->school != null){
+                $type = $class->school->group_type;
+                if($type == 0)
+                    $myuser.= " 小学";
+                else if($type == 1)
+                    $myuser.= " 中学";
+                else if($type == 2)
+                    $myuser.= " 中高";
+                else if($type == 3)
+                    $myuser.= " 高学";
+                else if($type == 4)
+                    $myuser.= " 大学";
+            }
 
             if($class->grade != 0)
                  $myuser.= $class->grade;
@@ -9572,14 +9577,16 @@ class MypageController extends Controller{
         $grade = null;
         if($user->isPupil() && $user->active == 1){
             $groupbyuser = $user->ClassOfPupil->School()->first();
-            if($groupbyuser->group_type == 0)
-                $rankingage = 1; //小学生
-            elseif($groupbyuser->group_type == 1)
-                $rankingage = 2; //中学生
-            elseif($groupbyuser->group_type == 2 || $groupbyuser->group_type == 3)
-                $rankingage = 3; //高校生
-            else
-                $rankingage = 4; //大学生
+            if($groupbyuser != null){
+                if($groupbyuser->group_type == 0)
+                    $rankingage = 1; //小学生
+                elseif($groupbyuser->group_type == 1)
+                    $rankingage = 2; //中学生
+                elseif($groupbyuser->group_type == 2 || $groupbyuser->group_type == 3)
+                    $rankingage = 3; //高校生
+                else
+                    $rankingage = 4; //大学生
+            }
         }else{
             $curage = $user->age();
             $today = now();
@@ -9912,14 +9919,16 @@ class MypageController extends Controller{
         $grade = null;
         if($user->isPupil() && $user->active == 1){
             $groupbyuser = $user->ClassOfPupil->School()->first();
-            if($groupbyuser->group_type == 0)
-                $rankingage = 1; //小学生
-            elseif($groupbyuser->group_type == 1)
-                $rankingage = 2; //中学生
-            elseif($groupbyuser->group_type == 2 || $groupbyuser->group_type == 3)
-                $rankingage = 3; //高校生
-            else
-                $rankingage = 4; //大学生
+            if($groupbyuser != null){
+                if($groupbyuser->group_type == 0)
+                    $rankingage = 1; //小学生
+                elseif($groupbyuser->group_type == 1)
+                    $rankingage = 2; //中学生
+                elseif($groupbyuser->group_type == 2 || $groupbyuser->group_type == 3)
+                    $rankingage = 3; //高校生
+                else
+                    $rankingage = 4; //大学生
+            }
         }else{
             $curage = $user->age();
             $today = now();
@@ -10513,14 +10522,16 @@ class MypageController extends Controller{
         $curage = Auth::user()->age();
         if(Auth::user()->isPupil() && Auth::user()->active == 1){
             $groupbyuser = Auth::user()->ClassOfPupil->School()->first();
-            if($groupbyuser->group_type == 0)
-                $rankingage = 1; //小学生
-            elseif($groupbyuser->group_type == 1)
-                $rankingage = 2; //中学生
-            elseif($groupbyuser->group_type == 2 || $groupbyuser->group_type == 3)
-                $rankingage = 3; //高校生
-            else
-                $rankingage = 4; //大学生
+            if($groupbyuser != null){
+                if($groupbyuser->group_type == 0)
+                    $rankingage = 1; //小学生
+                elseif($groupbyuser->group_type == 1)
+                    $rankingage = 2; //中学生
+                elseif($groupbyuser->group_type == 2 || $groupbyuser->group_type == 3)
+                    $rankingage = 3; //高校生
+                else
+                    $rankingage = 4; //大学生
+            }
         }else{
             
             
@@ -10582,7 +10593,7 @@ class MypageController extends Controller{
         $type = 1;$tagrgetpoint = 1;
        
         if(Auth::user()->isPupil() && Auth::user()->active == 1){ //学生
-            
+            $type = 0;
             $class = DB::table("users")
             ->select('org.group_type', 'classes.grade')
             ->join('classes','classes.id','=','users.org_id')
@@ -10638,19 +10649,23 @@ class MypageController extends Controller{
             }
             
             for($i=0;$i<4;$i++){
-               $sum=0; 
-               $temp_avg=MypageController::Get_AvgPoint($sql_term1[$i]);
-  
-                 foreach ($temp_avg as $ii => $avg) {
-                    $sum = $sum+($avg->sum);
-                    if($avg->flag=='1'){
-                        $mypercent  = floor($avg->sum * 100 / $tagrgetpoint * 100) / 100;
-                        $myavgPoints[$i][1] = $mypercent;                        
-                    }
-                 }
-                $schoolpercent = floor($sum/sizeof($temp_avg) * 100 / $tagrgetpoint * 100) / 100;
-                $myavgPoints[$i][0] = $schoolpercent;
+                $sum=0; 
+                $myavgPoints[$i][0] = 0;
+                $myavgPoints[$i][1] = 0;
+                $temp_avg=MypageController::Get_AvgPoint($sql_term1[$i]);
+                if(sizeof($temp_avg) > 0){
+                    foreach ($temp_avg as $ii => $avg) {
+                        $sum = $sum+($avg->sum);
+                        if($avg->flag=='1'){
+                            $mypercent  = floor($avg->sum * 100 / $tagrgetpoint * 100) / 100;
+                            $myavgPoints[$i][1] = $mypercent;                        
+                        }
+                     }
+                    $schoolpercent = floor($sum/sizeof($temp_avg) * 100 / $tagrgetpoint * 100) / 100;
+                    $myavgPoints[$i][0] = $schoolpercent;
+                }
             }
+
        
             $sql[1]="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag 
                 from users left join 
@@ -10765,81 +10780,81 @@ class MypageController extends Controller{
             $grade_odds = $grade % 2;
                
             //if($grade == 0){ //学年 0
-                $sql[3]="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag 
-                        from users left join 
-                        (select user_id, SUM(user_quizes.point) AS sum 
-                        from user_quizes 
-                        inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
-                        where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) and ".
-                        "created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59).
-                        "'group by user_id) as table1
-                        on users.id=table1.user_id
-                        where  ".
-                        "users.role=".$role." and users.active=1 and users.address1= '".Auth::user()->address1."' and users.address2= '".Auth::user()->address2."' and ".
-                        "users.org_id in ".
-                            "(select classes.id
-                            from classes  inner join
-                                (select users.id,table2.*
-                                 from users,
-                                    (select users.address1,users.address2,users.group_type,table1.*
-                                        from users,(select classes.year,classes.grade,classes.group_id from classes 
-                                                                where classes.id=(select users.org_id from users where users.id='".
-                                                                    Auth::id()."')) as table1
-                                        where users.id=table1.group_id) as table2
-                                 where users.address1=table2.address1 and users.address2=table2.address2 and users.group_type=table2.group_type and ".
-                                 "users.role=".config('consts')['USER']['ROLE']['GROUP']." and users.active='1') as table3
-                            on classes.group_id=table3.id and classes.grade=table3.grade and classes.year=table3.year and class_number is not NULL)".
-                        ") as table1";
-                    $threemonthsql[3]="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag 
-                        from users left join 
-                        (select user_id, SUM(user_quizes.point) AS sum 
-                        from user_quizes 
-                        inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
-                        where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) and ".
-                        "created_date between '".$current_season['begin_season']."' and '".$current_season['end_season'].
-                        "'group by user_id) as table1
-                        on users.id=table1.user_id
-                        where  ".
-                        "users.role=".$role." and users.active=1 and users.address1= '".Auth::user()->address1."' and users.address2= '".Auth::user()->address2."' and ".
-                        "users.org_id in ".
-                            "(select classes.id
-                            from classes  inner join
-                                (select users.id,table2.*
-                                 from users,
-                                    (select users.address1,users.address2,users.group_type,table1.*
-                                        from users,(select classes.year,classes.grade,classes.group_id from classes 
-                                                                where classes.id=(select users.org_id from users where users.id='".
-                                                                    Auth::id()."')) as table1
-                                        where users.id=table1.group_id) as table2
-                                 where users.address1=table2.address1 and users.address2=table2.address2 and users.group_type=table2.group_type and ".
-                                 "users.role=".config('consts')['USER']['ROLE']['GROUP']." and users.active='1') as table3
-                            on classes.group_id=table3.id and classes.grade=table3.grade and classes.year=table3.year and class_number is not NULL)".
-                        ") as table1";
-                    $allpointsql[3]="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag 
-                        from users left join 
-                        (select user_id, SUM(user_quizes.point) AS sum 
-                        from user_quizes 
-                        inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
-                        where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) ".
-                        "group by user_id) as table1
-                        on users.id=table1.user_id
-                        where  ".
-                        "users.role=".$role." and users.active=1 and users.address1= '".Auth::user()->address1."' and users.address2= '".Auth::user()->address2."' and ".
-                        "users.org_id in ".
-                            "(select classes.id
-                            from classes  inner join
-                                (select users.id,table2.*
-                                 from users,
-                                    (select users.address1,users.address2,users.group_type,table1.*
-                                        from users,(select classes.year,classes.grade,classes.group_id from classes 
-                                                                where classes.id=(select users.org_id from users where users.id='".
-                                                                    Auth::id()."')) as table1
-                                        where users.id=table1.group_id) as table2
-                                 where users.address1=table2.address1 and users.address2=table2.address2 and users.group_type=table2.group_type and ".
-                                 "users.role=".config('consts')['USER']['ROLE']['GROUP']." and users.active='1') as table3
-                            on classes.group_id=table3.id and classes.grade=table3.grade and classes.year=table3.year and class_number is not NULL)".
-                        ") as table1";
-            
+            $sql[3]="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag 
+                    from users left join 
+                    (select user_id, SUM(user_quizes.point) AS sum 
+                    from user_quizes 
+                    inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
+                    where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) and ".
+                    "created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59).
+                    "'group by user_id) as table1
+                    on users.id=table1.user_id
+                    where  ".
+                    "users.role=".$role." and users.active=1 and users.address1= '".Auth::user()->address1."' and users.address2= '".Auth::user()->address2."' and ".
+                    "users.org_id in ".
+                        "(select classes.id
+                        from classes  inner join
+                            (select users.id,table2.*
+                                from users,
+                                (select users.address1,users.address2,users.group_type,table1.*
+                                    from users,(select classes.year,classes.grade,classes.group_id from classes 
+                                                            where classes.id=(select users.org_id from users where users.id='".
+                                                                Auth::id()."')) as table1
+                                    where users.id=table1.group_id) as table2
+                                where users.address1=table2.address1 and users.address2=table2.address2 and users.group_type=table2.group_type and ".
+                                "users.role=".config('consts')['USER']['ROLE']['GROUP']." and users.active='1') as table3
+                        on classes.group_id=table3.id and classes.grade=table3.grade and classes.year=table3.year and class_number is not NULL)".
+                    ") as table1";
+            $threemonthsql[3]="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag 
+                from users left join 
+                (select user_id, SUM(user_quizes.point) AS sum 
+                from user_quizes 
+                inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
+                where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) and ".
+                "created_date between '".$current_season['begin_season']."' and '".$current_season['end_season'].
+                "'group by user_id) as table1
+                on users.id=table1.user_id
+                where  ".
+                "users.role=".$role." and users.active=1 and users.address1= '".Auth::user()->address1."' and users.address2= '".Auth::user()->address2."' and ".
+                "users.org_id in ".
+                    "(select classes.id
+                    from classes  inner join
+                        (select users.id,table2.*
+                            from users,
+                            (select users.address1,users.address2,users.group_type,table1.*
+                                from users,(select classes.year,classes.grade,classes.group_id from classes 
+                                                        where classes.id=(select users.org_id from users where users.id='".
+                                                            Auth::id()."')) as table1
+                                where users.id=table1.group_id) as table2
+                            where users.address1=table2.address1 and users.address2=table2.address2 and users.group_type=table2.group_type and ".
+                            "users.role=".config('consts')['USER']['ROLE']['GROUP']." and users.active='1') as table3
+                    on classes.group_id=table3.id and classes.grade=table3.grade and classes.year=table3.year and class_number is not NULL)".
+                ") as table1";
+            $allpointsql[3]="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag 
+                from users left join 
+                (select user_id, SUM(user_quizes.point) AS sum 
+                from user_quizes 
+                inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
+                where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) ".
+                "group by user_id) as table1
+                on users.id=table1.user_id
+                where  ".
+                "users.role=".$role." and users.active=1 and users.address1= '".Auth::user()->address1."' and users.address2= '".Auth::user()->address2."' and ".
+                "users.org_id in ".
+                    "(select classes.id
+                    from classes  inner join
+                        (select users.id,table2.*
+                            from users,
+                            (select users.address1,users.address2,users.group_type,table1.*
+                                from users,(select classes.year,classes.grade,classes.group_id from classes 
+                                                        where classes.id=(select users.org_id from users where users.id='".
+                                                            Auth::id()."')) as table1
+                                where users.id=table1.group_id) as table2
+                            where users.address1=table2.address1 and users.address2=table2.address2 and users.group_type=table2.group_type and ".
+                            "users.role=".config('consts')['USER']['ROLE']['GROUP']." and users.active='1') as table3
+                    on classes.group_id=table3.id and classes.grade=table3.grade and classes.year=table3.year and class_number is not NULL)".
+                ") as table1";
+    
             $myrankPoints3 = MypageController::Get_RankPoint($sql[3]);
             $threemonthrankPoints3 = MypageController::Get_RankPoint($threemonthsql[3]);
             $allrankPoints3 = MypageController::Get_RankPoint($allpointsql[3]);
@@ -10871,54 +10886,54 @@ class MypageController extends Controller{
                         on classes.group_id=table3.id and classes.grade=table3.grade and classes.year=table3.year and class_number is not NULL)".
                     ") as table1";
                 $threemonthsql[4]="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag 
-                from users left join 
-                (select user_id, SUM(user_quizes.point) AS sum 
-                from user_quizes 
-                inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
-                where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) and ".
-                "created_date between '".$current_season['begin_season']."' and '".$current_season['end_season'].
-                "'group by user_id) as table1
-                on users.id=table1.user_id
-                where  ".
-                "users.role=".$role." and users.active=1 and users.address1= '".Auth::user()->address1."' and ".
-                "users.org_id in ".
-                    "(select classes.id
-                    from classes  inner join
-                        (select users.id,table2.*
-                         from users,
-                            (select users.address1,users.address2,users.group_type,table1.*
-                                from users,(select classes.year,classes.grade,classes.group_id from classes 
-                                                        where classes.id=(select users.org_id from users where users.id='".
-                                                            Auth::id()."')) as table1
-                                where users.id=table1.group_id) as table2
-                         where users.address1=table2.address1 and users.group_type=table2.group_type and ".
-                         "users.role=".config('consts')['USER']['ROLE']['GROUP']." and users.active='1') as table3
-                    on classes.group_id=table3.id and classes.grade=table3.grade and classes.year=table3.year and class_number is not NULL)".
-                ") as table1";
+                    from users left join 
+                    (select user_id, SUM(user_quizes.point) AS sum 
+                    from user_quizes 
+                    inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
+                    where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) and ".
+                    "created_date between '".$current_season['begin_season']."' and '".$current_season['end_season'].
+                    "'group by user_id) as table1
+                    on users.id=table1.user_id
+                    where  ".
+                    "users.role=".$role." and users.active=1 and users.address1= '".Auth::user()->address1."' and ".
+                    "users.org_id in ".
+                        "(select classes.id
+                        from classes  inner join
+                            (select users.id,table2.*
+                            from users,
+                                (select users.address1,users.address2,users.group_type,table1.*
+                                    from users,(select classes.year,classes.grade,classes.group_id from classes 
+                                                            where classes.id=(select users.org_id from users where users.id='".
+                                                                Auth::id()."')) as table1
+                                    where users.id=table1.group_id) as table2
+                            where users.address1=table2.address1 and users.group_type=table2.group_type and ".
+                            "users.role=".config('consts')['USER']['ROLE']['GROUP']." and users.active='1') as table3
+                        on classes.group_id=table3.id and classes.grade=table3.grade and classes.year=table3.year and class_number is not NULL)".
+                    ") as table1";
                 $allpointsql[4]="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag 
-                from users left join 
-                (select user_id, SUM(user_quizes.point) AS sum 
-                from user_quizes 
-                inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
-                where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) ".
-                "group by user_id) as table1
-                on users.id=table1.user_id
-                where  ".
-                "users.role=".$role." and users.active=1 and users.address1= '".Auth::user()->address1."' and ".
-                "users.org_id in ".
-                    "(select classes.id
-                    from classes  inner join
-                        (select users.id,table2.*
-                         from users,
-                            (select users.address1,users.address2,users.group_type,table1.*
-                                from users,(select classes.year,classes.grade,classes.group_id from classes 
-                                                        where classes.id=(select users.org_id from users where users.id='".
-                                                            Auth::id()."')) as table1
-                                where users.id=table1.group_id) as table2
-                         where users.address1=table2.address1 and users.group_type=table2.group_type and ".
-                         "users.role=".config('consts')['USER']['ROLE']['GROUP']." and users.active='1') as table3
-                    on classes.group_id=table3.id and classes.grade=table3.grade and classes.year=table3.year and class_number is not NULL)".
-                ") as table1";
+                    from users left join 
+                    (select user_id, SUM(user_quizes.point) AS sum 
+                    from user_quizes 
+                    inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
+                    where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) ".
+                    "group by user_id) as table1
+                    on users.id=table1.user_id
+                    where  ".
+                    "users.role=".$role." and users.active=1 and users.address1= '".Auth::user()->address1."' and ".
+                    "users.org_id in ".
+                        "(select classes.id
+                        from classes  inner join
+                            (select users.id,table2.*
+                            from users,
+                                (select users.address1,users.address2,users.group_type,table1.*
+                                    from users,(select classes.year,classes.grade,classes.group_id from classes 
+                                                            where classes.id=(select users.org_id from users where users.id='".
+                                                                Auth::id()."')) as table1
+                                    where users.id=table1.group_id) as table2
+                            where users.address1=table2.address1 and users.group_type=table2.group_type and ".
+                            "users.role=".config('consts')['USER']['ROLE']['GROUP']." and users.active='1') as table3
+                        on classes.group_id=table3.id and classes.grade=table3.grade and classes.year=table3.year and class_number is not NULL)".
+                    ") as table1";
         
             $myrankPoints4 = MypageController::Get_RankPoint($sql[4]);
             $threemonthrankPoints4 = MypageController::Get_RankPoint($threemonthsql[4]);
@@ -11247,27 +11262,29 @@ class MypageController extends Controller{
                 inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                 where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) and ";
             $sql_average_end="' group by user_id) as table1 on users.id=table1.user_id where users.id='".Auth::id()."' or ( users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1))) order by flag desc) as table1"; 
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1))) order by flag desc) as table1"; 
 
             for ($k = 1; $k < 9; $k++) {
                 $date = date_sub(now(), date_interval_create_from_date_string($k * 3 . " months"));
                 $cur_season[8-$k] = MypageController::CurrentSeaon($date);
                 $sql_term1[8-$k]=$sql_average_front."created_date between '".$cur_season[8-$k]['begin_season']."' and '". $cur_season[8-$k]['end_season'].$sql_average_end;               
-            
             }
            
             for($i=0;$i<8;$i++){
-               $sum=0; 
-               $temp_avg=MypageController::Get_AvgPoint($sql_term1[$i]);
-  
-                 foreach ($temp_avg as $ii => $avg) {
+                $sum=0; 
+                $myavgPoints[$i][0] = 0;
+                $myavgPoints[$i][1] = 0;
+                $temp_avg=MypageController::Get_AvgPoint($sql_term1[$i]);
+                if(sizeof($temp_avg) > 0) {
+                    foreach ($temp_avg as $ii => $avg) {
                         $sum = $sum+($avg->sum);
                         if($avg->flag=='1'){
                             $myavgPoints[$i][1]=$avg->sum;                        
                         }
-                 }
+                    }
 
-                $myavgPoints[$i][0]=$sum/sizeof($temp_avg);
+                    $myavgPoints[$i][0]=$sum/sizeof($temp_avg);
+                }
             }
 
             $sql[1]="(select 0 as id,0 as sum,0 as flag) as table1";
@@ -11298,40 +11315,40 @@ class MypageController extends Controller{
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[3]= $threesql_temp." users.id in (select users.id from users,
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[3]= $allsql_temp." users.id in (select users.id from users,
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql[4]=$sql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[4]= $threesql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[4]= $allsql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
           
             $sql[5]=$sql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[5]= $threesql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[5]= $allsql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $myrankPoints3 = MypageController::Get_RankPoint($sql[3]);
             $myrankPoints4 = MypageController::Get_RankPoint($sql[4]);
@@ -11366,16 +11383,16 @@ class MypageController extends Controller{
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     
             $sql[3]=$sql_temp." users.id in (select users.id from users,
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql[4]=$sql_temp." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
 
             $mybookPoints2 = MypageController::Get_RankPoint($sql[2]);
                 
@@ -11449,148 +11466,148 @@ class MypageController extends Controller{
                                     and created_date between '".$array_season_obj[1]['begin_season']."' and '".$array_season_obj[1]['end_season']."' group by user_id) as table1 
                             on users.id=table1.user_id where users.id='".Auth::id()."' or (";
 
-           $sql_before[2]=$sql_temp1." users.id in (select users.id from users,
+            $sql_before[2]=$sql_temp1." users.id in (select users.id from users,
+                                        (select users.address1,users.address2
+                                        from users
+                                        where users.id='".Auth::id()."') as table1
+                                        where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            
+                $sql_before[3]=$sql_temp1." users.id in (select users.id from users,
+                                    (select users.address1,users.address2
+                                    from users
+                                    where users.id='".Auth::id()."') as table1
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                
+                $sql_before[4]=$sql_temp1." users.id in (select users.id from users
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                
+                $myquizPoints_before2 = MypageController::Get_RankPoint($sql_before[2]);
+                $myquizPoints_before3 = MypageController::Get_RankPoint($sql_before[3]);
+                $myquizPoints_before4 = MypageController::Get_RankPoint($sql_before[4]);
+
+                $myquizPoints_this1 = DB::table('user_quizes')
+                    ->select('user_id',DB::raw('SUM(user_quizes.point) AS sum'))
+                    ->join('books', 'user_quizes.book_id', DB::raw('books.id and books.active <> 7'))
+                    ->where( function ($q) {
+                        $q->Where(function ($q1) {
+                            $q1->where('user_quizes.type', '=', 0)->where('user_quizes.status', '=', 1);                    
+                        })->orWhere(function ($q1) {
+                            $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
+                        });
+                    })
+                    ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0))
+                    ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],3, 31,23,59,59))
+                    ->where('user_quizes.user_id','=',Auth::id())
+                    ->get();
+
+            $sql_temp2="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag from users 
+                                left join (select user_id, SUM(user_quizes.point) AS sum 
+                                    from user_quizes 
+                                    inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
+                                    where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
+                                            and created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)."' group by user_id) as table1 
+                                    on users.id=table1.user_id where users.id='".Auth::id()."' or (";
+
+                $sql_this[2]=$sql_temp2." users.id in (select users.id from users,
                                     (select users.address1,users.address2
                                     from users
                                     where users.id='".Auth::id()."') as table1
                                     where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
                         
-            $sql_before[3]=$sql_temp1." users.id in (select users.id from users,
-                                (select users.address1,users.address2
-                                from users
-                                where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
-            
-            $sql_before[4]=$sql_temp1." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
-            
-            $myquizPoints_before2 = MypageController::Get_RankPoint($sql_before[2]);
-            $myquizPoints_before3 = MypageController::Get_RankPoint($sql_before[3]);
-            $myquizPoints_before4 = MypageController::Get_RankPoint($sql_before[4]);
-
-            $myquizPoints_this1 = DB::table('user_quizes')
-                ->select('user_id',DB::raw('SUM(user_quizes.point) AS sum'))
-                ->join('books', 'user_quizes.book_id', DB::raw('books.id and books.active <> 7'))
-                ->where( function ($q) {
-                    $q->Where(function ($q1) {
-                        $q1->where('user_quizes.type', '=', 0)->where('user_quizes.status', '=', 1);                    
-                    })->orWhere(function ($q1) {
-                        $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
-                    });
-                })
-                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0))
-                ->where('created_date','<=',Carbon::create($current_season['end_thisyear'],3, 31,23,59,59))
-                ->where('user_quizes.user_id','=',Auth::id())
-                ->get();
-
-           $sql_temp2="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag from users 
-                            left join (select user_id, SUM(user_quizes.point) AS sum 
-                                from user_quizes 
-                                inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
-                                where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                        and created_date between '".Carbon::create($current_season['begin_thisyear'],4, 1,0,0,0)."' and '". Carbon::create($current_season['end_thisyear'],3, 31,23,59,59)."' group by user_id) as table1 
-                                on users.id=table1.user_id where users.id='".Auth::id()."' or (";
-
-            $sql_this[2]=$sql_temp2." users.id in (select users.id from users,
-                                (select users.address1,users.address2
-                                from users
-                                where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
-                    
-            $sql_this[3]=$sql_temp2." users.id in (select users.id from users,
-                                (select users.address1,users.address2
-                                from users
-                                where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
-            
-            $sql_this[4]=$sql_temp2." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                $sql_this[3]=$sql_temp2." users.id in (select users.id from users,
+                                    (select users.address1,users.address2
+                                    from users
+                                    where users.id='".Auth::id()."') as table1
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
                 
-            $myquizPoints_this2 = MypageController::Get_RankPoint($sql_this[2]);
-            $myquizPoints_this3 = MypageController::Get_RankPoint($sql_this[3]);
-            $myquizPoints_this4 = MypageController::Get_RankPoint($sql_this[4]);
-
-            $myquizPoints_last1 = DB::table('user_quizes')
-                ->select('user_id',DB::raw('SUM(user_quizes.point) AS sum'))
-                ->join('books', 'user_quizes.book_id', DB::raw('books.id and books.active <> 7'))
-                ->where( function ($q) {
-                    $q->Where(function ($q1) {
-                        $q1->where('user_quizes.type', '=', 0)->where('user_quizes.status', '=', 1);                    
-                    })->orWhere(function ($q1) {
-                        $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
-                    });
-                })
-                ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0))
-                ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59))
-                ->where('user_quizes.user_id','=',Auth::id())
-                ->get();
-
-            $sql_temp3="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag from users 
-                            left join (select user_id, SUM(user_quizes.point) AS sum 
-                                from user_quizes 
-                                inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
-                                where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                        and created_date between '".Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59)."' group by user_id) as table1 
-                                on users.id=table1.user_id where users.id='".Auth::id()."' or (";
-
-            $sql_last[2]=$sql_temp3." users.id in (select users.id from users,
-                                (select users.address1,users.address2
-                                from users
-                                where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                $sql_this[4]=$sql_temp2." users.id in (select users.id from users
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
                     
-            $sql_last[3]=$sql_temp3." users.id in (select users.id from users,
-                                (select users.address1,users.address2
-                                from users
-                                where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
-            
-            $sql_last[4]=$sql_temp3." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                $myquizPoints_this2 = MypageController::Get_RankPoint($sql_this[2]);
+                $myquizPoints_this3 = MypageController::Get_RankPoint($sql_this[3]);
+                $myquizPoints_this4 = MypageController::Get_RankPoint($sql_this[4]);
+
+                $myquizPoints_last1 = DB::table('user_quizes')
+                    ->select('user_id',DB::raw('SUM(user_quizes.point) AS sum'))
+                    ->join('books', 'user_quizes.book_id', DB::raw('books.id and books.active <> 7'))
+                    ->where( function ($q) {
+                        $q->Where(function ($q1) {
+                            $q1->where('user_quizes.type', '=', 0)->where('user_quizes.status', '=', 1);                    
+                        })->orWhere(function ($q1) {
+                            $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
+                        });
+                    })
+                    ->where('created_date','>=',Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0))
+                    ->where('created_date','<=',Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59))
+                    ->where('user_quizes.user_id','=',Auth::id())
+                    ->get();
+
+                $sql_temp3="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag from users 
+                                left join (select user_id, SUM(user_quizes.point) AS sum 
+                                    from user_quizes 
+                                    inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
+                                    where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
+                                            and created_date between '".Carbon::create($current_season['begin_thisyear']-1,4, 1,0,0,0)."' and '".Carbon::create($current_season['end_thisyear']-1,3, 31,23,59,59)."' group by user_id) as table1 
+                                    on users.id=table1.user_id where users.id='".Auth::id()."' or (";
+
+                $sql_last[2]=$sql_temp3." users.id in (select users.id from users,
+                                    (select users.address1,users.address2
+                                    from users
+                                    where users.id='".Auth::id()."') as table1
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                        
+                $sql_last[3]=$sql_temp3." users.id in (select users.id from users,
+                                    (select users.address1,users.address2
+                                    from users
+                                    where users.id='".Auth::id()."') as table1
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
                 
-            $myquizPoints_last2 = MypageController::Get_RankPoint($sql_last[2]);
-            $myquizPoints_last3 = MypageController::Get_RankPoint($sql_last[3]);
-            $myquizPoints_last4 = MypageController::Get_RankPoint($sql_last[4]);
-            
-            $myquizPoints_all1 = DB::table('user_quizes')
-                ->select('user_id',DB::raw('SUM(user_quizes.point) AS sum'))
-                ->join('books', 'user_quizes.book_id', DB::raw('books.id and books.active <> 7'))
-                ->where( function ($q) {
-                    $q->Where(function ($q1) {
-                        $q1->where('user_quizes.type', '=', 0)->where('user_quizes.status', '=', 1);                    
-                    })->orWhere(function ($q1) {
-                        $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
-                    });
-                })
-                ->where('user_quizes.user_id','=',Auth::id())
-                ->get();
-
-            $sql_temp4="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag from users 
-                            left join (select user_id, SUM(user_quizes.point) AS sum 
-                                from user_quizes 
-                                inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
-                                where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
-                                         group by user_id) as table1 
-                                on users.id=table1.user_id where users.id='".Auth::id()."' or (";
-
-            $sql_all[2]=$sql_temp4." users.id in (select users.id from users,
-                                (select users.address1,users.address2
-                                from users
-                                where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                $sql_last[4]=$sql_temp3." users.id in (select users.id from users
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
                     
-            $sql_all[3]=$sql_temp4." users.id in (select users.id from users,
-                                (select users.address1,users.address2
-                                from users
-                                where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
-            
-            $sql_all[4]=$sql_temp4." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                $myquizPoints_last2 = MypageController::Get_RankPoint($sql_last[2]);
+                $myquizPoints_last3 = MypageController::Get_RankPoint($sql_last[3]);
+                $myquizPoints_last4 = MypageController::Get_RankPoint($sql_last[4]);
                 
-            $myquizPoints_all2 = MypageController::Get_RankPoint($sql_all[2]);
-            $myquizPoints_all3 = MypageController::Get_RankPoint($sql_all[3]);
-            $myquizPoints_all4 = MypageController::Get_RankPoint($sql_all[4]);
+                $myquizPoints_all1 = DB::table('user_quizes')
+                    ->select('user_id',DB::raw('SUM(user_quizes.point) AS sum'))
+                    ->join('books', 'user_quizes.book_id', DB::raw('books.id and books.active <> 7'))
+                    ->where( function ($q) {
+                        $q->Where(function ($q1) {
+                            $q1->where('user_quizes.type', '=', 0)->where('user_quizes.status', '=', 1);                    
+                        })->orWhere(function ($q1) {
+                            $q1->where('user_quizes.type', '=', 1)->where('user_quizes.status', '=', 1);
+                        });
+                    })
+                    ->where('user_quizes.user_id','=',Auth::id())
+                    ->get();
+
+                $sql_temp4="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".Auth::id()."',1,0) as flag from users 
+                                left join (select user_id, SUM(user_quizes.point) AS sum 
+                                    from user_quizes 
+                                    inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
+                                    where ((user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 0 and user_quizes.status = 1))
+                                            group by user_id) as table1 
+                                    on users.id=table1.user_id where users.id='".Auth::id()."' or (";
+
+                $sql_all[2]=$sql_temp4." users.id in (select users.id from users,
+                                    (select users.address1,users.address2
+                                    from users
+                                    where users.id='".Auth::id()."') as table1
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                        
+                $sql_all[3]=$sql_temp4." users.id in (select users.id from users,
+                                    (select users.address1,users.address2
+                                    from users
+                                    where users.id='".Auth::id()."') as table1
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                
+                $sql_all[4]=$sql_temp4." users.id in (select users.id from users
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                    
+                $myquizPoints_all2 = MypageController::Get_RankPoint($sql_all[2]);
+                $myquizPoints_all3 = MypageController::Get_RankPoint($sql_all[3]);
+                $myquizPoints_all4 = MypageController::Get_RankPoint($sql_all[4]);
         }
 
         if(Auth::user()->isPupil() && Auth::user()->active == 1){
@@ -12428,7 +12445,7 @@ class MypageController extends Controller{
                 inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7 
                 where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) and ";
             $sql_average_end="' group by user_id) as table1 on users.id=table1.user_id where users.id='".Auth::id()."' or ( users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1))) order by flag desc) as table1"; 
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1))) order by flag desc) as table1"; 
             
             for ($k = 1; $k < 9; $k++) {
                 $date = date_sub(now(), date_interval_create_from_date_string($k * 3 . " months"));
@@ -12479,40 +12496,40 @@ class MypageController extends Controller{
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[3]= $threesql_temp." users.id in (select users.id from users,
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[3]= $allsql_temp." users.id in (select users.id from users,
                             (select users.address1,users.address2
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql[4]=$sql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[4]= $threesql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[4]= $allsql_temp." users.id in (select users.id from users,
                             (select users.address1
                             from users
                             where users.id='".Auth::id()."') as table1
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
           
             $sql[5]=$sql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $threemonth_sql[5]= $threesql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             $all_sql[5]= $allsql_temp." users.id in (select users.id from users
-                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                            where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $myrankPoints3 = MypageController::Get_RankPoint($sql[3]);
             $myrankPoints4 = MypageController::Get_RankPoint($sql[4]);
@@ -12547,16 +12564,16 @@ class MypageController extends Controller{
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     
             $sql[3]=$sql_temp." users.id in (select users.id from users,
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql[4]=$sql_temp." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $mybookPoints2 = MypageController::Get_RankPoint($sql[2]);
             $mybookPoints3 = MypageController::Get_RankPoint($sql[3]);
@@ -12589,16 +12606,16 @@ class MypageController extends Controller{
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     
             $sql[3]=$sql_temp." users.id in (select users.id from users,
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql[4]=$sql_temp." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $myquizPoints2 = MypageController::Get_RankPoint($sql[2]);
             $myquizPoints3 = MypageController::Get_RankPoint($sql[3]);
@@ -12631,16 +12648,16 @@ class MypageController extends Controller{
                                     (select users.address1,users.address2
                                     from users
                                     where users.id='".Auth::id()."') as table1
-                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                         
             $sql_before[3]=$sql_temp1." users.id in (select users.id from users,
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql_before[4]=$sql_temp1." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $myquizPoints_before2 = MypageController::Get_RankPoint($sql_before[2]);
             $myquizPoints_before3 = MypageController::Get_RankPoint($sql_before[3]);
@@ -12673,16 +12690,16 @@ class MypageController extends Controller{
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     
             $sql_this[3]=$sql_temp2." users.id in (select users.id from users,
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql_this[4]=$sql_temp2." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $myquizPoints_this2 = MypageController::Get_RankPoint($sql_this[2]);
             $myquizPoints_this3 = MypageController::Get_RankPoint($sql_this[3]);
@@ -12715,16 +12732,16 @@ class MypageController extends Controller{
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     
             $sql_last[3]=$sql_temp3." users.id in (select users.id from users,
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql_last[4]=$sql_temp3." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $myquizPoints_last2 = MypageController::Get_RankPoint($sql_last[2]);
             $myquizPoints_last3 = MypageController::Get_RankPoint($sql_last[3]);
@@ -12755,16 +12772,16 @@ class MypageController extends Controller{
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     
             $sql_all[3]=$sql_temp4." users.id in (select users.id from users,
                                 (select users.address1,users.address2
                                 from users
                                 where users.id='".Auth::id()."') as table1
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $sql_all[4]=$sql_temp4." users.id in (select users.id from users
-                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."'  and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
             
             $myquizPoints_all2 = MypageController::Get_RankPoint($sql_all[2]);
             $myquizPoints_all3 = MypageController::Get_RankPoint($sql_all[3]);
@@ -13848,6 +13865,7 @@ class MypageController extends Controller{
             else
                 $period = date_format(date_add(date_create($certi_back->settlement_date), date_interval_create_from_date_string("5 months")), "Y-m-d");
 
+
             if($this->pay_state == "Completed"){
                 if($user->isAdmin()){
                 
@@ -13940,7 +13958,12 @@ class MypageController extends Controller{
                     $message->to_id = Auth::id();
                     $message->type = 0;
                     $message->name = "協会";
-                    $message->content = "支払いが完了しました。読書認定書（パスコード".$passcode."）の有効期限は ".date_format($period_date, 'Y年n月j日')."です。";                
+                    if($certi_back->settlement_date === null || $certi_back->settlement_date == '') {
+                        $message->content = "支払いが完了しました。読書認定書（パスコード".$passcode."）の有効期限は ".date_format($period_date, 'Y年n月j日')."です。";                
+                    }
+                    else{
+                        $message->content = "支払いが完了しました。読書認定書（パスコード".$passcode."）の有効期限は ".date_format($period_date, 'Y年n月j日')."に延長されました。";                
+                    }
                 }
                 $message->save();
 
@@ -13964,7 +13987,12 @@ class MypageController extends Controller{
             $certi_back->save();
         }
         else{
-            $passcode = rand(100000, 999999);
+            if($certi_back->passcode){
+                $passcode = $certi_back->passcode;
+            }
+            else{
+                $passcode = rand(100000, 999999);
+            }
             if($certi_back->settlement_date === null || $certi_back->settlement_date == '')
                 $certi_back->settlement_date = date_format(date_add(now(), date_interval_create_from_date_string("6 months")), "Y-m-d");
             else
@@ -14023,8 +14051,6 @@ class MypageController extends Controller{
 
         return $passcode;
     }
-
-
 
     public function create_certi(){
         $firstname = DB::table('users')
@@ -14328,7 +14354,6 @@ class MypageController extends Controller{
     public function passcode(Request $request, $index = null){
         $password = $request->input('pwd'); 
         
-
         $rule = array(
             'pwd' => 'required'
         );
@@ -14350,10 +14375,11 @@ class MypageController extends Controller{
                             ->where('passcode', '!=', '')
                             ->whereNotNull('passcode')
                             ->whereNotNull('settlement_date')
-                            ->where('settlement_date' ,'<', now())
+                            ->where('settlement_date', '!=', '')
+                            ->where('settlement_date' ,'>=', now())
                             ->count();
 
-        if(is_null($settlement_check) || (!is_null($settlement_check) && $settlement_check < 1)){
+        if(!is_null($settlement_check) && $settlement_check > 0) {
             if($index == null){
                 // Auth::login($user);
                 return Redirect::to('/mypage/settlement_certi_view/'.$user->user_id.'/'.$user->index);     
@@ -14365,7 +14391,7 @@ class MypageController extends Controller{
                 return Redirect::to('/mypage/search_certi/'.$index);           
             }
             else{
-                return Redirect::to('/mypage/certi_pay/'.$index);           
+                return Redirect::to('/mypage/certi_pay/'.$user->index);           
             }
         }
         else{
@@ -14940,7 +14966,7 @@ class MypageController extends Controller{
         $rankperiod = $request->input('rankperiod');
         $rankyear = $request->input('rankyear');
         $current_season = MypageController::CurrentSeaon(now());
-        $ranks = UserQuiz::selectRaw("users.id, users.firstname, users.lastname, users.username, users.birthday, users.address1, SUM(user_quizes.point) as cur_point")
+        $ranks = UserQuiz::selectRaw("users.id, users.firstname, users.lastname, users.username, users.birthday, users.address1, users.fullname_is_public, SUM(user_quizes.point) as cur_point")
              ->leftJoin('users','users.id','=','user_quizes.user_id')
              ->join('books', 'user_quizes.book_id', DB::raw('books.id and books.active <> 7'))
             ->where( function ($q) {
@@ -15077,14 +15103,16 @@ class MypageController extends Controller{
                 $curage = $user->age();
                 if($user->isPupil() && $user->active == 1){
                     $groupbyuser = $user->ClassOfPupil->School()->first();
-                    if($groupbyuser->group_type == 0)
-                        $rankingage = 1; //小学生
-                    elseif($groupbyuser->group_type == 1)
-                        $rankingage = 2; //中学生
-                    elseif($groupbyuser->group_type == 2 || $groupbyuser->group_type == 3)
-                        $rankingage = 3; //高校生
-                    else
-                        $rankingage = 4; //大学生
+                    if($groupbyuser != null){
+                        if($groupbyuser->group_type == 0)
+                            $rankingage = 1; //小学生
+                        elseif($groupbyuser->group_type == 1)
+                            $rankingage = 2; //中学生
+                        elseif($groupbyuser->group_type == 2 || $groupbyuser->group_type == 3)
+                            $rankingage = 3; //高校生
+                        else
+                            $rankingage = 4; //大学生
+                    }
                 }else{
                     
                     if($curage <= 11){
@@ -15162,16 +15190,20 @@ class MypageController extends Controller{
                    
                     for($i=0;$i<4;$i++){
                        $sum=0; 
+                       $schoolpercent = 0;
+                       $myavgPoints[$i][1] = 0;
                        $temp_avg=MypageController::Get_AvgPoint1($sql_term1[$i]);
-          
-                         foreach ($temp_avg as $ii => $avg) {
-                            $sum = $sum+($avg->sum);
-                            if($avg->flag=='1'){
-                                $mypercent  = floor($avg->sum * 100 / $tagrgetpoint * 100) / 100;
-                                $myavgPoints[$i][1] = $mypercent;                        
+                       if(sizeof($temp_avg) > 0){
+            
+                            foreach ($temp_avg as $ii => $avg) {
+                                $sum = $sum+($avg->sum);
+                                if($avg->flag=='1'){
+                                    $mypercent  = floor($avg->sum * 100 / $tagrgetpoint * 100) / 100;
+                                    $myavgPoints[$i][1] = $mypercent;                        
+                                }
                             }
-                         }
-                        $schoolpercent = floor($sum/sizeof($temp_avg) * 100 / $tagrgetpoint * 100) / 100;
+                            $schoolpercent = floor($sum/sizeof($temp_avg) * 100 / $tagrgetpoint * 100) / 100;
+                        }
                         $myavgPoints[$i][0] = $schoolpercent;
 
                     }
@@ -15778,7 +15810,7 @@ class MypageController extends Controller{
                         inner join `books` on `user_quizes`.`book_id` = books.id and books.active <> 7  
                         where ((user_quizes.type = 0 and user_quizes.status = 1) or (user_quizes.type = 1 and user_quizes.status = 1) or (user_quizes.type = 2 and user_quizes.status = 3)) and ";
                     $sql_average_end="' group by user_id) as table1 on users.id=table1.user_id where users.id='".$id."' or ( users.id in (select users.id from users
-                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1))) order by flag desc) as table1"; 
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1))) order by flag desc) as table1"; 
 
                     for ($k = 1; $k < 9; $k++) {
                         $date1 = date_sub(now(), date_interval_create_from_date_string(($k+$mode+1) * 3 . " months"));
@@ -15789,16 +15821,19 @@ class MypageController extends Controller{
                    
                     for($i=0;$i<8;$i++){
                        $sum=0; 
+                       $myavgPoints[$i][0] = 0;
+                       $myavgPoints[$i][1] = 0;
                        $temp_avg=MypageController::Get_AvgPoint1($sql_term1[$i]);
-          
-                         foreach ($temp_avg as $ii => $avg) {
+                        if(sizeof($temp_avg) > 0){
+                            foreach ($temp_avg as $ii => $avg) {
                                 $sum = $sum+($avg->sum);
                                 if($avg->flag=='1'){
                                     $myavgPoints[$i][1]=$avg->sum;                        
                                 }
-                         }
+                            }
 
-                        $myavgPoints[$i][0]=$sum/sizeof($temp_avg);
+                            $myavgPoints[$i][0]=$sum/sizeof($temp_avg);
+                        }
                     }
 
                     $sql[1]="(select 0 as id,0 as sum,0 as flag) as table1";
@@ -15829,40 +15864,40 @@ class MypageController extends Controller{
                                     (select users.address1,users.address2
                                     from users
                                     where users.id='".$id."') as table1
-                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     $threemonth_sql[3]= $threesql_temp." users.id in (select users.id from users,
                                     (select users.address1,users.address2
                                     from users
                                     where users.id='".$id."') as table1
-                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     $all_sql[3]= $allsql_temp." users.id in (select users.id from users,
                                     (select users.address1,users.address2
                                     from users
                                     where users.id='".$id."') as table1
-                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     
                     $sql[4]=$sql_temp." users.id in (select users.id from users,
                                     (select users.address1
                                     from users
                                     where users.id='".$id."') as table1
-                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     $threemonth_sql[4]= $threesql_temp." users.id in (select users.id from users,
                                     (select users.address1
                                     from users
                                     where users.id='".$id."') as table1
-                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     $all_sql[4]= $allsql_temp." users.id in (select users.id from users,
                                     (select users.address1
                                     from users
                                     where users.id='".$id."') as table1
-                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                   
                     $sql[5]=$sql_temp." users.id in (select users.id from users
-                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     $threemonth_sql[5]= $threesql_temp." users.id in (select users.id from users
-                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     $all_sql[5]= $allsql_temp." users.id in (select users.id from users
-                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                    where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                                    
                     $myrankPoints3 = MypageController::Get_RankPoint1($sql[3]);
                     $myrankPoints4 = MypageController::Get_RankPoint1($sql[4]);
@@ -15898,16 +15933,16 @@ class MypageController extends Controller{
                                         (select users.address1,users.address2
                                         from users
                                         where users.id='".$id."') as table1
-                                        where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                        where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                             
                     $sql[3]=$sql_temp." users.id in (select users.id from users,
                                         (select users.address1,users.address2
                                         from users
                                         where users.id='".$id."') as table1
-                                        where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                        where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     
                     $sql[4]=$sql_temp." users.id in (select users.id from users
-                                        where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                        where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     
                     $mybookPoints2 = MypageController::Get_RankPoint1($sql[2]);
                     $mybookPoints3 = MypageController::Get_RankPoint1($sql[3]);
@@ -15940,16 +15975,16 @@ class MypageController extends Controller{
                                         (select users.address1,users.address2
                                         from users
                                         where users.id='".$id."') as table1
-                                        where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                        where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.address2=table1.address2 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                             
                     $sql[3]= "  users.id in (select users.id from users,
                                         (select users.address1,users.address2
                                         from users
                                         where users.id='".$id."') as table1
-                                        where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                        where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.address1=table1.address1 and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     
                     $sql[4]= "  users.id in (select users.id from users
-                                        where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and (users.active >= 1)))) as table1";
+                                        where users.birthday between '".$search_birthday['start_day']."' and '".$search_birthday['end_day']."' and users.role!='".config('consts')['USER']['ROLE']['GROUP']."' and users.role not in (4,5,6,7) and (users.active >= 1)))) as table1";
                     
                     $myquizPoints2 = MypageController::Get_RankPoint1($sql_temp.$sql[2]);
                     $myquizPoints3 = MypageController::Get_RankPoint1($sql_temp.$sql[3]);

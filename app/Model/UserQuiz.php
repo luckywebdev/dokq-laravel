@@ -227,6 +227,7 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
             ->leftjoin('books', 'user_quizes.book_id', DB::raw('books.id and books.active <> 7')) 
             ->whereIn('u.active', [1,2,3,4])
             ->where('u.role', '!=', config('consts')['USER']['ROLE']['GROUP'])
+            ->whereNotIn('u.role', [4,5,6,7])
             ->groupby('u.id')
             ->orderby('sumpoint','desc');
         /*if($role == config('consts')['USER']['ROLE']['PUPIL']){
@@ -894,7 +895,7 @@ or (user_quizes.type = 2 and user_quizes.status = 3))'))
     }
     static function provincequizranking($term,$season,$rankingage, $user, $grade=null){
         $users = UserQuiz::SumQuizPoint($term,$season,$user->role)
-            ->where('u.address1',$user->address1);
+            ->where('u.address1', '=', $user->address1);
         $today = now();
         switch ($rankingage) {
             case 1:

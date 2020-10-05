@@ -62,13 +62,13 @@
 							<tbody class="text-md-center">
 								<?php $__currentLoopData = $myAllHistories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $passed_quiz_record): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 								<tr class="info">
-									<td><?php echo e($passed_quiz_record->created_date); ?></td>
+									<td><?php echo e($passed_quiz_record->finished_date); ?></td>
 									<td><a <?php if($passed_quiz_record->Book->active >= 3): ?> href="<?php echo e(url('book/' . $passed_quiz_record->book_id . '/detail')); ?>" <?php endif; ?> class="font-blue-madison"><?php echo e($passed_quiz_record->Book->title); ?></a></td>
 									<td><a href="<?php echo e(url('/book/search_books_byauthor?writer_id='.$passed_quiz_record->Book->writer_id.'&fullname='.$passed_quiz_record->Book->fullname_nick())); ?>" class="font-blue-madison"><?php echo e($passed_quiz_record->Book->fullname_nick()); ?></a></td>
 									<td><?php echo e($passed_quiz_record->Book->fullname_yomi()); ?></td>
 									<td>dq<?php echo e($passed_quiz_record->book_id); ?></td>
 									<td><?php echo e(floor($passed_quiz_record->point*100)/100); ?></td>
-									<td><?php echo e(date_format(date_add(date_create($passed_quiz_record->created_date), date_interval_create_from_date_string($passed_quiz_record->passed_test_time."seconds")), "Y-m-d H:i:s")); ?></td>
+									<td><?php echo e(date_format(date_add(date_create($passed_quiz_record->finished_date), date_interval_create_from_date_string($passed_quiz_record->passed_test_time."seconds")), "Y-m-d H:i:s")); ?></td>
 									<td><a href="<?php echo e(url("/mypage/other_view/".$passed_quiz_record->org_id)); ?>" class="font-blue-madison"><?php echo e($passed_quiz_record->Org_User->username); ?></a></td>
 									<?php if(!$otherview_flag): ?> <td><input type="checkbox" class="make-switch onebook" data-size="small" id="<?php echo e($passed_quiz_record->id); ?>" <?php if(($passed_quiz_record->is_public) == 1): ?>checked <?php endif; ?> ></td> <?php endif; ?>
 								</tr>

@@ -78,7 +78,7 @@
 							<tr>
 								<td>{{$key+1}}</td>
 								<td>@if(Date("Y") - Date("Y", strtotime($rank->birthday)) >= 15)
-										@if($rank->firstname != '' && $rank->firstname !== null) 
+										@if($rank->firstname != '' && $rank->firstname !== null && $rank->fullname_is_public == 1) 
 											<a href="{{url('mypage/other_view/' . $rank->id)}}" class="font-blue">{{$rank->firstname}} {{$rank->lastname}}</a>
 										@else
 											<a href="{{url('mypage/other_view/' . $rank->id)}}" class="font-blue"> {{$rank->username}}</a>
@@ -135,7 +135,7 @@
 							<tr>
 								<td>{{$key+1}}</td>
 								<td>@if(Date("Y") - Date("Y", strtotime($rank->birthday)) >= 15)
-										@if($rank->firstname != '' && $rank->firstname !== null) 
+										@if($rank->firstname != '' && $rank->firstname !== null && $rank->fullname_is_public == 1) 
 											<a href="{{url('mypage/other_view/' . $rank->id)}}" class="font-blue">{{$rank->firstname}} {{$rank->lastname}}</a>
 										@else
 											<a href="{{url('mypage/other_view/' . $rank->id)}}" class="font-blue"> {{$rank->username}}</a>

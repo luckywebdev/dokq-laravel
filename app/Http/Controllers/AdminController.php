@@ -2298,7 +2298,7 @@ class AdminController extends Controller
         $this->page_info['side'] = 'admin_basic_info';
         $this->page_info['subside'] = 'book_credit';
         
-        $bookcredits = CertiBackup::all();
+        $bookcredits = CertiBackup::orderby('backup_date', 'desc')->get();
         return view('admin.book_credit')
             ->with('page_info', $this->page_info)
             ->with('bookcredits', $bookcredits);
@@ -3654,15 +3654,24 @@ class AdminController extends Controller
 
         if(isset($user)){
             try{
-                $puiple_1 = User::where(['org_id' => $user_id, 'properties' => 0, 'role' => 9])->update(['active' => 2, 'org_id' => 0, 'group_name' => "", 'group_yomi' => ""]);
-                $puiple_2 = User::where(['org_id' => $user_id, 'properties' => 1, 'role' => 9])->update(['role' => 1, 'org_id' => 0, 'group_name' => "", 'group_yomi' => ""]);
+                $puiple_1 = User::where(['properties' => 0, 'role' => 9])
+                                ->whereIn('org_id', DB::raw("select classes.id from classes where classes.group_id='".$user_id."'"))
+                                ->update(['active' => 2, 'org_id' => 0, 'group_name' => "", 'group_yomi' => ""]);
+                $puiple_1 = User::where(['properties' => 1, 'role' => 9])
+                                ->whereIn('org_id', DB::raw("select classes.id from classes where classes.group_id='".$user_id."'"))
+                                ->update(['role' => 1, 'org_id' => 0, 'group_name' => "", 'group_yomi' => ""]);
+
+                // $puiple_1 = User::where(['org_id' => $user_id, 'properties' => 0, 'role' => 9])->update(['active' => 2, 'org_id' => 0, 'group_name' => "", 'group_yomi' => ""]);
+                // $puiple_2 = User::where(['org_id' => $user_id, 'properties' => 1, 'role' => 9])->update(['role' => 1, 'org_id' => 0, 'group_name' => "", 'group_yomi' => ""]);
                 $teacher = User::where(['org_id' => $user_id, 'role' => 4])->update(['active' => 2, 'org_id' => 0, 'group_name' => "", 'group_yomi' => ""]);
+                $represent = User::where(['org_id' => $user_id, 'role' => 6])->update(['active' => 2, 'org_id' => 0, 'role' => 4, 'group_name' => "", 'group_yomi' => ""]);
+                $IT_specialist = User::where(['org_id' => $user_id, 'role' => 7])->update(['active' => 2, 'org_id' => 0, 'role' => 4, 'group_name' => "", 'group_yomi' => ""]);
                 $person = User::where(['org_id' => $user_id, 'role' => 1])->update(['active' => 2, 'org_id' => 0, 'group_name' => "", 'group_yomi' => ""]);
                 $registerbooks = Books::where('register_id', $user_id)->update(['register_id' => 0]);
                 $angates = Angate::where('user_id', $user_id)->delete();
                 $article = Article::where('register_id', $user_id)->delete();
                 $certiBackup = CertiBackup::where('user_id', $user_id)->delete();
-                $classes = Classes::where('teacher_id', $user_id)->update(['teacher_id' => null]);
+                $classes = Classes::where('group_id', $user_id)->update(['teacher_id' => null]);
                 $history_access = AccessHistory::where('user_id', $user_id)->delete();
                 $history_login = LoginHistory::where('user_id', $user_id)->delete();
                 $history_pwd = PwdHistory::where('user_id', $user_id)->delete();

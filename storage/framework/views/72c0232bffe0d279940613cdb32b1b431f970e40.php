@@ -157,14 +157,16 @@
 							</div>
 						</div>
 						<?php else: ?>
-						<div class="portlet-title">
-							<div class="caption">
-								3カ月間で獲得するポイント推移<span style="font-size:12px">（同年代全国平均との比較）</span>
+							<?php if($current_user->active != 2 && !in_array($current_user->role, [2, 4, 5, 6, 7])): ?>
+							<div class="portlet-title">
+								<div class="caption">
+									3カ月間で獲得するポイント推移<span style="font-size:12px">（同年代全国平均との比較）</span>
+								</div>
 							</div>
-						</div>
-						<div class="portlet-body  col-md-12" style="height: 350px;">
-							<div id="target-chart" class="dqtarget-chart chart-holder" style="width: 480px; height: 320px;"></div>
-						</div>
+							<div class="portlet-body  col-md-12" style="height: 350px;">
+								<div id="target-chart" class="dqtarget-chart chart-holder" style="width: 480px; height: 320px;"></div>
+							</div>
+							<?php endif; ?>
 						<?php endif; ?>
 						</div>
 
@@ -300,6 +302,7 @@
 								</div>
 							</div>
 						</div>
+						<?php if($current_user->active != 2 && !in_array($current_user->role, [2, 4, 5, 6, 7])): ?>
 						<div class="caption" style="font-size:16px:">
 							&nbsp;<br>
 							マイ読書量順位
@@ -363,6 +366,7 @@
 							<input type="hidden" id="currentSeason" name="currentSeason" value="<?php echo e($current_season['term']); ?>">
 							<input type="hidden" id="arraySeason" name="arraySeason" value="<?php echo e($current_season['term']); ?>">
 						</div>
+						<?php endif; ?>
 					</div>
 				</div>	
 			</div>	

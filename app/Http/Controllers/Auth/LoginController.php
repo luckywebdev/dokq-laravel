@@ -261,7 +261,7 @@ class LoginController extends Controller
                                 $orgworkHistory->user_id = $user->id;
                                 $orgworkHistory->username = $user->username;
                                 $orgworkHistory->group_id = $user->org_id;
-                                if(!$user->isLibrarian() && $user->active == 1)
+                                if(!$user->isLibrarian() && $user->active == 1 && User::find($user->org_id))
                                     $orgworkHistory->group_name = User::find($user->org_id)->username; 
                                 if($user->isTeacher() && $user->active == 1){
                                     $local_ip = \Request::ip();
@@ -309,7 +309,7 @@ class LoginController extends Controller
                                 $personworkHistory->item = 0;
                                 $personworkHistory->work_test = 0;
                                 $personworkHistory->user_type = '教職員';
-                                if(!$user->isLibrarian())
+                                if(!$user->isLibrarian() && $user->School)
                                     $personworkHistory->org_username = $user->School->username;
                                 $personworkHistory->age = $user->age();
                                 $personworkHistory->address1 = $user->address1;
@@ -442,11 +442,11 @@ class LoginController extends Controller
             $PersonadminHistory->save();
         }else if($user->isGroup() || $user->isSchoolMember()){
             $orgworkHistory = new OrgworkHistory();
-            if($user->isSchoolMember()){
+            if($user->isSchoolMember() && $user->org_id){
                 $orgworkHistory->user_id = $user->id;
                 $orgworkHistory->username = $user->username;
                 $orgworkHistory->group_id = $user->org_id;
-                if(!$user->isLibrarian() && $user->active == 1)
+                if(!$user->isLibrarian() && $user->active == 1 && User::find($user->org_id))
                     $orgworkHistory->group_name = User::find($user->org_id)->username; 
             }
             if($user->isGroup()){
@@ -467,7 +467,7 @@ class LoginController extends Controller
                 $personworkHistory->item = 0;
                 $personworkHistory->work_test = 1;
                 $personworkHistory->user_type = '教職員';
-                if(!$user->isLibrarian() && $user->active == 1)
+                if(!$user->isLibrarian() && $user->active == 1 && $user->School)
                     $personworkHistory->org_username = $user->School->username;
                 $personworkHistory->age = $user->age();
                 $personworkHistory->address1 = $user->address1;

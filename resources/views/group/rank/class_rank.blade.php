@@ -84,35 +84,35 @@
 									<tbody class="text-md-center">
 										<tr class="danger">
 											<td>{{$current_season['year']}}年度 冬</td>
-											<td>{{$avg_point['winter']}}</td>
-											<td>{{$rank_grade['winter']}}</td>
-											<td>{{$rank_city['winter']}}</td>
-											<td>{{$rank_province['winter']}}</td>
-											<td>{{$rank_overall['winter']}}</td>
+											<td>{{$current_season['term'] >= 3 ? $avg_point['winter'] : '-'}}</td>
+											<td>{{$current_season['term'] >= 3 ? $rank_grade['winter'] : '-'}}</td>
+											<td>{{$current_season['term'] >= 3 ? $rank_city['winter'] : '-'}}</td>
+											<td>{{$current_season['term'] >= 3 ? $rank_province['winter'] : '-'}}</td>
+											<td>{{$current_season['term'] >= 3 ? $rank_overall['winter'] : '-'}}</td>
 										</tr>
 										<tr class="warning">
 											<td>{{$current_season['year']}}年度 秋</td>
-											<td>{{$avg_point['autumn']}}</td>
-											<td>{{$rank_grade['autumn']}}</td>
-											<td>{{$rank_city['autumn']}}</td>
-											<td>{{$rank_province['autumn']}}</td>
-											<td>{{$rank_overall['autumn']}}</td>
+											<td>{{$current_season['term'] >= 2 ? $avg_point['autumn'] : '-'}}</td>
+											<td>{{$current_season['term'] >= 2 ? $rank_grade['autumn'] : '-'}}</td>
+											<td>{{$current_season['term'] >= 2 ? $rank_city['autumn'] : '-'}}</td>
+											<td>{{$current_season['term'] >= 2 ? $rank_province['autumn'] : '-'}}</td>
+											<td>{{$current_season['term'] >= 2 ? $rank_overall['autumn'] : '-'}}</td>
 										</tr>
 										<tr class="danger">
 											<td>{{$current_season['year']}}年度 夏</td>
-											<td>{{$avg_point['summer']}}</td>
-											<td>{{$rank_grade['summer']}}</td>
-											<td>{{$rank_city['summer']}}</td>
-											<td>{{$rank_province['summer']}}</td>
-											<td>{{$rank_overall['summer']}}</td>
+											<td>{{$current_season['term'] >= 1 ? $avg_point['summer'] : '-'}}</td>
+											<td>{{$current_season['term'] >= 1 ? $rank_grade['summer'] : '-'}}</td>
+											<td>{{$current_season['term'] >= 1 ? $rank_city['summer'] : '-'}}</td>
+											<td>{{$current_season['term'] >= 1 ? $rank_province['summer'] : '-'}}</td>
+											<td>{{$current_season['term'] >= 1 ? $rank_overall['summer'] : '-'}}</td>
 										</tr>
 										<tr class="warning">
 											<td>{{$current_season['year']}}年度 春</td>
-											<td>{{$avg_point['spring']}}</td>
-											<td>{{$rank_grade['spring']}}</td>
-											<td>{{$rank_city['spring']}}</td>
-											<td>{{$rank_province['spring']}}</td>
-											<td>{{$rank_overall['spring']}}</td>
+											<td>{{$current_season['term'] >= 0 ? $avg_point['spring'] : '-'}}</td>
+											<td>{{$current_season['term'] >= 0 ? $rank_grade['spring'] : '-'}}</td>
+											<td>{{$current_season['term'] >= 0 ? $rank_city['spring'] : '-'}}</td>
+											<td>{{$current_season['term'] >= 0 ? $rank_province['spring'] : '-'}}</td>
+											<td>{{$current_season['term'] >= 0 ? $rank_overall['spring'] : '-'}}</td>
 										</tr>
 										<tr class="danger">
 											<td>{{$current_season['year']}}年度 累計</td>
@@ -146,7 +146,7 @@
 			</div>
 		</div>
 		<form action={{url('/group/rank/1')}} id="selectClass" name="rank1-form" method = "GET">
-					<input type="hidden" name="_token" value="{{ csrf_field()}}">
+					<!-- <input type="hidden" name="_token" value="{{ csrf_field()}}"> -->
 					<input type="hidden" name="class_id" id="class_id" value=""/>
 		</form>
 	</div>
