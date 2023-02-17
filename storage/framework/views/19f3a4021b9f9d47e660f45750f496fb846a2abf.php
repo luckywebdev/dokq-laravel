@@ -21,7 +21,7 @@
 		background: #3863A0;
 		text-align: center;">
 				<h1 style="text-align: center;">
-					読Q退会用URLの送付
+					読Qを退会しました
 				</h1>
 			</div>
 			<div style="padding: 20px">
@@ -33,9 +33,9 @@
 									<?php echo e($user->group_name); ?><br>
 									<?php echo e($user->rep_post); ?>　　<?php echo e($user->rep_name); ?>　様
 								<?php elseif($user->role==config('consts')['USER']['ROLE']['AUTHOR']): ?>
-								 <?php echo e($user->username); ?>　様
+								 <?php echo e($user->firstname); ?>　様
 								<?php else: ?>
-								 <?php echo e($user->username); ?>　様
+								 <?php echo e($user->firstname); ?>　様
 								<?php endif; ?>
 								<br><br>
 								いつも読Qをご利用いただきありがとうございます。
@@ -43,7 +43,7 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								このたび、読Qを退会される旨のお申し出を承りました。会費の支払い停止手続を始めさせていただきます。このメールに心当たりが無い場合、読Q宛に、お問合せ欄からご連絡ください。なお、読Qでは、あなたのアカウントを退会後も3カ月間保持します。退会していた間の会費を納めていただければ、3か月以内なら復活することが可能です。ポイントや合格履歴などを取り戻すことはできません。<br>
+							このたび、会費お支払い停止の手続きが終了し、読Qの退会が完了しました。これまで読Qをご利用いただき、ありがとうございました。このメールに心当たりが無い場合、読Q宛に、お問合せ欄からご連絡ください。なお、読Qでは、あなたのアカウントを退会後も3カ月間保持します。３か月分の会費を納めていただくことで、復活が可能です。お問合せ欄からご連絡ください。<br>
 							</td>
 						</tr>
 						 <tr>
@@ -55,15 +55,10 @@
 						<tr>
 							<td colspan="2">
 							    <br><br>
-								一般社団法人読書認定協会<br>
-								藤沢市辻堂元町5-7-3<br>
-								代表理事　　神部　ゆかり<br>
+								一般社団法人読書認定協会<br><br>
                                 <?php echo e($actual_link); ?>
 
                                 <br>
-                                <?php
-                                 echo config('mail')['from']['address'];
-                                ?>
 							</td>
 						</tr> 
 					</tbody>

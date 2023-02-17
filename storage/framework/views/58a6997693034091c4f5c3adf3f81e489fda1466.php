@@ -278,9 +278,9 @@
                         <label class="label-above">現有効期限</label>                                                   
                     </div>  
                     <?php if($user->isPupil()): ?>
-                    <input type="<?php echo e("text"); ?>" name="payment" class="form-control" id="payment" value="<?php if($user->properties == 0): ?><?php echo e(config('consts')['PAYMENT_METHOD'][0]); ?><?php elseif($user->pay_content !== null && $user->pay_content !== ''): ?><?php echo e(config('consts')['PAY_LIST'][$user->pay_content].$user->pay_amount.'円'.$user->period); ?><?php else: ?><?php echo e(''); ?><?php endif; ?>"  readonly>
+                    <input type="<?php echo e("text"); ?>" name="payment" class="form-control" id="payment" value="<?php if($user->active >= 2): ?><?php echo e(date_format(date_create($user->updated_at), 'Y年m月d日').'より準会員'); ?> <?php else: ?> <?php if($user->properties == 0): ?><?php echo e(config('consts')['PAYMENT_METHOD'][0]); ?><?php elseif($user->pay_content !== null && $user->pay_content !== ''): ?><?php echo e(config('consts')['PAY_LIST'][$user->pay_content].$user->pay_amount.'円'.$user->period); ?><?php else: ?><?php echo e(''); ?><?php endif; ?> <?php endif; ?>"  readonly>
                     <?php else: ?>
-                    <input type="<?php echo e("text"); ?>" name="payment" class="form-control" id="payment" value="<?php if($user->properties == 0): ?><?php echo e(''); ?><?php elseif($user->pay_content !== null && $user->pay_content !== ''): ?><?php echo e(config('consts')['PAY_LIST'][$user->pay_content].$user->pay_amount.'円'.$user->period); ?><?php else: ?><?php echo e(''); ?><?php endif; ?>"  readonly>
+                    <input type="<?php echo e("text"); ?>" name="payment" class="form-control" id="payment" value="<?php if($user->active >= 2): ?><?php echo e(date_format(date_create($user->updated_at), 'Y年m月d日').'より準会員'); ?> <?php else: ?> <?php if($user->properties == 0): ?><?php echo e(''); ?><?php elseif($user->pay_content !== null && $user->pay_content !== ''): ?><?php echo e(config('consts')['PAY_LIST'][$user->pay_content].$user->pay_amount.'円'.$user->period); ?><?php else: ?><?php echo e(''); ?><?php endif; ?> <?php endif; ?>"  readonly>
                     <?php endif; ?>
 
                 </div>
@@ -502,6 +502,13 @@
                                     <span style="color:red">本人確認画像のチェック</span>
                                     <input type="checkbox" class="form-control" id="authfile_check" name="authfile_check" <?php if($user->authfile_check == 1): ?> <?php echo e("checked"); ?> <?php endif; ?> >
                                 </div>
+                                <?php if($user->authfile != null && $user->authfile != '' && $user->authfile_check == 1): ?>
+                                <div>
+                                    <a href="#" id="authfile_download" style="color:blue; font-weight: bold">ダウンロード</a>
+                                    <span>&nbsp;/&nbsp;</span>
+                                    <a href="#" id="authfile_delete" style="color:red; font-weight: bold">ファイル削除</a>
+                                </div>
+                                <?php endif; ?>
                             </td>
                             <td style="vertical-align:middle;">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -527,6 +534,13 @@
                                     <span style="color:red">資格書類画像のチェック</span>
                                     <input type="checkbox" class="form-control" id="certifile_check" name="certifile_check" <?php if($user->certifile_check == 1): ?> <?php echo e("checked"); ?> <?php endif; ?> >
                                 </div>
+                                <?php if($user->certifilename != null && $user->certifilename != '' && $user->certifile_check == 1): ?>
+                                <div>
+                                    <a href="#" id="certifile_download" style="color:blue; font-weight: bold">ダウンロード</a>
+                                    <span>&nbsp;/&nbsp;</span>
+                                    <a href="#" id="certifile_delete" style="color:red; font-weight: bold">ファイル削除</a>
+                                </div>
+                                <?php endif; ?>
                             </td>
                         </tr>                                              
                     </tbody>
@@ -544,7 +558,9 @@
                             <td style="vertical-align:middle;">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-preview thumbnail" style="width: 150px; height: 150px;">
-                                        <img src="<?php if($user->image_path != null): ?> <?php echo e(url($user->image_path)); ?> <?php endif; ?>" alt=""/>
+                                        <?php if($user->imagepath_check != 1): ?>
+                                            <img src="<?php if($user->image_path != null): ?> <?php echo e(url($user->image_path)); ?> <?php endif; ?>" alt=""/>
+                                        <?php endif; ?>
                                     </div>
                                     <div class="text-md-center"><span>&nbsp;<?php if($user->imagepath_date): ?>登録日 : <?php echo e($user->imagepath_date); ?><?php endif; ?></span></div>
                                     <div class="text-md-center" style="height: 34px;">                                      
@@ -724,6 +740,80 @@
             $("#validate-form").submit();
         });
 
+        $("#authfile_download").click(function(e) {
+            e.preventDefault();
+            const link = document.createElement('a')
+            link.href = "<?php echo e($user->file); ?>"
+            link.download = downloadFileName("<?php echo e($user->file); ?>", "<?php echo e($user->username); ?>")
+            document.body.appendChild(link)
+            link.click();
+            document.body.removeChild(link);
+        })
+
+        $("#authfile_delete").click(function (e) {
+            e.preventDefault();
+
+            var info = {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                id: `<?php echo e($user->id); ?>`
+            }
+            $.ajax({
+                type: "post",
+                url: "<?php echo e(url('/admin/deleteAuthFileByAdmin')); ?>",
+                data: info,
+            
+                beforeSend: function (xhr) {
+                    var token = $('meta[name="csrf_token"]').attr('content');
+                    if (token) {
+                          return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                    }
+                },           
+                success: function (response){
+                    console.log('response', response)
+                    if (response.status == 'success') {
+                        location.reload();
+                    }
+                }
+            });
+        });
+
+        $("#certifile_download").click(function(e) {
+            e.preventDefault();
+            const link = document.createElement('a')
+            link.href = "<?php echo e($user->certifile); ?>"
+            link.download = downloadFileName("<?php echo e($user->certifile); ?>", "<?php echo e($user->username); ?>")
+            document.body.appendChild(link)
+            link.click();
+            document.body.removeChild(link);
+        })
+
+        $("#certifile_delete").click(function (e) {
+            e.preventDefault();
+
+            var info = {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                id: `<?php echo e($user->id); ?>`
+            }
+            $.ajax({
+                type: "post",
+                url: "<?php echo e(url('/admin/deleteCertiFileByAdmin')); ?>",
+                data: info,
+            
+                beforeSend: function (xhr) {
+                    var token = $('meta[name="csrf_token"]').attr('content');
+                    if (token) {
+                          return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                    }
+                },           
+                success: function (response){
+                    console.log('response', response)
+                    if (response.status == 'success') {
+                        location.reload();
+                    }
+                }
+            });
+        });
+
         var handleDatePickers = function () {
 
             if (jQuery().datepicker) {
@@ -756,6 +846,11 @@
         handleComponents();
         handleDatePickers();
         handleInputMasks();
+
+        var downloadFileName = function (path, name) {
+            var ext = path.slice(-4);
+            return name + ext;
+        }
     </script>
     <script type="text/javascript" src="<?php echo e(asset('js/group/group.js')); ?>"></script>
 <?php $__env->stopSection(); ?>

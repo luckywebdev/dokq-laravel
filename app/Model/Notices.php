@@ -9,7 +9,7 @@ class Notices extends Model
 {
     protected $table = 'notices';
     
-    protected $fillable = ['content', 'created_at','updated_at'];
+    protected $fillable = ['content', 'outside_link', 'created_at','updated_at'];
 
     public function scopeNotice($query, $id){
     	return $query->where( function ($q) use ($id) {

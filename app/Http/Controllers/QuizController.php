@@ -58,7 +58,7 @@ class QuizController extends Controller
         else if(strpos($device_data, 'Windows') > 0){
             $device = 'Windows Desktop';
         }
-        else if(strpost($device_data, 'iPhone') !== false && strpos($device_data, 'Mac OS') > 0){
+        else if(strpos($device_data, 'iPhone') !== false && strpos($device_data, 'Mac OS') > 0){
             $device = 'Mac OS Desktop';
         }
         else{

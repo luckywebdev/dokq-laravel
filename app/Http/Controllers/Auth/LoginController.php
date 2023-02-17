@@ -71,7 +71,7 @@ class LoginController extends Controller
         $start_month = $real_pay_start_arr[1];
         $start_day = $real_pay_start_arr[2];
         if(strpos(strtolower($pay_content), "yearly") === false){
-            if($start_year == 12){
+            if($start_month == 12){
                 $period_month = 1;
                 $period_year = $start_year + 1;
                 $end_day_of_period_year_month = cal_days_in_month(CAL_GREGORIAN,$period_month,$period_year);
@@ -236,8 +236,13 @@ class LoginController extends Controller
                                                 ->whereNotNull('settlement_date')
                                                 ->where('settlement_date' ,'<', $next_month_date)
                                                 ->first();
-                
-                        if($settlement_check > 0){
+                        if ($certi_back && is_object($certi_back)) {
+                            $certi_message_check = Messages::where('to_id', $user->id)
+                                                ->where('content', 'like', '%(パスコード'.$certi_back->passcode.')%')
+                                                ->where('created_at', '>', date_format(date_sub(date_create($certi_back->settlement_date), date_interval_create_from_date_string('2 weeks')), "Y-m-d"))
+                                                ->count();
+                        } else $certi_message_check = 0;
+                        if($certi_back && $settlement_check > 0 && date_sub(date_create($certi_back->settlement_date), date_interval_create_from_date_string('2 weeks')) <= now() && date_create($certi_back->settlement_date) > now() && $certi_message_check == 0){
                             $message = new Messages;
                             $message->type = 0;
                             $message->from_id = 0;
@@ -261,9 +266,13 @@ class LoginController extends Controller
                                 $orgworkHistory->user_id = $user->id;
                                 $orgworkHistory->username = $user->username;
                                 $orgworkHistory->group_id = $user->org_id;
-                                if(!$user->isLibrarian() && $user->active == 1 && User::find($user->org_id))
+                                if(!$user->isLibrarian() && $user->active == 1 && User::find($user->org_id)) {
                                     $orgworkHistory->group_name = User::find($user->org_id)->username; 
-                                if($user->isTeacher() && $user->active == 1){
+                                }
+                                if($user->isLibrarian() && $user->active == 1 && User::find($user->org_id)) {
+                                    $request->session()->put('teacher_auth', 1);
+                                }
+                                if(($user->isTeacher() || $user->isRepresen() || $user->isItmanager()) && $user->active == 1){
                                     $local_ip = \Request::ip();
                                     $org_data = User::whereRaw('users.id = "'.$user->org_id.'"')->first();
                                     $school_ip = $org_data->ip_address;
@@ -281,6 +290,7 @@ class LoginController extends Controller
                                     $school_ip = ip2long($school_ip);
                                     $mask = -1 << (32 - $cidr);
                                     $school_ip &= $mask; # nb: in case the supplied subnet wasn't correctly aligned
+				    // dd('ip_check', $local_ip, $school_ip, $local_ip & $mask, $mask);
                                     $ip_check = ($local_ip & $mask) == $school_ip;
                                     if($ip_check && $org_data->fixed_flag == 1){
                                         $request->session()->put('teacher_auth', 1);
@@ -311,10 +321,13 @@ class LoginController extends Controller
                                 $personworkHistory->user_type = '教職員';
                                 if(!$user->isLibrarian() && $user->School)
                                     $personworkHistory->org_username = $user->School->username;
+                                if($user->isLibrarian() && $user->active == 1 && User::find($user->org_id)) {
+                                    $request->session()->put('teacher_auth', 1);
+                                }
                                 $personworkHistory->age = $user->age();
                                 $personworkHistory->address1 = $user->address1;
                                 $personworkHistory->address2 = $user->address2;
-                                if($user->isTeacher()){
+                                if($user->isTeacher() || $user->isRepresen() || $user->isItmanager()){
                                     $local_ip = \Request::ip();
                                     $org_data = User::whereRaw('users.id = "'.$user->org_id.'"')->first();
                                     $school_ip = $org_data->ip_address;
@@ -527,8 +540,14 @@ class LoginController extends Controller
                                 ->whereNotNull('settlement_date')
                                 ->where('settlement_date' ,'<', $next_month_date)
                                 ->first();
-                
-        if($settlement_check > 0){
+        $certi_message_check = 0;
+        if ($settlement_check > 0 && $certi_back) {
+            $certi_message_check = Messages::where('to_id', $user->id)
+                                    ->where('content', 'like', '%(パスコード'.$certi_back->passcode.')%')
+                                    ->where('created_at', '>', date_format(date_sub(date_create($certi_back->settlement_date), date_interval_create_from_date_string('2 weeks')), "Y-m-d"))
+                                    ->count();
+        }
+        if($settlement_check > 0 && date_sub(date_create($certi_back->settlement_date), date_interval_create_from_date_string('2 weeks')) <= now() && date_create($certi_back->settlement_date) > now() && $certi_message_check == 0){
             $message = new Messages;
             $message->type = 0;
             $message->from_id = 0;
@@ -557,9 +576,13 @@ class LoginController extends Controller
                 $orgworkHistory->user_id = $user->id;
                 $orgworkHistory->username = $user->username;
                 $orgworkHistory->group_id = $user->org_id;
-                if(!$user->isLibrarian())
+                if(!$user->isLibrarian()) {
                     $orgworkHistory->group_name = User::find($user->org_id)->username; 
-                if($user->isTeacher()){
+                }
+                if($user->isLibrarian() && $user->active == 1 && User::find($user->org_id)) {
+                    $request->session()->put('teacher_auth', 1);
+                }
+                if($user->isTeacher() || $user->isRepresen() || $user->isItmanager()){
                     $local_ip = \Request::ip();
                     $org_data = User::whereRaw('users.id = "'.$user->org_id.'"')->first();
                     $school_ip = $org_data->ip_address;
@@ -605,9 +628,13 @@ class LoginController extends Controller
                 $personworkHistory->item = 0;
                 $personworkHistory->work_test = 0;
                 $personworkHistory->user_type = '教職員';
-                if(!$user->isLibrarian())
+                if(!$user->isLibrarian()) {
                     $personworkHistory->org_username = $user->School->username;
-                if($user->isTeacher()){
+                }
+                if($user->isLibrarian() && $user->active == 1 && User::find($user->org_id)) {
+                    $request->session()->put('teacher_auth', 1);
+                }
+                if($user->isTeacher() || $user->isRepresen() || $user->isItmanager()){
                     $local_ip = \Request::ip();
                     $org_data = User::whereRaw('users.id = "'.$user->org_id.'"')->first();
                     $school_ip = $org_data->ip_address;

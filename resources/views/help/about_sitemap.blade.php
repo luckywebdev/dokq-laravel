@@ -129,12 +129,16 @@
 						<ul style="list-style:none">
 							<li><a href="" style="font-weight: bold; color: #fd73cf; font-size: 180%">会員学校トップページ</a></li>
 							<li style="font-size: 150%">団体の読Q基本情報</li>
+							@if(Auth::check() && Auth::user()->isGroupSchoolMember())
 							<li><a href="{{ url('/auth/viewpdf?role=100&helpdoc=/manual/group_manual.pdf') }}" style="font-size: 150%">団体読Qマニュアル</a></li>
+							@else
+							<li style="font-size: 150%">団体読Qマニュアル</li>
+							@endif
 							<li style="font-size: 150%">読Qクラス設定</li>
 							<li style="font-size: 150%">読Q担任登録</li>
 							<li style="font-size: 150%">クラス対抗読Qランキング</li>
 							<li style="font-size: 150%">学校対抗読Qランキング</li>
-							<li><a href="" style="font-size: 150%">小中学校読Qランキング全国順位</a></li>
+							<li style="font-size: 150%">小中学校読Qランキング全国順位</li>
 						</ul>
 						<ul style="list-style:none">
 							<li><a href="" style="font-weight: bold; color: #fd73cf; font-size: 180%">教職員トップページ</a></li>

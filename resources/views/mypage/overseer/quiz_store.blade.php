@@ -6,6 +6,15 @@
 			vertical-align: middle !important;
 			text-align: center !important;
 		}
+		.alert_msg {
+			color: red;
+			position: absolute;
+			right: 2%;
+			font-weight: bold;
+			top: 70px;
+			white-space: normal;
+			width: 60%;
+		}
 	</style>
 @stop
 @section('breadcrumb')
@@ -91,8 +100,9 @@
 								<li class="@if(isset($type) && $type == '2') active @endif">
 									<a href="{{url('/mypage/quiz_store/2/'.$book->id)}}"><strong>
 									監修者による認定審査</strong></a>
-								</li>
+								</li>								
 							</ul>
+							<h5 class="text-bold pull-right alert_msg" style="color: red">注意！：　クイズ作成者が1人だけの場合、読Q本登録を完了できません。 （著者が監修者の場合を除く）</h5>
 
 							<div class="tab-content" style="background: #fcc5fa;">
 								
@@ -110,7 +120,7 @@
 												<th>出典ページ</th>
 												<th>名前</th>
 												<th>クイズID</th>
-												<th>編集/削除</th>
+												<th>編集</th>
 											</tr>
 										</thead>
 										@if(isset($type) && $type == '1')

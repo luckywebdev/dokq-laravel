@@ -42,20 +42,26 @@
                         <div class="form-body col-md-12">
                             <?php if(isset($act)&& $act == "confirm"): ?>
                                 <div class="col-md-3">
+                                <?php if(isset($book) && $book->register_id == Auth::id()): ?>
                                 <button type="button" class="btn btn-primary save-close" style="margin-top:8px;"><i class="fa fa-save"></i> 登録して終了する</button>
+                                <?php endif; ?>
                                 </div>
                                 <div class="col-md-3">
+                                <?php if(isset($book) && $book->register_id == Auth::id()): ?>
                                 <button type="button" class="btn btn-success quiz-make" style="margin-top:8px;"><i class="fa fa-check"></i> 登録してクイズを作る</button>
+                                <?php endif; ?>
                                 </div>
                                 <div class="col-md-4">
+                                <?php if(isset($book) && $book->register_id == Auth::id()): ?>
                                 <button type="button" class="btn btn-warning recreate" style="margin-top:8px;">登録してもう1冊本を登録する</button>
+                                <?php endif; ?>
                             	</div>
                             	<div class="col-md-2">
                             	<button type="button" class="btn btn-info" style="margin-top:8px;" onclick="javascript:history.go(-1)">戻　る</button>
                             	</div>
                             <?php else: ?>
                             	<div class="col-md-5">
-                                <button type="button" class="btn btn-primary subsave" style="margin-top:8px;"><i class="fa fa-save"></i> 途中保存する</button>
+                                <!-- <button type="button" class="btn btn-primary subsave" style="margin-top:8px;"><i class="fa fa-save"></i> 途中保存する</button> -->
                                 </div>
                                 <div class="col-md-3">
                                 <button type="button" class="btn btn-success btn_confirm" style="margin-top:8px;"><i class="fa fa-check"></i> 確認画面へ進む</button>

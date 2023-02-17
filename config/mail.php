@@ -55,8 +55,12 @@ return [
     |
     */
 
+    // 'from' => [
+    //     'address' => 'info@dokq.org',
+    //     'name' => '読Q',
+    // ],
     'from' => [
-        'address' => 'info@dokq.org',
+        'address' => 'support@dokq.org',
         'name' => '読Q',
     ],
 
@@ -84,9 +88,11 @@ return [
     |
     */
 
-    'username' => 'info@dokq.org',
+    // 'username' => 'info@dokq.org',
+    // 'password' => 'dokusho573',  //'dokq1117',
 
-    'password' => 'dokusho573',  //'dokq1117',
+    'username' => 'support@dokq.org',
+    'password' => '2510043dokq',  //'dokq1117',
 
     /*
     |--------------------------------------------------------------------------

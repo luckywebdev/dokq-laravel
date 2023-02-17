@@ -39,7 +39,7 @@
 		                > クラス内の読書量
 		            </li>
 		            <li class="hidden-xs">
-		                > クラス児童一覧(一括操作用)
+		                > クラス生徒一覧(一括操作用)
 		            </li>
 		        </ol>
 	        </div>
@@ -88,23 +88,23 @@
 							<div class="col-md-4">
 								<?php if(Auth::user()->isLibrarian() && Auth::user()->active==1): ?>							
 									<select class="bs-select form-control" id="form_action">
-										<option value="A" disabled="true">A 一括（選択した児童）で読Qネーム入力</option>
-										<option value="B" disabled="true">B 一括（選択した児童）教師パスワード入力</option>
-										<option value="C" disabled="true">C 一括(選択した児童）ログアウト</option>
-										<option value="D" <?php if(!Auth::user()->getWifiFlag()): ?> disabled <?php endif; ?>>D 一括（選択した児童）でお知らせを入力</option>
-										<option value="E" disabled="true">E 選択した児童の合格記録の取り消し</option>
-										<option value="F" disabled="true">F 選択した児童のログインエラーロック解除</option>
-										<option value="G" disabled="true">G 選択した児童の顔認証エラーを顔登録画面へ</option>
+										<option value="A" disabled="true">A 一括（選択した生徒）で読Qネーム入力</option>
+										<option value="B" disabled="true">B 一括（選択した生徒）教師パスワード入力</option>
+										<option value="C" disabled="true">C 一括(選択した生徒）ログアウト</option>
+										<option value="D" <?php if(!Auth::user()->getWifiFlag()): ?> disabled <?php endif; ?>>D 一括（選択した生徒）でお知らせを入力</option>
+										<option value="E" disabled="true">E 選択した生徒の合格記録の取り消し</option>
+										<option value="F" disabled="true">F 選択した生徒のログインエラーロック解除</option>
+										<option value="G" disabled="true">G 選択した生徒の顔認証エラーを顔登録画面へ</option>
 									</select>
 								<?php else: ?>
 									<select class="bs-select form-control" id="form_action">
-										<option value="A" <?php if($fixed_flag != 1): ?> disabled <?php endif; ?>>A 一括（選択した児童）で読Qネーム入力</option>
-										<option value="B" <?php if($fixed_flag != 1): ?> disabled <?php endif; ?>>B 一括（選択した児童）教師パスワード入力</option>
-										<option value="C" <?php if($fixed_flag != 1): ?> disabled <?php endif; ?>>C 一括(選択した児童）ログアウト</option>
-										<option value="D" <?php if(!Auth::user()->getWifiFlag()): ?> disabled <?php endif; ?> <?php if($teacher_belong == 0): ?> disabled <?php endif; ?>>D 一括（選択した児童）でお知らせを入力</option>
-										<option value="E" <?php if(!Auth::user()->getWifiFlag()): ?> disabled <?php endif; ?> <?php if($teacher_belong == 0): ?> disabled <?php endif; ?>>E 選択した児童の合格記録の取り消し</option>
-										<option value="F" <?php if(!Auth::user()->getWifiFlag()): ?> disabled <?php endif; ?> <?php if($teacher_belong == 0): ?> disabled <?php endif; ?>>F 選択した児童のログインエラーロック解除</option>
-										<option value="G" <?php if(!Auth::user()->getWifiFlag()): ?> disabled <?php endif; ?> <?php if($teacher_belong == 0): ?> disabled <?php endif; ?>>G 選択した児童の顔認証エラーを顔登録画面へ</option>
+										<option value="A" <?php if($fixed_flag != 1): ?> disabled <?php endif; ?>>A 一括（選択した生徒）で読Qネーム入力</option>
+										<option value="B" <?php if($fixed_flag != 1): ?> disabled <?php endif; ?>>B 一括（選択した生徒）教師パスワード入力</option>
+										<option value="C" <?php if($fixed_flag != 1): ?> disabled <?php endif; ?>>C 一括(選択した生徒）ログアウト</option>
+										<option value="D" <?php if(!Auth::user()->getWifiFlag()): ?> disabled <?php endif; ?> <?php if($teacher_belong == 0): ?> disabled <?php endif; ?>>D 一括（選択した生徒）でお知らせを入力</option>
+										<option value="E" <?php if(!Auth::user()->getWifiFlag()): ?> disabled <?php endif; ?> <?php if($teacher_belong == 0): ?> disabled <?php endif; ?>>E 選択した生徒の合格記録の取り消し</option>
+										<option value="F" <?php if(!Auth::user()->getWifiFlag()): ?> disabled <?php endif; ?> <?php if($teacher_belong == 0): ?> disabled <?php endif; ?>>F 選択した生徒のログインエラーロック解除</option>
+										<option value="G" <?php if(!Auth::user()->getWifiFlag()): ?> disabled <?php endif; ?> <?php if($teacher_belong == 0): ?> disabled <?php endif; ?>>G 選択した生徒の顔認証エラーを顔登録画面へ</option>
 									</select>	
 								<?php endif; ?>							
 							</div>
@@ -117,7 +117,7 @@
 								</label>
 							</div>
 							<div class="col-md-4">
-								<h4 class="text-md-center">クラス児童選択</h4>
+								<h4 class="text-md-center">クラス生徒選択</h4>
 							</div>
 							<div class="col-md-2">
 								<button type="button" class="btn btn-danger pull-right cancel_btn">キャンセル</button>
@@ -369,17 +369,72 @@
 			// var socket = io('http://localhost:3000');
 
 			var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');
+			<?php if(Auth::check()): ?>
+				socket.on('msglogin', function(msg){
+					console.log(msg);
+					var data = JSON.parse(msg);
+					var id = '<?php echo Auth::id();?>';
+					var pupil_id = data.logedin_id;
+					var pupils = $(".pupil");
+					console.log(pupil_id);
+					pupils.each(function(){
+						var p_id_temp = $(this).attr("tdid");
+						if(p_id_temp == pupil_id){
+							console.log(p_id_temp);
+							$(this).removeClass('danger');
+							$(this).removeClass('grey');
+							$(this).removeClass('warning');
+							$(this).removeClass('primary');
+						}
+						else{
+							// $(this).removeClass('danger');
+						}
+					});
+				}); 
+				socket.on('msglogout', function(msg){
+					console.log(msg);
+					var data = JSON.parse(msg);
+					var id = '<?php echo Auth::id();?>';
+					var pupil_id = data.logedout_id;
+					var pupils = $(".pupil");
+					console.log(pupil_id);
+					pupils.each(function(){
+						var p_id_temp = $(this).attr("tdid");
+						if(p_id_temp == pupil_id){
+							console.log(p_id_temp);
+							if($(this).hasClass('danger')){
+								$(this).removeClass('danger');
+							}
+							if($(this).hasClass('primary')){
+								$(this).removeClass('primary');
+							}
+							if($(this).hasClass('warning')){
+								$(this).removeClass('warning');
+							}
+							if(!$(this).hasClass('grey')){
+								$(this).addClass('grey');
+							}
+						}
+						else{
+							// $(this).removeClass('danger');
+						}
+					});
+				}); 
+			<?php endif; ?>
 			socket.on('test-pupil', function(msg){
-				console.log(msg);
+				console.log("text-pupil-msg===>", msg);
 				var data = JSON.parse(msg);
 				var id = '<?php echo Auth::id();?>';
 				var pupil_id = data.id;
 				var pupils = $(".pupil");
-				console.log(pupil_id);
 				pupils.each(function(){
 					var p_id_temp = $(this).attr("tdid");
 					if(p_id_temp == pupil_id){
-						console.log(p_id_temp);
+						$(this).removeClass('danger');
+						$(this).removeClass('grey');
+						$(this).removeClass('warning');
+						$(this).removeClass('primary');
+
 						$(this).addClass('danger');
 					}
 					else{
@@ -388,59 +443,55 @@
 				});
 		    }); 
 			socket.on('test-start', function(msg){
-				console.log(msg);
+				console.log("test-start-msg====>", msg);
 				var data = JSON.parse(msg);
 				var id = '<?php echo Auth::id();?>';
 				var pupil_id = data.id;
 				var pupils = $(".pupil");
-				console.log(pupil_id);
 				pupils.each(function(){
 					var p_id_temp = $(this).attr("tdid");
 					if(p_id_temp == pupil_id){
-						console.log(p_id_temp);
 						$(this).removeClass('danger');
+						$(this).removeClass('grey');
+						$(this).removeClass('warning');
+						$(this).removeClass('primary');
+
 						$(this).addClass('primary');
-					}
-					else{
-						// $(this).removeClass('danger');
 					}
 				});
 		    }); 
 			socket.on('test-failed', function(msg){
-				console.log(msg);
+				console.log("test-failed-msg=====>", msg);
 				var data = JSON.parse(msg);
 				var id = '<?php echo Auth::id();?>';
 				var pupil_id = data.id;
 				var pupils = $(".pupil");
-				console.log(pupil_id);
 				pupils.each(function(){
 					var p_id_temp = $(this).attr("tdid");
 					if(p_id_temp == pupil_id){
-						console.log(p_id_temp);
+						$(this).removeClass('danger');
+						$(this).removeClass('grey');
+						$(this).removeClass('warning');
 						$(this).removeClass('primary');
+
 						$(this).addClass('warning');
-					}
-					else{
-						// $(this).removeClass('danger');
 					}
 				});
 		    }); 
 			socket.on('test-success', function(msg){
-				console.log(msg);
+				console.log("test-success-msg===>", msg);
 				var data = JSON.parse(msg);
 				var id = '<?php echo Auth::id();?>';
 				var pupil_id = data.id;
 				var pupils = $(".pupil");
-				console.log(pupil_id);
 				pupils.each(function(){
 					var p_id_temp = $(this).attr("tdid");
 					if(p_id_temp == pupil_id){
-						console.log(p_id_temp);
+						$(this).removeClass('danger');
+						$(this).removeClass('grey');
+						$(this).removeClass('warning');
 						$(this).removeClass('primary');
 						$(this).addClass('danger');
-					}
-					else{
-						// $(this).removeClass('danger');
 					}
 				});
 		    }); 
@@ -448,7 +499,26 @@
 				test: 1
 			}
 			socket.emit('test-overseer', JSON.stringify(data));
-
+			
+			socket.on('test-success-confirm', function(msg){
+				console.log('test-success-confirm-msg======>', msg);
+				var data = JSON.parse(msg);
+				var id = '<?php echo Auth::id();?>';
+				var pupil_id = data.id;
+				var pupils = $(".pupil");
+				pupils.each(function(){
+					var p_id_temp = $(this).attr("tdid");
+					if(p_id_temp == pupil_id){
+						$(this).removeClass('danger');
+						$(this).removeClass('grey');
+						$(this).removeClass('warning');
+						$(this).removeClass('primary');
+					}
+					else{
+						// $(this).removeClass('danger');
+					}
+				});
+		    }); 
 
 			$("#btn_process").click(function(){
 				//get pupil ids
@@ -553,10 +623,10 @@
 							ids: pupilids
 						};
 						socket.emit('test-password', JSON.stringify(data));
-						/*setTimeout(function() {
+						setTimeout(function() {
 							history.go(0);
 							
-						}, 500);*/													
+						}, 1000);													
 						$("#alert_text1").html("<?php echo e(config('consts')['MESSAGES']['SUCCEED']); ?>");
     					$("#alertSuccessModal").modal();
 						break;
@@ -565,9 +635,9 @@
 						
 						var pupilids = checkids.join(",");
 						socket.emit('logout', pupilids);
-						/*setTimeout(function(){
+						setTimeout(function(){
 							history.go(0);	
-						}, 500);*/							
+						}, 1000);							
 						$("#alert_text1").html("<?php echo e(config('consts')['MESSAGES']['SUCCEED']); ?>");
     					$("#alertSuccessModal").modal();
 						break;
@@ -608,17 +678,6 @@
 				}
 			}
 
-			//var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');
-            <?php if(Auth::check()): ?>
-	            socket.on('msglogin', function(msg){
-			var pupilid = msg;
-			$("#"+pupilid).removeClass("grey");
-	            });
-                socket.on('msglogout', function(msg){
-			var pupilid = msg;
-			$("#"+pupilid).addClass("grey");
-            });
-		<?php endif; ?>
 			
 		$(".group-checkable").change(function(e){
 			if($(".group-checkable").prop('checked')){

@@ -66,7 +66,13 @@
 						</div>
 						<div class="timeline-body-head">
 							<div class="timeline-body-head-caption">
-								<a class="timeline-body-title font-blue-madison" href="{{url('mypage/other_view/' . $overseer->id)}}">@if($overseer->isAuthor()){{$overseer->fullname_nick()}}@else{{$overseer->fullname()}}@endif</a>
+								<a class="timeline-body-title font-blue-madison" href="{{url('mypage/other_view/' . $overseer->id)}}">
+								@if($overseer->fullname_is_public == 1)
+									@if($overseer->isAuthor()){{$overseer->fullname_nick()}}@else{{$overseer->fullname()}}@endif
+                                @else
+                                    {{ $overseer->username }}
+                                @endif
+								</a>
 							</div>
 						</div>
 						<div class="timeline-body-content">

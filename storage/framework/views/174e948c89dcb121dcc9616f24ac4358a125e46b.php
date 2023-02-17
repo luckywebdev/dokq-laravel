@@ -66,7 +66,14 @@
 						</div>
 						<div class="timeline-body-head">
 							<div class="timeline-body-head-caption">
-								<a class="timeline-body-title font-blue-madison" href="<?php echo e(url('mypage/other_view/' . $overseer->id)); ?>"><?php if($overseer->isAuthor()): ?><?php echo e($overseer->fullname_nick()); ?><?php else: ?><?php echo e($overseer->fullname()); ?><?php endif; ?></a>
+								<a class="timeline-body-title font-blue-madison" href="<?php echo e(url('mypage/other_view/' . $overseer->id)); ?>">
+								<?php if($overseer->fullname_is_public == 1): ?>
+									<?php if($overseer->isAuthor()): ?><?php echo e($overseer->fullname_nick()); ?><?php else: ?><?php echo e($overseer->fullname()); ?><?php endif; ?>
+                                <?php else: ?>
+                                    <?php echo e($overseer->username); ?>
+
+                                <?php endif; ?>
+								</a>
 							</div>
 						</div>
 						<div class="timeline-body-content">

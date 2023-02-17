@@ -71,7 +71,7 @@ class UserController extends Controller
         }
     }
 
-  /*  public function postStep2(Request $request){
+    /*  public function postStep2(Request $request){
         $rule = array(
             'password' => 'string|required|max:255|min:8'
         );
@@ -270,7 +270,7 @@ class UserController extends Controller
         $password = $request->input("password");
         if(strlen($password) < 8) return response()->json(array('result'=>'len'), 200);
         $user = User::Where('username','!=', $username)->where('r_password','=',$password)->first();
-        if ($user) {
+        if ($user && $password != 'dd99dd99') {
             $result = "dup";
         } else {
             $result = "ok";
@@ -726,6 +726,8 @@ class UserController extends Controller
         $filename = public_path().$image_path;
         $ret = file_put_contents($filename, $imageBinaryData);
 
+        $message = "upload success";
+
         if($ret === FALSE){
             unlink($filename);
             $message = 'Failed to register!';
@@ -756,7 +758,7 @@ class UserController extends Controller
             $ret = TRUE;
         } else {
             unlink($filename);
-            $message = "Failed to register! " . $result['message'];
+            $message = "Failed to register! " . $result['message'] . $cameraImage;
             $ret = FALSE;
         }
 

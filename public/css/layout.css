@@ -321,6 +321,7 @@ Page Header
 }
 .page-header.navbar .top-menu .navbar-nav > li.dropdown-notification .dropdown-menu .dropdown-menu-list > li a .details {
   overflow: hidden;
+  cursor: pointer;
 }
 .page-header.navbar .top-menu .navbar-nav > li.dropdown-notification .dropdown-menu .dropdown-menu-list > li a .details .label-icon {
   margin-right: 10px;
@@ -2087,6 +2088,17 @@ Page content
   font-weight: 300;
   /* subtitle */
 }
+.page-instruction {
+  margin: 0px 0px 15px 0px;
+  padding: 0px;
+  font-size: 14px;
+  letter-spacing: -1px;
+  display: block;
+  color: #458eb3;
+  margin: 0px 0px 15px 0px;
+  font-weight: 300;
+}
+
 .page-title small {
   font-size: 14px;
   letter-spacing: 0px;

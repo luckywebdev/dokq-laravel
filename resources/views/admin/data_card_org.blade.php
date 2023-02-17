@@ -293,16 +293,16 @@
                                     @foreach($classes as $class)
                                         <tr class="info">
                                             <td class="col-md-3">
-                                            @if($class->grade == 0)                                 
+                                                @if($class->grade == 0)                                 
                                                     {{$class->class_number}}組
-                                            @elseif($class->class_number == '' || $class->class_number == null)
-                                                {{$class->grade}}年
-                                            @else
-                                                {{$class->grade}}年{{$class->class_number}}組 
-                                            @endif 
-                                            @if($class->member_counts != 0 && $class->member_counts !== null)
-                                                 {{$class->member_counts}}名
-                                             @endif          
+                                                @elseif($class->class_number == '' || $class->class_number == null)
+                                                    {{$class->grade}}年
+                                                @else
+                                                    {{$class->grade}}年{{$class->class_number}}組 
+                                                @endif 
+                                                @if($class->member_counts != 0 && $class->member_counts !== null)
+                                                    {{$class->member_counts}}名
+                                                @endif          
                                             </td>
 
                                             <td class="col-md-9">

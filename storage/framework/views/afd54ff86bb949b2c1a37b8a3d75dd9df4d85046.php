@@ -158,7 +158,7 @@
 							<div class="news-blocks lime">
 								<h4 class="font-blue-madison">学校ランキング</h4>
 								<p>
-									<?php echo e($user->address2); ?><?php echo e($user->group_name); ?>児童の読書量・・・市で<?php echo e($school_rank_city); ?>位!
+									<?php echo e($user->group_name); ?>児童の読書量・・・市で<?php echo e($school_rank_city); ?>位!
 								</p>
 								<div class="row">
 									<div class="col-md-12">
@@ -409,15 +409,13 @@
 													<?php for($i = 0; $i < (12 - count($myBooks)); $i++): ?>
 													<td class="col-md-1"></td>
 													<?php endfor; ?>
+													<?php $j = 0; ?>
 													<?php $__currentLoopData = $myBooks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $book): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-													<?php if($book->point >= 0 && $book->point <= 2) $color = '#ffb5fc'; //help.about_target.blade.php
-														  elseif($book->point > 2 && $book->point <= 5) $color = '#facaca';//ff0000 
-														  elseif($book->point > 5 && $book->point <= 8) $color = '#f9d195'; //FF9900
-														  elseif($book->point > 8 && $book->point <= 11) $color = '#f6f99a'; //f4fd00
-														  elseif($book->point > 11 && $book->point <= 15) $color = '#e1f98f'; //d6f432
-														  elseif($book->point > 15 && $book->point <= 19) $color = '#92fab2'; //26a69a
-														  elseif($book->point > 19 && $book->point <= 25) $color = '#a7d4fb'; //5C9BD1
-														  elseif($book->point > 25) $color = '#f0f5fa';	
+													<?php
+															if($j % 4 == 0)     $color = "#FFB5FC";
+															elseif($j % 4 == 1) $color = "#F6F99A";
+															elseif($j % 4 == 2) $color = "#92FAB2";
+															elseif($j % 4 == 3) $color = "#A7D4FB";
 													?>
 													<td class="col-md-1 text-md-center" style="background-color:<?php echo e($color); ?>;padding-left:0px;padding-right:0px;">
 														<div class="row col-md-12" style="writing-mode:vertical-rl;margin-left:0px;margin-right:0px;padding-left:0px;padding-right:0px;height:200px;">
@@ -437,6 +435,7 @@
 															</h5>
 														</div>
 													</td>
+													<?php $j++; ?>
 													<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>																					
 												</tr>
 											</tbody>
@@ -532,7 +531,7 @@
 								 <span class="show-xs" style="text-align:left;font-size:12px">(同年代全国平均との比較)</span>
 								</div>	
 							</div>
-							<div class="portlet-body col-md-12">
+							<div class="portlet-body col-md-12 text-center" style="padding-top: 20px">
 								<canvas id="bar" width="617" height="300" style="width: 617px; height: 300px;"></canvas>
 								<div class="legend">
 									<div style="position: absolute; width: 70px; height: 40px; top: 14px; right: 13px; background-color: rgb(255, 255, 255); opacity: 0.85;"> </div>
@@ -870,17 +869,17 @@
 		<?php if($user->role == config('consts')['USER']['ROLE']['PUPIL'] && $user->active == 1): ?>
 			<?php if($type == 0): ?>
 				var barChartData = {
-					labels : [<?php echo e($cur_season[0]['year']); ?> + "年度 <?php echo e($cur_season[0]['season']); ?>"  ,<?php echo e($cur_season[1]['year']); ?> + "年度 <?php echo e($cur_season[1]['season']); ?>",<?php echo e($cur_season[2]['year']); ?> + "年度 <?php echo e($cur_season[2]['season']); ?>",<?php echo e($cur_season[3]['year']); ?> + "年度 <?php echo e($cur_season[3]['season']); ?>"],
+					labels : [<?php echo e($cur_season[0]['year']); ?> + "年度 <?php echo e($cur_season[0]['season']); ?>"  ,<?php echo e($cur_season[1]['year']); ?> + "年度 <?php echo e($cur_season[1]['season']); ?>",<?php echo e($cur_season[2]['year']); ?> + "年度 <?php echo e($cur_season[2]['season']); ?>",<?php echo e($cur_season[3]['year']); ?> + "年度 <?php echo e($cur_season[3]['season']); ?>", <?php echo e($cur_season[4]['year']); ?> + "年度 <?php echo e($cur_season[4]['season']); ?>" , <?php echo e($cur_season[5]['year']); ?> + "年度 <?php echo e($cur_season[5]['season']); ?>" , <?php echo e($cur_season[6]['year']); ?> + "年度 <?php echo e($cur_season[6]['season']); ?>" , <?php echo e($cur_season[7]['year']); ?> + "年度 <?php echo e($cur_season[7]['season']); ?>" ],
 					datasets : [
 						{
 							fillColor : "#d0cece",
 							strokeColor : "#d0cece",
-							data : [<?php echo e($myavgPoints[0][0]); ?>,<?php echo e($myavgPoints[1][0]); ?>,<?php echo e($myavgPoints[2][0]); ?>,<?php echo e($myavgPoints[3][0]); ?>]
+							data : [<?php echo e($myavgPoints[0][0]); ?>,<?php echo e($myavgPoints[1][0]); ?>,<?php echo e($myavgPoints[2][0]); ?>,<?php echo e($myavgPoints[3][0]); ?>,<?php echo e($myavgPoints[4][0]); ?>,<?php echo e($myavgPoints[5][0]); ?>,<?php echo e($myavgPoints[6][0]); ?>,<?php echo e($myavgPoints[7][0]); ?>]
 						},
 						{
 							fillColor : "#f8cbad",
 							strokeColor : "#f8cbad",
-							data : [<?php echo e($myavgPoints[0][1]); ?>,<?php echo e($myavgPoints[1][1]); ?>,<?php echo e($myavgPoints[2][1]); ?>,<?php echo e($myavgPoints[3][1]); ?>]
+							data : [<?php echo e($myavgPoints[0][1]); ?>,<?php echo e($myavgPoints[1][1]); ?>,<?php echo e($myavgPoints[2][1]); ?>,<?php echo e($myavgPoints[3][1]); ?>,<?php echo e($myavgPoints[4][1]); ?>,<?php echo e($myavgPoints[5][1]); ?>,<?php echo e($myavgPoints[6][1]); ?>,<?php echo e($myavgPoints[7][1]); ?>]
 						}
 					]
 					

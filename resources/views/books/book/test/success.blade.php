@@ -63,8 +63,8 @@
 						<tr>
 							<td class="h4 text-md-right">続けて違う本を受検</td>
 							<td class="text-md-left">
-								<a href="{{url('/book/search')}}" class="btn btn-warning">本を検索して受検</a>
-								<a href="{{url('/mypage/wish_list')}}" class="btn btn-warning">マイ書斎から受検</a>
+								<a href="{{url('/book/search')}}" class="btn btn-warning" style="margin-top: 5px; margin-bottom: 5px">本を検索して受検</a>
+								<a href="{{url('/mypage/wish_list')}}" class="btn btn-warning" style="margin-top: 5px; margin-bottom: 5px">マイ書斎から受検</a>
 							</td>
 						</tr>
 						<tr>
@@ -105,22 +105,24 @@
 @section('scripts')
     <script>
 	   $(document).ready(function(){
-		// var socket = io('http://localhost:3000');
-
-		var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');
-		var datas = {
-			id: '<?php echo Auth::id(); ?>'
-		};
-		socket.emit('test-success', JSON.stringify(datas));
-		socket.on('test-overseer', function(msg){
-			var data = JSON.parse(msg);
-			if(data.test == 1){
-				var datas = {
-					id: '<?php echo Auth::id(); ?>'
-				};
-				socket.emit('test-success', JSON.stringify(datas));
-			}
-		   });
+			// var socket = io('http://localhost:3000');
+			console.log("success page");
+			var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');
+			var datas = {
+				id: '<?php echo Auth::id(); ?>'
+			};
+			socket.emit('test-success-confirm', JSON.stringify(datas));
+			socket.on('test-overseer', function(msg){
+				console.log('test-overseer-test-success====>', msg);
+				var data = JSON.parse(msg);
+				if(data.test == 1){
+					var datas = {
+						id: '<?php echo Auth::id(); ?>'
+					};
+					socket.emit('test-success-confirm', JSON.stringify(datas));
+				}
+			});
+		   
 
 			history.pushState(null, null, location.href);
 				window.onpopstate = function () {

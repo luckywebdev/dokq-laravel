@@ -56,9 +56,9 @@
 				}	
 			    $title .= 'さんのマイ書斎';
 			    ?>
-			    {{$title}}
+			    {{$title}} 
+				<a href='' id="user_name" userId="{{$user->id}}">{{Auth::user()->role == config('consts')['USER']['ROLE']['ADMIN'] ? $user->username : ''}}</a>
 			</h3>
-
 			<div class="row">
 				<div class="col-md-12">
 					<div class="top-news" style="width:320px;height:50px">
@@ -805,6 +805,14 @@
 			$(".form-horizontal").attr("action", "/group/rank/6");
 		    $(".form-horizontal").submit();
 		});
+		$("#user_name").click(function(e) {
+			e.preventDefault();
+			var queryString = window.location.search;
+			var baseUrl = location.origin;
+			var userId = $("#user_name").attr("userId");
+			console.log('[go detail]', queryString, baseUrl, userId)
+			window.location.href=`${baseUrl}/admin/personaldata/${userId}${queryString}`
+		})
 
 		/*
 		var quarters_point = [

@@ -41,6 +41,7 @@
 					<form class="form form-horizontal" name = "search_form" action = "/mypage/search_certi" id = "search_form">
 					{{ csrf_field() }}
 					<input type="hidden" name="search" id="search" value="1">
+					<input type="hidden" name="sort_dir" id="sort_dir" value="desc" >
 					<input type="hidden" id="items" name="items" value="">
 						<div class="form-group row ">
 							<div class="col-md-12">
@@ -79,6 +80,7 @@
 							<div class="col-md-3">
 								<input type="text" class="form-control date-picker"  name="key_e_date" id="key_e_date" value="{{isset($_GET['key_e_date']) ? $_GET['key_e_date'] : ''}}" readonly>
 							</div>
+							<label class="text-md-left col-md-1 control-label date_clear" style="cursor: pointer"><i class="fa fa-times-circle"></i></label>
 						</div>
 
 						<div class="form-group row">
@@ -160,7 +162,7 @@
 								<th class="col-md-1"></th>
 								<th class="col-md-2">受検日時</th>
 								<th class="col-md-3">タイトル</th>
-								<th class="col-md-3">著者</th>
+								<th class="col-md-3" id="author_sort">著者</th>
 								<th class="col-md-2">ポイント</th>
 								<th class="col-md-1">公開非公開</th>
 								<th class="col-md-1">削除</th>
@@ -184,6 +186,8 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			var certi_list = [];
+			// localStorage.removeItem('certi_list');
+
 			var count = 1;
 			var t = $('#sample_test1_2').DataTable( {
 				data: certi_list,
@@ -195,11 +199,11 @@
 				columns: [{
 					"orderable": false
 				},{
-					"orderable": true
+					"orderable": false
 				}, {
 					"orderable": false
 				}, {
-					"orderable": true
+					"orderable": false
 				}, {
 					"orderable": false
 				}, {
@@ -213,6 +217,7 @@
 					cell.innerHTML = i+1;
 				} );
 			} ).draw();
+
 			if(localStorage.getItem('certi_list') != null && localStorage.getItem('certi_list') != ""){
 				$('#sample_test1_2').removeClass('hidden');
 				$(".selected_row").removeClass("hidden");
@@ -370,6 +375,7 @@
 						'<button type="button" class="btn btn-default d_btn" style="padding-top:1px; padding-bottom: 1px" id="d_'+book_arr[7]+'">削除</button>'
 					] ).draw( false );
 					count++;
+					
 					$(".selected_row").removeClass("hidden");
 					$("#total_btn").removeAttr('disabled');
 				}
@@ -382,6 +388,20 @@
 				localStorage.removeItem('certi_list');
 				certi_list = [];
 				location.href = "{{url('/mypage/create_certi')}}";
+			})
+
+			$("#author_sort").click(function() {
+				var sort_dir = $("#sort_dir").val();
+				if(sort_dir == "asc") {
+					$("#sort_dir").val("desc");
+				} 
+				else{
+					$("#sort_dir").val("asc");
+				}
+			})
+
+			$(".date_clear").click(function() {
+				$(".date-picker").val("");
 			})
 		});
 

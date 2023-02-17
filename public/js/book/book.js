@@ -2,7 +2,7 @@ $(document).ready(function(){
 	
 	setInterval(function(){
 
-		if($("select[name=type]").val()==2){
+		if($("select[name=type]").val()==1){
 			
 			$("input[name=total_chars]").attr("readonly", null);
 //			if ($("input[name=total_chars]").val() == ""){

@@ -110,7 +110,7 @@
 
                     </li>
                     <li>
-                        <a class="nav-link text-white" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">ログアウト</a>
+                        <a class="nav-link text-white" href="{{ route('logout') }}" onclick="event.preventDefault();localStorage.removeItem('certi_list');document.getElementById('logout-form').submit();">ログアウト</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="get" style="display: none;">
                             {{ csrf_field() }}
                         </form>

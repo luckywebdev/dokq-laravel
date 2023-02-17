@@ -34,7 +34,11 @@
 		<div class="page-content">
 			<div class="page-head">
 				<div class="page-title">
-					<h3>読Qへお問合せ</h3>
+					<h3>読Qへお問合せ
+                        <?php if(isset($message)): ?>
+                        <button type="button" class="btn btn-warning del_sel pull-right">削 除</button>
+                        <?php endif; ?>
+                    </h3>
 				</div>
 			</div>
             <div class="row panel panel-default form">
@@ -112,7 +116,37 @@
                     $("#form").submit(); 
                 }
             });
-        })
+
+            $(".del_sel").click(function() {
+                var del_chk = [ $('#checkid').val() ];
+                var info = {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    quizIds: del_chk,
+                    type: 1
+                };
+                var post_url = "/admin/quiz_delete";
+                $.ajax({
+                    type: "post",
+                    url: post_url,
+                    data: info,
+                    beforeSend: function (xhr) {
+                        var token = $('meta[name="csrf-token"]').attr('content');
+                        if (token) {
+                                return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                        }
+                    },
+                    success: function (response) {
+                        console.log("response===>", response);
+                        if(response.status){
+                            window.location.href = '/admin/quiz_answer';
+                        }
+                        else
+                            alert('Delete error') ;
+                    }
+                });  
+            });
+
+        });
     </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

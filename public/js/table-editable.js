@@ -18,8 +18,9 @@ var TableEditable = function () {
             var jqTds = $('>td', nRow);
             jqTds[0].innerHTML = '<input type="text" style = "margin:auto;" class="form-control input-small date-picker" value="' + aData[0] + '" readonly>';
             jqTds[1].innerHTML = '<input type="text" style = "margin:auto;" class="form-control input-large" value="' + aData[1] + '">';
-            jqTds[2].innerHTML = '<a class="edit" id = "update" href="">ほかん</a>';
-            jqTds[3].innerHTML = '<a class="cancel" href="">とりけし</a>';
+            jqTds[2].innerHTML = '<input type="text" style = "margin:auto;" class="form-control input-large" value="' + aData[2] + '">';
+            jqTds[3].innerHTML = '<a class="edit" id = "update" href="">ほかん</a>';
+            jqTds[4].innerHTML = '<a class="cancel" href="">とりけし</a>';
             $('.date-picker').datepicker({
                 rtl: Metronic.isRTL(),
                 orientation: "left",
@@ -32,10 +33,12 @@ var TableEditable = function () {
             var jqInputs = $('input', nRow);
             oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
             oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
+            oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
             $("#update_date").val(jqInputs[0].value);
             $("#update_content").val(jqInputs[1].value);
-            oTable.fnUpdate('<a class="edit" href="">編集する</a>', nRow, 2, false);
-            oTable.fnUpdate('<a class="delete" href="">削除</a>', nRow, 3, false);
+            $("#update_outside_link").val(jqInputs[2].value);
+            oTable.fnUpdate('<a class="edit" href="">編集する</a>', nRow, 3, false);
+            oTable.fnUpdate('<a class="delete" href="">削除</a>', nRow, 4, false);
             oTable.fnDraw();
         }
 
@@ -45,7 +48,7 @@ var TableEditable = function () {
             oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
             oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
             oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
-            oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
+            oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 5, false);
             oTable.fnDraw();
         }
 

@@ -52,18 +52,20 @@
                                     <th class="align-middle" style="width:15%;">閲覧終了日</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-md-center">                          
+                            <tbody class="text-md-center">   
                             <?php $__currentLoopData = $bookcredits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=> $bookcredit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php if($bookcredit->passcode && $bookcredit->settlement_date): ?>
                                 <tr class="info">
-                                    <td><?php echo e(date_format(date_add(date_create($bookcredit->backup_date), date_interval_create_from_date_string("1 days")), "Y-m-d")); ?></td>
+                                    <td><?php echo e(date_format(date_add(date_create($bookcredit->updated_at), date_interval_create_from_date_string("1 days")), "Y-m-d")); ?></td>
                                     <td><?php echo e($bookcredit->username); ?></td>
-                                    <td><?php if($bookcredit->index == 1): ?>〇<?php endif; ?></td>
-                                    <td><?php if($bookcredit->index == 2): ?>〇<?php endif; ?></td>
-                                    <td><?php if($bookcredit->index == 3): ?>〇<?php endif; ?></td>
-                                    <td><?php if($bookcredit->index == 4): ?>〇<?php endif; ?></td>
+                                    <td><?php if($bookcredit->index == 1 && $bookcredit->personworkHistory && count($bookcredit->personworkHistory) < 2): ?>〇<?php endif; ?></td>
+                                    <td><?php if($bookcredit->index == 2 && $bookcredit->personworkHistory && count($bookcredit->personworkHistory) < 2): ?>〇<?php endif; ?></td>
+                                    <td><?php if($bookcredit->index == 3 && $bookcredit->personworkHistory && count($bookcredit->personworkHistory) < 2): ?>〇<?php endif; ?></td>
+                                    <td><?php if($bookcredit->index == 4 && $bookcredit->personworkHistory && count($bookcredit->personworkHistory) < 2): ?>〇<?php endif; ?></td>
                                     <td><?php echo e($bookcredit->passcode); ?></td>
-                                    <td><?php echo e(date_format(date_add(date_create($bookcredit->backup_date), date_interval_create_from_date_string("6 months")), "Y-m-d")); ?></td>
+                                    <td><?php echo e($bookcredit->settlement_date); ?></td>
                                 </tr>
+                                <?php endif; ?>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
                             </tbody>    
                         </table>

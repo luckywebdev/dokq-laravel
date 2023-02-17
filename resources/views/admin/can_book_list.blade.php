@@ -85,6 +85,7 @@
 							@endforeach
 						</tbody>
 					</table>
+					{{ $books->links() }}
 				</div>
 			</div>
 			<div id="popup" style="display:none;z-index:1000;">

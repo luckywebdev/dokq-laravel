@@ -24,6 +24,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\Restore;
+use App\Model\SelfEvaluationButtons;
 use Swift_TransportException;
 
 class HomeController extends Controller
@@ -81,6 +82,7 @@ class HomeController extends Controller
             ->orderBy('updated_at', 'desc')
             ->take(4)->get();
         $advertise = Advertise::first();
+        $selfEvaluation = SelfEvaluationButtons::first();
         return view('home.index')
             ->withPage($this->page)
             ->withNosidebar(true)
@@ -88,6 +90,7 @@ class HomeController extends Controller
             ->withNotices($notices)
             ->withQuizBooks($quizBooks)
             ->with('advertise', $advertise)
+            ->with('self_evaluation', $selfEvaluation)
             ->withObBooks($overseerBooks)
             ->with('page_info',$page_info);
     }
@@ -109,14 +112,21 @@ class HomeController extends Controller
         $result = DB::table('users')
             ->where('id',Auth::id())
             ->update(['reload_flag' => 8]);
-        $settlement_flag = CertiBackup::where('user_id', Auth::id())->where('settlement_date','<',date_add(now(),date_interval_create_from_date_string("1 months")))->first();    
-        if((is_object($settlement_flag) || is_array($settlement_flag)) && count(get_object_vars($settlement_flag))){
+        $settlement_flag = CertiBackup::where('user_id', Auth::id())->where('settlement_date','<',date_add(now(),date_interval_create_from_date_string("1 months")))->first();  
+        if ($settlement_flag && is_object($settlement_flag)) {
+            $certi_message_check = Messages::where('to_id', Auth::id())
+                                            ->where('content', 'like', '%(パスコード'.$settlement_flag->passcode.')%')
+                                            ->where('created_at', '>', date_format(date_sub(date_create($settlement_flag->settlement_date), date_interval_create_from_date_string('2 weeks')), "Y-m-d"))
+                                            ->count();
+        } else $certi_message_check = 0;
+
+        if((is_object($settlement_flag) || is_array($settlement_flag)) && count(get_object_vars($settlement_flag)) && $certi_message_check == 0 && date_sub(date_create($settlement_flag->settlement_date), date_interval_create_from_date_string('2 weeks')) <= now() && date_create($settlement_flag->settlement_date) > now()){
             $message = new Messages;
             $message->type = 0;
             $message->from_id = 0;
             $message->to_id = Auth::id();
             $message->name = "協会";
-            $message->content = sprintf(config('consts')['MESSAGES']['SETTLEMENT_1MONTH'],
+            $message->content = sprintf(config('consts')['MESSAGES']['SETTLEMENT_1MONTH'], $settlement_flag->passcode,
                 date_format(date_create($settlement_flag->settlement_date), 'm月d日'));
             $message->save();
         }

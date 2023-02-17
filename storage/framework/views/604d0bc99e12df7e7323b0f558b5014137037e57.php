@@ -67,31 +67,31 @@
 									<tbody class="text-md-center">
 										<tr class="danger">
 											<td><?php echo e($current_season['year']); ?>年度 冬</td>
-											<td><?php echo e($grade_avg_point['winter']); ?></td>
-											<td><?php echo e($grade_rank_city['winter']); ?></td>
-											<td><?php echo e($grade_rank_province['winter']); ?></td>
-											<td><?php echo e($grade_rank_overall['winter']); ?></td>
+											<td><?php echo e($current_season['term'] >= 3 ? $grade_avg_point['winter'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 3 ? $grade_rank_city['winter'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 3 ? $grade_rank_province['winter'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 3 ? $grade_rank_overall['winter'] : '-'); ?></td>
 										</tr>
 										<tr class="warning">
 											<td><?php echo e($current_season['year']); ?>年度 秋</td>
-											<td><?php echo e($grade_avg_point['autumn']); ?></td>
-											<td><?php echo e($grade_rank_city['autumn']); ?></td>
-											<td><?php echo e($grade_rank_province['autumn']); ?></td>
-											<td><?php echo e($grade_rank_overall['autumn']); ?></td>
+											<td><?php echo e($current_season['term'] >= 2 ? $grade_avg_point['autumn'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 2 ? $grade_rank_city['autumn'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 2 ? $grade_rank_province['autumn'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 2 ? $grade_rank_overall['autumn'] : '-'); ?></td>
 										</tr>
 										<tr class="danger">
 											<td><?php echo e($current_season['year']); ?>年度 夏</td>
-											<td><?php echo e($grade_avg_point['summer']); ?></td>
-											<td><?php echo e($grade_rank_city['summer']); ?></td>
-											<td><?php echo e($grade_rank_province['summer']); ?></td>
-											<td><?php echo e($grade_rank_overall['summer']); ?></td>
+											<td><?php echo e($current_season['term'] >= 1 ? $grade_avg_point['summer'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 1 ? $grade_rank_city['summer'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 1 ? $grade_rank_province['summer'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 1 ? $grade_rank_overall['summer'] : '-'); ?></td>
 										</tr>
 										<tr class="warning">
 											<td><?php echo e($current_season['year']); ?>年度 春</td>
-											<td><?php echo e($grade_avg_point['spring']); ?></td>
-											<td><?php echo e($grade_rank_city['spring']); ?></td>
-											<td><?php echo e($grade_rank_province['spring']); ?></td>
-											<td><?php echo e($grade_rank_overall['spring']); ?></td>
+											<td><?php echo e($current_season['term'] >= 0 ? $grade_avg_point['spring'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 0 ? $grade_rank_city['spring'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 0 ? $grade_rank_province['spring'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 0 ? $grade_rank_overall['spring'] : '-'); ?></td>
 										</tr>
 										<tr class="danger">
 											<td><?php echo e($current_season['year']); ?>年度 累計</td>
@@ -123,8 +123,8 @@
 			</div>
 		</div>
 		<form action=<?php echo e(url('/group/rank/2')); ?> id="selectGrade" name="rank2-form" method = "GET">
-					<input type="hidden" name="_token" value="<?php echo e(csrf_field()); ?>">
-					<input type="hidden" name="id" id="id" value=""/>
+					<!-- <input type="hidden" name="_token" value="<?php echo e(csrf_field()); ?>"> -->
+					<input type="hidden" name="ids" id="ids" value=""/>
 					<input type="hidden" name="grade" id="grade" value=""/>
 					<input type="hidden" name="group_id" id="group_id" value=""/>
 					<input type="hidden" name="sel_year" id="sel_year" value=""/>
@@ -140,8 +140,8 @@
 			<?php endif; ?>
 			ComponentsDropdowns.init();
 			$("select").change(function(){
-//				alert($(":selected").attr("id"));
-				$("#id").val($(":selected").attr("id"));
+				// alert($(":selected").attr("grade"));
+				$("#ids").val($(":selected").attr("id"));
 				$("#grade").val($(":selected").attr("grade"));
 				$("#group_id").val($(":selected").attr("gid"));
 				$("#sel_year").val($(":selected").attr("syear"));

@@ -114,7 +114,7 @@
 
                     </li>
                     <li>
-                        <a class="nav-link text-white" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();document.getElementById('logout-form').submit();">ログアウト</a>
+                        <a class="nav-link text-white" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();localStorage.removeItem('certi_list');document.getElementById('logout-form').submit();">ログアウト</a>
                         <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="get" style="display: none;">
                             <?php echo e(csrf_field()); ?>
 

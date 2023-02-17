@@ -5,7 +5,7 @@
 		</div>
   	</div>
 	{{csrf_field()}}
-	<input type="hidden" name="register_id" value="{{Auth::id()}}">
+	<input type="hidden" name="register_id" value="{{isset($book) ? $book->register_id : Auth::id()}}">
 	<input type="hidden" name="action" id="action" value="">
 	<input type="hidden" name="active" id="active" value="{{isset($book) ? $book->active : 0}}">
 	<input type="hidden" name="subsave" value="0" id="subsave">
@@ -37,7 +37,7 @@
 		<h4 class="form-section warning"><strong>@if(isset($book)) 本の基本情報を編集 @else 本の基本情報を入力します @endif</strong></h4>
 		<div class="row top-border">
 			<div class="col-md-12 margin-bottom-5 {{ $errors->has('type') ? ' has-danger' : '' }}">
-				<label class="control-label col-md-7 text-md-left f-14"><strong>1.&nbsp;&nbsp;&nbsp;&nbsp;本の種類</strong></label>
+				<label class="control-label col-md-7 text-md-left f-14"><strong>1.&nbsp;&nbsp;&nbsp;&nbsp;本の登録方法の選択</strong></label>
 				<div class="col-md-5">
 					<input type="hidden" id="book_form_flag" name="book_form_flag"/>
 					<select class="bs-select" name="type" id="type" style="height:33px !important">
@@ -141,6 +141,7 @@
 				<div class=" col-md-12 col-md-offset-1">
 					<label class="control-label text-md-left">&nbsp;例：&nbsp;ISBN-10:&nbsp;</label>
 					<label class="control-label text-md-left" style="background-color:#fefe0c;padding-left:0px">406277088</label>1
+					
 				</div>
 			
 				<div class=" col-md-12 col-md-offset-1">
@@ -248,7 +249,7 @@
 				<div class="form-group col-md-5">
 					<div class="col-md-1"><h4>p</h4></div>
 					<div class="col-md-9 spin">
-						<input type="number" min="0" name="pages" value="{{ old('pages')!='' ? old('pages'): (isset($book)? $book->pages: '') }}" class="param spinner-input form-control" maxlength="3" id="input_8">
+						<input type="number" min="0" name="pages" value="{{ old('pages')!='' ? old('pages'): (isset($book)? $book->pages: '0') }}" class="param spinner-input form-control" maxlength="3" id="input_8">
 						@if ($errors->has('pages'))
 							<span class="form-control-feedback">
 								<span>{{ $errors->first('pages') }}</span>
@@ -267,7 +268,7 @@
 				<label class="control-label col-md-6 col-md-offset-1 text-md-left font-weight-bold">a.&nbsp;&nbsp;&nbsp;&nbsp;行数…　１ページの中には最大で何行ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-						<input type="number" min="0" name="max_rows" value="{{ old('max_rows')!='' ? old('max_rows'): (isset($book)? $book->max_rows: '') }}" class="param calc form-control" maxlength="3" id="input_9">
+						<input type="number" min="0" name="max_rows" value="{{ old('max_rows')!='' ? old('max_rows'): (isset($book)? $book->max_rows: '0') }}" class="param calc form-control" maxlength="3" id="input_9">
 						@if ($errors->has('max_rows'))
 							<span class="form-control-feedback">
 								<span>{{ $errors->first('max_rows') }}</span>
@@ -281,7 +282,7 @@
 				<label class="control-label col-md-6 col-md-offset-1 text-md-left font-weight-bold">b.&nbsp;&nbsp;&nbsp;&nbsp;字数…　１行の中には最大で何文字ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-						<input type="number" min="0" name="max_chars" value="{{ old('max_chars')!='' ? old('max_chars'): (isset($book)? $book->max_chars: '') }}" class="param calc form-control" maxlength="3" id="input_10">
+						<input type="number" min="0" name="max_chars" value="{{ old('max_chars')!='' ? old('max_chars'): (isset($book)? $book->max_chars: '0') }}" class="param calc form-control" maxlength="3" id="input_10">
 						@if ($errors->has('max_chars'))
 							<span class="form-control-feedback">
 								<span>{{ $errors->first('max_chars') }}</span>
@@ -301,7 +302,7 @@
 				<div class="col-md-7"></div>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-						<input type="number" min="0" name="entire_blanks" value="{{ old('entire_blanks')!='' ? old('entire_blanks'): (isset($book)? $book->entire_blanks: '') }}" class="param calc form-control" maxlength="3" id="input_11">
+						<input type="number" min="0" name="entire_blanks" value="{{ old('entire_blanks')!='' ? old('entire_blanks'): (isset($book)? $book->entire_blanks: '0') }}" class="param calc form-control" maxlength="3" id="input_11">
 						@if ($errors->has('entire_blanks'))
 							<span class="form-control-feedback">
 								<span>{{ $errors->first('entire_blanks') }}</span>
@@ -316,7 +317,7 @@
 				<div class="col-md-7"></div>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-						<input type="number" min="0" name="quarter_filled" value="{{ old('quarter_filled')!='' ? old('quarter_filled'): (isset($book)? $book->quarter_filled: '') }}" class="param calc form-control" maxlength="3" id="input_12">
+						<input type="number" min="0" name="quarter_filled" value="{{ old('quarter_filled')!='' ? old('quarter_filled'): (isset($book)? $book->quarter_filled: '0') }}" class="param calc form-control" maxlength="3" id="input_12">
 						@if ($errors->has('quarter_filled'))
 							<span class="form-control-feedback">
 								<span>{{ $errors->first('quarter_filled') }}</span>
@@ -331,7 +332,7 @@
 				<div class="col-md-7"></div>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-						<input type="number" min="0" name="half_blanks" value="{{ old('half_blanks')!='' ? old('half_blanks'): (isset($book)? $book->half_blanks: '') }}" class="param calc form-control" maxlength="3" id="input_13">
+						<input type="number" min="0" name="half_blanks" value="{{ old('half_blanks')!='' ? old('half_blanks'): (isset($book)? $book->half_blanks: '0') }}" class="param calc form-control" maxlength="3" id="input_13">
 						@if ($errors->has('half_blanks'))
 							<span class="form-control-feedback">
 								<span>{{ $errors->first('half_blanks') }}</span>
@@ -346,7 +347,7 @@
 				<div class="col-md-7"></div>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-						<input type="number" min="0" name="quarter_blanks" value="{{ old('quarter_blanks')!='' ? old('quarter_blanks'): (isset($book)? $book->quarter_blanks: '') }}" class="param calc form-control" maxlength="3" id="input_14">
+						<input type="number" min="0" name="quarter_blanks" value="{{ old('quarter_blanks')!='' ? old('quarter_blanks'): (isset($book)? $book->quarter_blanks: '0') }}" class="param calc form-control" maxlength="3" id="input_14">
 						@if ($errors->has('quarter_blanks'))
 							<span class="form-control-feedback">
 								<span>{{ $errors->first('quarter_blanks') }}</span>
@@ -368,7 +369,7 @@
 				<label class="control-label col-md-6 col-md-offset-1 text-md-left font-weight-bold">a.&nbsp;&nbsp;&nbsp;&nbsp;p30の中に、字数が半分以下の行は、何行ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-					<input type="number" min="0" name="p30" value="{{ old('p30')!='' ? old('p30'): (isset($book)? $book->p30: '') }}" class="param calc form-control" maxlength="3" id="input_15">
+					<input type="number" min="0" name="p30" value="{{ old('p30')!='' ? old('p30'): (isset($book)? $book->p30: '0') }}" class="param calc form-control" maxlength="3" id="input_15">
 					@if ($errors->has('p30'))
 						<span class="form-control-feedback">
 							<span>{{ $errors->first('p30') }}</span>
@@ -382,7 +383,7 @@
 				<label class="control-label col-md-6 col-md-offset-1 text-md-left font-weight-bold">b.&nbsp;&nbsp;&nbsp;&nbsp;P50の中に、字数が半分以下の行は、何行ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-					<input type="number" min="0" name="p50" value="{{ old('p50')!='' ? old('p50'): (isset($book)? $book->p50: '') }}" class="param calc form-control" maxlength="3" id="input_16">
+					<input type="number" min="0" name="p50" value="{{ old('p50')!='' ? old('p50'): (isset($book)? $book->p50: '0') }}" class="param calc form-control" maxlength="3" id="input_16">
 					@if ($errors->has('p50'))
 						<span class="form-control-feedback">
 							<span>{{ $errors->first('p50') }}</span>
@@ -396,7 +397,7 @@
 				<label class="control-label col-md-6 col-md-offset-1 text-md-left font-weight-bold">c.&nbsp;&nbsp;&nbsp;&nbsp;P70の中に、字数が半分以下の行は、何行ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-					<input type="number" min="0" name="p70" value="{{ old('p70')!='' ? old('p70'): (isset($book)? $book->p70: '') }}" class="param calc form-control" maxlength="3" id="input_17">
+					<input type="number" min="0" name="p70" value="{{ old('p70')!='' ? old('p70'): (isset($book)? $book->p70: '0') }}" class="param calc form-control" maxlength="3" id="input_17">
 					@if ($errors->has('p70'))
 						<span class="form-control-feedback">
 							<span>{{ $errors->first('p70') }}</span>
@@ -410,7 +411,7 @@
 				<label class="control-label col-md-6 col-md-offset-1 text-md-left font-weight-bold">d.&nbsp;&nbsp;&nbsp;&nbsp;P90の中に、字数が半分以下の行は、何行ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-					<input type="number" min="0" name="p90" value="{{ old('p90')!='' ? old('p90'): (isset($book)? $book->p90: '') }}" class="param calc form-control" maxlength="3" id="input_18">
+					<input type="number" min="0" name="p90" value="{{ old('p90')!='' ? old('p90'): (isset($book)? $book->p90: '0') }}" class="param calc form-control" maxlength="3" id="input_18">
 					@if ($errors->has('p90'))
 						<span class="form-control-feedback">
 							<span>{{ $errors->first('p90') }}</span>
@@ -424,7 +425,7 @@
 				<label class="control-label col-md-6 col-md-offset-1 text-md-left font-weight-bold">e.&nbsp;&nbsp;&nbsp;&nbsp;P110の中に、字数が半分以下の行は、何行ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-					<input type="number" min="0" name="p110" value="{{ old('p110')!='' ? old('p110'): (isset($book)? $book->p110: '') }}" class="param calc form-control" maxlength="3" id="input_19">
+					<input type="number" min="0" name="p110" value="{{ old('p110')!='' ? old('p110'): (isset($book)? $book->p110: '0') }}" class="param calc form-control" maxlength="3" id="input_19">
 					@if ($errors->has('p110'))
 						<span class="form-control-feedback">
 							<span>{{ $errors->first('p110') }}</span>
@@ -441,7 +442,7 @@
 				<label class="control-label col-md-7 text-md-left f-14"><strong>16.&nbsp;&nbsp;&nbsp;&nbsp;総字数・・・・・・・・・・・・・・・・・・</strong></label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-					<input type="number" value="{{ old('total_chars')!='' ? old('total_chars'): (isset($book)? $book->total_chars: '') }}" name="total_chars" id="total_chars" readonly class="form-control" maxlength="6">
+					<input type="number" value="{{ old('total_chars')!='' ? old('total_chars'): (isset($book)? $book->total_chars: '0') }}" name="total_chars" id="total_chars" readonly class="form-control" maxlength="6">
 					@if ($errors->has('total_chars'))
 						<span class="form-control-feedback">
 							<span>{{ $errors->first('total_chars') }}</span>
@@ -461,7 +462,7 @@
 				<label class="control-label offset-md-1 col-md-6 text-md-left"><strong>この本のポイント・・・・・・・・・・・・・・</strong></label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-9">
-					<input type="text" name="point" value="{{ old('point')!='' ? old('point'): (isset($book)? floor($book->point*100)/100: '') }}" readonly="true" class="form-control" id="point">
+					<input type="text" name="point" value="{{ old('point')!='' ? old('point'): (isset($book)? floor($book->point*100)/100: '0') }}" readonly="true" class="form-control" id="point">
 					</div>
 					<label class="control-label col-md-3 text-md-left">ポイント</label>
 				</div>				

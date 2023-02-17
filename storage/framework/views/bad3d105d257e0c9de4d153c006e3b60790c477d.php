@@ -61,7 +61,7 @@
 							<tbody class="text-md-center">
 								<?php $__currentLoopData = $books; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $book): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 									<tr>
-										<td><?php if(Auth::user()->role == config('consts')['USER']['ROLE']['AUTHOR'] && count($book->Overseer) == 0): ?> <?php echo e(with((date_create($book->replied_date1)))->format('Y/m/d')); ?> <?php else: ?> <?php echo e(with((new Date($book->replied_date3)))->format('Y/m/d')); ?><?php endif; ?></td>
+										<td><?php if(Auth::user()->role == config('consts')['USER']['ROLE']['AUTHOR'] && is_array($book->Overseer) && count($book->Overseer) == 0): ?> <?php echo e(with((date_create($book->replied_date1)))->format('Y/m/d')); ?> <?php else: ?> <?php echo e(with((new Date($book->replied_date3)))->format('Y/m/d')); ?><?php endif; ?></td>
 										<td><a <?php if($book->active >= 3): ?> href="<?php echo e(url('/book/'.$book->id.'/detail')); ?>" <?php endif; ?> class="font-blue-madison"><?php echo e($book->title); ?></a></td>
 										<td><a href="<?php echo e(url('/book/search_books_byauthor?writer_id=' . $book->writer_id.'&fullname='.$book->fullname_nick())); ?>" class="font-blue-madison"><?php echo e($book->fullname_nick()); ?></a></td>
 										<td><a <?php if($book->active >= 3): ?> href="<?php echo e(url('/book/'.$book->id.'/detail')); ?>" <?php endif; ?> class="font-blue-madison">dq<?php echo e($book->id); ?></a></td>

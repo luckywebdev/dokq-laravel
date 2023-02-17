@@ -40,8 +40,9 @@
 	<div class="page-content-wrapper">
 		<div class="page-content">
 			<div class="row">
-		    	<div class="col-md-12">	
-					<h3 class="page-title caption col-md-11">読Q活動の全履歴</h3>
+		    	<div class="col-md-12" style="display: flex; align-items: flex-end">	
+					<span class="page-instruction">〇・・・認定 &nbsp;&nbsp; △・・・送信済み &nbsp;&nbsp; X・・・却下</span>
+					<h3 class="page-title caption col-md-6">読Q活動の全履歴</h3>
 					<?php if($otherview_flag): ?>			
 					<div class="tools" style="float:right;">
 						<a class="text-md-center font-blue-madison" href="<?php if(Auth::user()->isPupil()): ?><?php echo e(url('/mypage/rank_child_pupil')); ?><?php else: ?><?php echo e(url('/mypage/rank_by_age')); ?><?php endif; ?>">もっと見る</a>
@@ -52,23 +53,27 @@
 
 			<div class="row">
 				<div class="col-md-12">	
-					<div style="height:400px; min-width: 100%; overflow-x: auto">					
-						<table class="table table-bordered table-hover" style="width: 100%">
+					<div style="overflow-y: scroll">					
+						<table class="table table-bordered table-hover" style="width: 100%; margin-bottom: 0px">
 							<thead>
 								<tr class="blue">
-									<th class="col-md-1"  style="padding:0px; width: 9%">登録日</th>
-									<th class="col-md-1"  style="padding:0px; width: 5%; white-space: normal">受検</th>
-									<th class="col-md-1" style="padding:0px; width: 5%; white-space: normal">クイズ作成</th>
-									<th class="col-md-1"  style="padding:0px; width: 5%; white-space: normal">本の登録</th>
-									<th class="col-md-1"  style="padding:0px; width: 9%; white-space: normal">タイトル</th>
-									<th class="col-md-1"  style="padding:0px; width: 9%">著者</th>
-									<th class="col-md-2"  style="padding:0px; width: 30%">クイズ</th>
-									<th class="col-md-1" style="padding:0px; width: 7%; white-space: normal">得たポイント</th>
-									<th class="col-md-1"  style="padding:0px; width: 7%; white-space: normal">現在までの<br>今期ポイント</th>
-									<th class="col-md-1"  style="padding:0px; width: 7%; white-space: normal">現在までの<br>今年度ポイント</th>
-									<th class="col-md-1"  style="padding:0px; width: 7%; white-space: normal">現在までの<br>生涯ポイント</th>
+									<th style="padding:0px; width: 9%">登録日</th>
+									<th style="padding:0px; width: 5%; white-space: normal">受検</th>
+									<th style="padding:0px; width: 5%; white-space: normal">クイズ作成</th>
+									<th style="padding:0px; width: 5%; white-space: normal">本の登録</th>
+									<th style="padding:0px; width: 9%; white-space: normal">タイトル</th>
+									<th style="padding:0px; width: 9%">著者</th>
+									<th style="padding:0px; width: 30%">クイズ</th>
+									<th style="padding:0px; width: 7%; white-space: normal">得たポイント</th>
+									<th style="padding:0px; width: 7%; white-space: normal">現在までの<br>今期ポイント</th>
+									<th style="padding:0px; width: 7%; white-space: normal">現在までの<br>今年度ポイント</th>
+									<th style="padding:0px; width: 7%; white-space: normal">現在までの<br>生涯ポイント</th>
 								</tr>
 							</thead>
+						</table>
+					</div>
+					<div style="height:400px; min-width: 100%; overflow-x: auto; margin-bottom: 15px">
+						<table class="table table-bordered table-hover" style="width: 100%; margin-bottom: 0px">
 							<tbody class="text-md-center">
 								<?php $sumPoint = 0; ?>
 								<?php $__currentLoopData = $myAllHistories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $history): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -87,7 +92,7 @@
 									<td style="vertical-align:middle; text-align: left; width: 30%"> <?php $st = str_replace_first("#", "<u style='text-decoration:underline;'>", $history->question); $st = str_replace_first("#", "</u>", $st); 
 															$st = str_replace_first("＃", "<u style='text-decoration:underline;'>", $st); $st = str_replace_first("＃", "</u>", $st);
 															for($i = 0; $i < 30; $i++) {
-															 	$st = str_replace_first("*", "<span class='font_gogic' style='font-size:10px;'>(", $st); $st = str_replace_first("*", ")</span>", $st);
+																$st = str_replace_first("*", "<span class='font_gogic' style='font-size:10px;'>(", $st); $st = str_replace_first("*", ")</span>", $st);
 																$st = str_replace_first("＊", "<span class='font_gogic' style='font-size:10px;'>(", $st); $st = str_replace_first("＊", ")</span>", $st);
 															} 
 															echo $st  ?>

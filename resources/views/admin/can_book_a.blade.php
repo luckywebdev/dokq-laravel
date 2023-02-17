@@ -98,6 +98,24 @@
 			</div>
 		</div>
 	</div>
+    <div class="modal fade" id="certWaningModal" role="dialog">
+	    <div class="modal-dialog modal-md">
+	      <div class="modal-content">
+            <div class="modal-header">
+	          <h4 class="modal-title"></h4>
+	        </div>
+	        <div class="modal-body">
+	          <p>却下すると、もとに戻せません。</p>
+              <p>本当に却下しますか？</p>
+	        </div>
+	        <div class="modal-footer">
+	          <button type="button" data-dismiss="modal" class="btn btn-info modal-ok" >はい却下します</button>
+	          <button type="button" data-dismiss="modal" class="btn btn-info modal-close" >いいえ、却下しません</button>
+	        </div>
+	      </div>
+	    </div>
+	</div>
+
 
 @stop
 @section('scripts')
@@ -135,7 +153,7 @@
                 }
             });
 			$("select[name=type]").change(function(){
-				if ($(this).val() == "0"){
+				if ($(this).val() == "1"){
 					$(".param").each(function(index, item){
 							$(item).val("");
 					})
@@ -143,7 +161,7 @@
 					$("input[name=total_chars]").val("");
 					$("input[name=point]").val("");
 				}
-				else if (($(this).val() == "1")){
+				else if (($(this).val() == "0")){
 					$(".param").each(function(index, item){
 						$(item).val("0");
 					})
@@ -160,8 +178,18 @@
             }
 
 		    $(".save-close").click(function(){
-		    	$("#book-register-form").submit();
+                var uncertCheck = $("#answer2").attr('checked');
+                if (uncertCheck) {
+                    $("#certWaningModal").modal('show');
+                } else {
+		    	    $("#book-register-form").submit();
+                }
 		    });
+
+            $(".modal-ok").click(function() {
+                console.log('[sdfsdafasf]');
+		    	$("#book-register-form").submit();
+            })
 
             $('#input_3').keyup(function(){
                 bookout();

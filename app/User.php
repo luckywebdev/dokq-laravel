@@ -129,6 +129,7 @@ class User extends Authenticatable
     	'replied_date2',
     	'replied_date3',
         'replied_date4',
+        'paypal_stop_date',
         'escape_date',
         'settlement_date',
         'period',
@@ -576,7 +577,7 @@ class User extends Authenticatable
         else if(strpos($device_data, 'Windows') > 0){
             $device = 'Windows Desktop';
         }
-        else if(strpost($device_data, 'iPhone') !== false && strpos($device_data, 'Mac OS') > 0){
+        else if(strpos($device_data, 'iPhone') !== false && strpos($device_data, 'Mac OS') > 0){
             $device = 'Mac OS Desktop';
         }
         else{

@@ -236,27 +236,27 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/mypage/rank_child_pupil', 'MypageController@rank_child_pupil');
     Route::get('/mypage/rank_child_pupil/{id}', 'MypageController@rank_child_pupil');
     Route::get('/mypage/rank_by_age', 'MypageController@rank_by_age');
-    Route::get('/mypage/rank_by_age/{id}', 'MypageController@rank_by_age');
+    Route::get('/mypage/rank_by_age/{id}/{other_flag?}', 'MypageController@rank_by_age');
     Route::get('/mypage/rank_graph', 'MypageController@rank_graph');
     Route::get('/mypage/rank_graph/{id}', 'MypageController@rank_graph');
     Route::get('/mypage/rank_bq', 'MypageController@rank_bq');
-    Route::get('/mypage/rank_bq/{id}', 'MypageController@rank_bq');
+    Route::get('/mypage/rank_bq/{id}/{other_flag?}', 'MypageController@rank_bq');
     Route::get('/mypage/rank_bq_child', 'MypageController@rank_bq_child');
     Route::get('/mypage/rank_bq_child/{id}', 'MypageController@rank_bq_child');
     Route::get('/mypage/history_all', 'MypageController@history_all');
-    Route::get('/mypage/history_all/{id}', 'MypageController@history_all');
+    Route::get('/mypage/history_all/{id}/{other_flag?}', 'MypageController@history_all');
     Route::get('/mypage/pass_history', 'MypageController@pass_history');
-    Route::get('/mypage/pass_history/{id}', 'MypageController@pass_history');
+    Route::get('/mypage/pass_history/{id}/{other_flag?}', 'MypageController@pass_history');
     Route::post('/mypage/pass_history/setpublic/{type}/{id}', 'MypageController@SetQuizPublic');
     Route::get('/mypage/quiz_history', 'MypageController@quiz_history');
-    Route::get('/mypage/quiz_history/{id}', 'MypageController@quiz_history');
+    Route::get('/mypage/quiz_history/{id}/{other_flag?}', 'MypageController@quiz_history');
     Route::get('/mypage/book_reg_history', 'MypageController@book_reg_history');
-    Route::get('/mypage/book_reg_history/{id}', 'MypageController@book_reg_history');
+    Route::get('/mypage/book_reg_history/{id}/{other_flag?}', 'MypageController@book_reg_history');
     Route::get('/mypage/recent_report', 'MypageController@recent_report');
     Route::post('/mypage/recent_print', 'MypageController@recent_print');
     Route::get('/mypage/last_report', 'MypageController@last_report');
     Route::get('/mypage/last_report/{mode}', 'MypageController@last_report');
-    Route::get('/mypage/last_report/{mode}/{id}', 'MypageController@last_report');
+    Route::get('/mypage/last_report/{mode}/{id}/{other_flag?}', 'MypageController@last_report');
     Route::post('/mypage/last_print', 'MypageController@last_print');
     Route::get('/mypage/article_history', 'MypageController@article_history');
     Route::get('/mypage/article_history/{id}', 'MypageController@article_history');
@@ -267,7 +267,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/mypage/edit_info', 'MypageController@edit_info');
     Route::post('/mypage/edit_info/update', 'MypageController@update_info');
     Route::get('/mypage/other_view_info', 'MypageController@other_view_info');
-    Route::get('/mypage/other_view_info/{id}', 'MypageController@other_view_info');
+    Route::get('/mypage/other_view_info/{id}/{other_flag?}', 'MypageController@other_view_info');
     Route::get('/mypage/become_overseer', 'MypageController@become_overseer');
     Route::post('/mypage/update_userinfo', 'MypageController@update_userinfo');
     Route::get('/mypage/escape_group', 'MypageController@escape_group');
@@ -317,7 +317,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/mypage/pupil_history','MypageController@pupil_history');
     
     ////book indexing.//////////////
-    Route::get('/book/register', 'BookController@register');
+    Route::get('/book/record_book', 'BookController@register');
     Route::get('/book/register/caution', 'BookController@caution');
     Route::post('/book/create_update', 'BookController@create_update');
     Route::post('/book/subsave', 'BookController@subsave');
@@ -376,8 +376,11 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/book/{id}/res_passer', 'BookController@res_passer');
     Route::post('/book/regWishlist', 'BookController@regWishlist');
     Route::post('/book/regTestSuccess', 'BookController@regTestSuccess');
+    Route::post('/book/regTestSuccessGeneral', 'BookController@regTestSuccess_general');
     Route::post('/book/sessionquiztime', 'BookController@sessionquiztime');
     
+    Route::get('/admin/reg_sendMail/{user_id}', 'AdminController@reg_sendMail');
+    Route::get('/admin/unapproved/{user_id}', 'AdminController@unapproved');
     Route::get('/admin/reg_group_list', 'AdminController@reg_group_list');
     Route::get('/admin/reg_person_list', 'AdminController@reg_person_list');
     Route::get('/admin/unsubscribe_list', 'AdminController@unsubscribe_list');
@@ -407,6 +410,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/admin/manual_quiz', 'AdminController@manual_quiz');
     Route::get('/admin/advertise', 'AdminController@advertise');
     Route::post('/admin/ad_save', 'AdminController@ad_save');
+    Route::get('/admin/self_evaluation', 'AdminController@self_evaluation_buttons');
+    Route::post('/admin/self_evaluation_save', 'AdminController@self_evaluation_save');
     Route::get('/admin/app_search_history', 'AdminController@app_search_history');
     Route::post('/admin/exportSearchbook', 'AdminController@exportSearchbook');
     Route::post('/admin/exportQuizemake', 'AdminController@exportQuizemake');
@@ -424,6 +429,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/admin/several_search_result', 'AdminController@several_search_result');
     Route::get('/admin/several_search_result', 'AdminController@several_search_result');
     Route::get('/admin/quiz_answer', 'AdminController@quiz_answer');
+    Route::post('/admin/quiz_delete', 'AdminController@quiz_delete');
     Route::get('/admin/quiz_answer_card', 'AdminController@quiz_answer_card');
     Route::get('/admin/basic_list', 'AdminController@basic_list');
     Route::get('/admin/basic_info/{id}', 'AdminController@basic_info');
@@ -465,5 +471,6 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/admin/deletebookByAdmin', 'AdminController@deletebookByAdmin');
     Route::post('/admin/deleteperByAdmin', 'AdminController@deleteperByAdmin');
     Route::post('/admin/deleteorgByAdmin', 'AdminController@deleteorgByAdmin');
-
+    Route::post('/admin/deleteAuthFileByAdmin', 'AdminController@deleteAuthFileByAdmin');
+    Route::post('/admin/deleteCertiFileByAdmin', 'AdminController@deleteCertiFileByAdmin');
 });

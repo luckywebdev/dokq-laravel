@@ -56,16 +56,18 @@
                 <table class="table table-striped table-bordered table-hover data-table">
                     <thead>
                         <tr class="bg-blue">
-                            <th class="col-sm-1">クイズ№</th>
+                            <th>クイズ№</th>
                             <th class="col-sm-3">文面</th>
-                            <th class="col-sm-1">出典</th>
-                            <th class="col-sm-1">認定日</th>
-                            <th class="col-sm-1">作成者</th>
-                            <th class="col-sm-1">認定した<br>監修者ID</th>
-                            <th class="col-sm-1">出題回数</th>
-                            <th class="col-sm-1">正答数</th>
-                            <th class="col-sm-1">誤答数</th>
-                            <th class="col-sm-1">時短<br>正答数</th>
+                            <th>正解</th>
+                            <th>出典</th>
+                            <th>認定日</th>
+                            <th>作成者</th>
+                            <th>認定した<br>監修者ID</th>
+                            <th>出題回数</th>
+                            <th>正答数</th>
+                            <th>誤答数</th>
+                            <th>時短<br>正答数</th>
+                            <th>編集</th>
                         </tr>
                     </thead>
                     <tbody class="text-md-center">  
@@ -79,6 +81,7 @@
                                                                 $st = str_replace_first("＊", "<span class='font_gogic' style='font-size:10px;font-family:HGP明朝B;'>(", $st); $st = str_replace_first("＊", ")</span>", $st);
                                                             } 
                                                             echo $st  ?></td>
+                                <td>@if($quiz->answer == 1) ① @elseif($quiz->answer == 0) ② @endif</td>
                                 <td style="vertical-align:middle;">{{config('consts')['QUIZ']['APP_RANGES'][$quiz->app_range]}}</td>
                                 <td style="vertical-align:middle;">{{date_format(date_create($quiz->published_date),'Y-m-d')}}</td>
                                 <td style="vertical-align:middle;">{{$quiz->RegisterShow()}}</td>
@@ -87,6 +90,7 @@
                                 <td style="vertical-align:middle;">{{$quiz->quizanswerright}}</td>
                                 <td style="vertical-align:middle;">{{$quiz->quizanswerwrong}}</td>
                                 <td style="vertical-align:middle;">{{$quiz->quizanswershorttime}}</td>
+                                <td class="quiz_edit" qid="{{$quiz->id}}" style="vertical-align:middle;">編集</td>
                             </tr>
                         @else                                                              
                             @foreach($quizes as $key=>$quiz)                                                                 
@@ -99,6 +103,7 @@
                                                                 $st = str_replace_first("＊", "<span class='font_gogic' style='font-size:10px;font-family:HGP明朝B;'>(", $st); $st = str_replace_first("＊", ")</span>", $st);
                                                             } 
                                                             echo $st  ?></td>
+                                <td>@if($quiz->answer == 1) ① @elseif($quiz->answer == 0) ② @endif</td>
                                 <td style="vertical-align:middle;">{{config('consts')['QUIZ']['APP_RANGES'][$quiz->app_range]}}</td>
                                 <td style="vertical-align:middle;">{{date_format(date_create($quiz->published_date),'Y-m-d')}}</td>
                                 <td style="vertical-align:middle;">{{$quiz->RegisterShow()}}</td>
@@ -107,6 +112,7 @@
                                 <td style="vertical-align:middle;">{{$quiz->quizanswerright}}</td>
                                 <td style="vertical-align:middle;">{{$quiz->quizanswerwrong}}</td>
                                 <td style="vertical-align:middle;">{{$quiz->quizanswershorttime}}</td>
+                                <td class="quiz_edit" qid="{{$quiz->id}}" style="vertical-align:middle;">編集</td>
                             </tr>   
                             @endforeach   
                         @endif                                              
@@ -146,6 +152,11 @@
             }
             $("input[name=recommend_coefficient]").val(recommend);
             
+        });
+        $(".quiz_edit").click(function() {
+            console.log("$$$");
+            // console.log("/quiz/create?quiz=" + $(this).attr("qid") + "&act=accept");
+            location.href = "/quiz/create?quiz=" + $(this).attr("qid") + "&act=accept";
         });
 	</script>
 	<script type="text/javascript" src="{{asset('js/group/group.js')}}"></script>

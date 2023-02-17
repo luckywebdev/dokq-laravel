@@ -61,7 +61,7 @@
 							<tbody class="text-md-center">
 								@foreach($books as $book)
 									<tr>
-										<td>@if(Auth::user()->role == config('consts')['USER']['ROLE']['AUTHOR'] && count($book->Overseer) == 0) {{with((date_create($book->replied_date1)))->format('Y/m/d')}} @else {{with((new Date($book->replied_date3)))->format('Y/m/d')}}@endif</td>
+										<td>@if(Auth::user()->role == config('consts')['USER']['ROLE']['AUTHOR'] && is_array($book->Overseer) && count($book->Overseer) == 0) {{with((date_create($book->replied_date1)))->format('Y/m/d')}} @else {{with((new Date($book->replied_date3)))->format('Y/m/d')}}@endif</td>
 										<td><a @if($book->active >= 3) href="{{url('/book/'.$book->id.'/detail')}}" @endif class="font-blue-madison">{{$book->title}}</a></td>
 										<td><a href="{{url('/book/search_books_byauthor?writer_id=' . $book->writer_id.'&fullname='.$book->fullname_nick())}}" class="font-blue-madison">{{$book->fullname_nick()}}</a></td>
 										<td><a @if($book->active >= 3) href="{{url('/book/'.$book->id.'/detail')}}" @endif class="font-blue-madison">dq{{$book->id}}</a></td>

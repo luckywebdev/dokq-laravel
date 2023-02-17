@@ -28,7 +28,8 @@
 		<div class="page-content">
 			<div class="page-head">
 				<div class="page-title">
-					<h3>お問合せ対応</h3>
+					<h3>お問合せ対応
+                    <button type="button" class="btn btn-warning del_sel pull-right">☑した行を削除</button></h3>
 				</div>
 			</div>
             <div class="row">
@@ -49,6 +50,7 @@
                                     <th>問い合わせ文 冒頭</th>
                                     <th>返信全文</th>
                                     <th>返信日</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody class="text-md-center">
@@ -94,7 +96,8 @@
                                     <td><a href="mailto:<?php echo e($inquiry->email); ?>"><?php echo e($inquiry->email); ?></a></td>
                                     <td><?php echo e($inquiry->content); ?></td>
                                     <td><?php echo e($inquiry->post); ?></td>
-                                    <td><?php echo e(with((date_create($inquiry->updated_at)))->format('Y.m.d')); ?></td>
+                                    <td><?php echo e($inquiry->post != '' ? with((date_create($inquiry->updated_at)))->format('Y.m.d') : ''); ?></td>
+                                    <td><input type="checkbox" class="del_chk" data-id="<?php echo e($inquiry->id); ?>" ></td>
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>   
                             </tbody>    
@@ -126,6 +129,8 @@
         $(document).ready(function(){
             ComponentsDropdowns.init();
             
+            var del_chk = [];
+
             $(".checkboxes").change(function(){
                // alert($(".checkboxes").val());
                 var checkboxes = $('input:checked');
@@ -138,6 +143,52 @@
                     
                 }
             });
+
+            $(".del_chk").change(function() {
+                var chk_state = $(this).attr("checked");
+                var chk_id = $(this).data("id");
+                if(chk_state == "checked"){
+                    if(!del_chk.includes(chk_id)){
+                        del_chk.push(chk_id);
+                    }
+                }
+                else{
+                    var item_index = del_chk.indexOf(chk_id);
+                    if(item_index >= 0){
+                        del_chk.splice(item_index, 1);                        
+                    }
+                }
+
+            })
+
+            $(".del_sel").click(function() {
+                var info = {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    quizIds: del_chk,
+                    type: 0
+                };
+                var post_url = "/admin/quiz_delete";
+                $.ajax({
+                    type: "post",
+                    url: post_url,
+                    data: info,
+                    beforeSend: function (xhr) {
+                        var token = $('meta[name="csrf-token"]').attr('content');
+                        if (token) {
+                                return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                        }
+                    },
+                    success: function (response) {
+                        console.log("response===>", response);
+                        if(response.status){
+                            window.location.reload();
+                        }
+                        else
+                            alert('Delete error') ;
+                    }
+                });  
+            })
+
         });
         TableManaged.init();
      </script>

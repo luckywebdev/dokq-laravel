@@ -48,6 +48,7 @@
 					        <th>分類</th>
 					        <th>住所</th>
 					        <th>メールアドレス</th>
+							<th >返信日</th>
 					        <th>正式登録日</th>
 					        <th>読Qネーム</th>
 					        <th>パスワード</th>
@@ -62,10 +63,26 @@
 								<td class="align-middle col-md-1">{{config('consts')['USER']['TYPE'][$user->role]}}</td>
 								<td class="align-middle col-md-3">{{$user->address1}} {{$user->address2}}</td>
 								<td class="align-middle"><a href="mailto:{{$user->email}}">{{$user->email}}</a></td>
+								<td class="align-middle" style="white-space: nowrap">
+								@if ($user->isSchoolMember() || $user->isPupil())
+									{{ "-" }}
+								@elseif ($user->replied_date1)
+									{{with(date_create($user->replied_date1))->format("Y/m/d")}}
+								@else
+									<a class="btn btn-info sendmail" href="{{url('/admin/reg_sendMail/'.$user->id)}}" data-user="{{$user->id}}" >送信</a>
+									<a class="btn btn-danger" href="{{url('/admin/unapproved/'.$user->id)}}">削除</button>
+								@endif
+								</td>
 								<td class="align-middle">{{$user->replied_date2? with(date_create($user->replied_date2))->format('Y/m/d'): ""}}</td>
 								<td class="align-middle">{{$user->username}}</td>
 								<td class="align-middle">{{$user->r_password}}</td>
-								<td class="align-middle">{{$user->pay_date? with(date_add(date_create($user->pay_date), date_interval_create_from_date_string("2 weeks"))->format('Y/m/d')): ""}}</td>
+								<td class="align-middle">
+								@if ($user->isSchoolMember() || $user->isPupil())
+									{{ "-" }}
+								@else
+									{{$user->pay_date? with(date_add(date_create($user->pay_date), date_interval_create_from_date_string("2 weeks"))->format('Y/m/d')): ""}}
+								@endif
+								</td>
 								
 							</tr>
 							@endforeach

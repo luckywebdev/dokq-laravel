@@ -1234,14 +1234,17 @@ class BookController extends Controller
     }
 
     public function subsave(Request $request){
-        if($request->input('book_id')!="")
-            $savebook = Books::where('id', '<>',$request->input('book_id'))->where('register_id', Auth::id())->where('active', 0)->first();
-         else
-            $savebook = Books::where('register_id', Auth::id())->where('active', 0)->first();
+        $user = Auth::user();
+        if($user->role != 15){
+            if($request->input('book_id')!="")
+                $savebook = Books::where('id', '<>',$request->input('book_id'))->where('register_id', Auth::id())->where('active', 0)->first();
+            else
+                $savebook = Books::where('register_id', Auth::id())->where('active', 0)->first();
 
-        if(!is_null($savebook) && count(get_object_vars($savebook)) > 0)
-             return Redirect::back()
-                ->withErrors(["savebookerr" => '途中保存できるのは1冊だけです。'])->withInput();
+            if(!is_null($savebook) && count(get_object_vars($savebook)) > 0)
+                return Redirect::back()
+                    ->withErrors(["savebookerr" => '途中保存できるのは1冊だけです。'])->withInput();
+        }
 
         if(($request->input('title') !== null && $request->input('title') !== '') && ($request->input('firstname_nick') !== null && $request->input('firstname_nick') != '') && ($request->input('lastname_nick') !== null && $request->input('lastname_nick') != ''))
             $book = Books::where('firstname_nick','=',$request->input('firstname_nick'))->where('lastname_nick','=',$request->input('lastname_nick'))->where('title','=', $request->input('title'))->where('active', 2)
@@ -1388,35 +1391,39 @@ class BookController extends Controller
             $book = Books::create($res);
         }
              
-        if($request->input('active') !== null && $request->input('active') != 0)
-            $book->active = $request->input('active');
-        else $book->active = 0;
-        $book->categories()->detach();
-        $book->categories()->attach($request->input('categories'));
+        if($request->input('book_id') == ""){
+            if($request->input('active') !== null && $request->input('active') != 0)
+                $book->active = $request->input('active');
+            else $book->active = 0;
+            $book->categories()->detach();
+            $book->categories()->attach($request->input('categories'));
 
-        $book->save();
+            $book->save();
+        }
 
 
         $request->session()->flash('status', config('consts')['MESSAGES']['SUCCEED']);
 
-        $message = Messages::find($request->input('msg_id'));
-        $msgId = 1;
-        if(!$message) {
-            $message = new Messages;
-            $msgId = Messages::max('id') + 1;
-        } else {
-            $msgId = $message->id;
+        if($request->input('book_id') == ""){
+            $message = Messages::find($request->input('msg_id'));
+            $msgId = 1;
+            if(!$message) {
+                $message = new Messages;
+                $msgId = Messages::max('id') + 1;
+            } else {
+                $msgId = $message->id;
+            }
+            $message->type = 0;
+            $message->from_id = 0;
+            $message->to_id = Auth::id();
+            $message->name = "協会";
+            $message->content = View::make('partials.save_noti')
+                ->withType("subsave")
+                ->with('id', $book->id)
+                ->with('msgId', $msgId)
+                ->render();
+            $message->save();
         }
-        $message->type = 0;
-        $message->from_id = 0;
-        $message->to_id = Auth::id();
-        $message->name = "協会";
-        $message->content = View::make('partials.save_noti')
-            ->withType("subsave")
-            ->with('id', $book->id)
-            ->with('msgId', $msgId)
-            ->render();
-        $message->save();
         return Redirect::back()->withInput()->with("book", $book);
     }
     public function edit(Request $request, $id, $msgId){
@@ -2122,6 +2129,7 @@ class BookController extends Controller
         $password = $request->session()->get('password');
         
         if($mode==3 && $request->input('passed_point')){
+            $request->session()->put('book_id',$request->input('book_id'));
             $request->session()->put('passed_point',$request->input('passed_point'));
             $request->session()->put('passed_quiz_count',$request->input('passed_quiz_count'));
             $request->session()->put('passed_test_time',$request->input('passed_test_time'));
@@ -2130,7 +2138,7 @@ class BookController extends Controller
         }
        
         $user = User::where('r_password','=',$password)->first();
-        $this->regTestSuccess_general($request, $bookId, $request->input('passed_test_time'));
+        // $this->regTestSuccess_general($request, $bookId, $request->input('passed_test_time'));
         return view('books.book.test.verify_face_overseer')
             ->with('page_info', $this->page_info)
             ->withTitle('顔認証')
@@ -2139,6 +2147,10 @@ class BookController extends Controller
             ->withUser($user)
             ->withUserId($user->id)
             ->withPassword($password)
+            ->with('passed_test_time', $request->input('passed_test_time'))
+            ->with('passed_point', $request->input('passed_point'))
+            ->with('passed_quiz_count', $request->input('passed_quiz_count'))
+            ->with('page_count', $request->input('page_count'))
             ->withNosidebar(true);
         
     }
@@ -2554,7 +2566,12 @@ class BookController extends Controller
     }
 
     public function viewTestQuiz(Request $request){
-        $book = Books::find($request->input('book_id'));
+        if($request->input('book_id')){
+            $book = Books::find($request->input('book_id'));
+        }
+        else if($request->session()->has('book_id') && $request->session()->get('book_id') != null){
+            $book = Books::find($request->session()->get('book_id'));
+        }
         $page_count = 0;
         $point = 0;
         $test_time =0;
@@ -2571,6 +2588,10 @@ class BookController extends Controller
         if($request->has("page_count")){
             $page_count = $request->input("page_count");
         }
+        else if($request->session()->has('page_count')) {
+            $page_count = $request->session()->get('page_count');
+        }
+
         if($request->session()->get('page_count') !== null){
             if($page_count != $request->session()->get('page_count'))
                 return Redirect::to('/book/test/failed?book_id='.$book->id.'&page_count='.$request->session()->get('page_count'));
@@ -2578,6 +2599,9 @@ class BookController extends Controller
         
         if($request->has('test_time')){
             $test_time = $request->input('test_time');
+        }
+        else if($request->session()->has('passed_test_time')){
+            $test_time = $request->session()->get('passed_test_time');
         }
          
         if($request->session()->get('test_time') !== null && $request->session()->get('test_time') != 0)
@@ -2592,6 +2616,9 @@ class BookController extends Controller
         
         if($request->has('point')){
             $point = $request->input("point");
+        }
+        else if($request->session()->has('passed_point')){
+            $point = $request->session()->get('passed_point');
         }
 
         if($request->has('answer')){
@@ -2894,7 +2921,9 @@ class BookController extends Controller
        
         return response()->json($response);
     }
-    public function regTestSuccess_general(Request $request, $book_id, $passed_test_time){
+    public function regTestSuccess_general(Request $request, $book_id = 0, $passed_test_time = 0){
+        $book_id = $request->input('book_id');
+        $passed_test_time = $request->input('passed_test_time');
         $beforebookRegister_totalpoint = UserQuiz::TotalPoint(Auth::id());
         $beforebookRegister_rank = 10;
         

@@ -54,6 +54,24 @@
 												</div>
 											</div>
 										</div>
+										@if($notice->outside_link != '')
+										<div class="col2" style="display: flex; flex-direction: column; align-items: flex-start">
+											<div class="cont">
+												<div class="cont-col2">
+													<div class="desc">
+														詳細については下記URLをクリック！
+													</div>
+												</div>
+											</div>
+											<div class="cont">
+												<div class="cont-col2">
+													<div class="desc">
+														<a href="{{$notice->outside_link}}" target="__blank">{{$notice->outside_link}}</a>
+													</div>
+												</div>
+											</div>
+										</div>
+										@endif
 									<!-- </a> -->
 								</li>
 								@endforeach
@@ -181,9 +199,17 @@
 				</div>
 			</div>
 		</div>
+		<!-- <div class="row">
+			<div class="col-md-12">
+				@if (Auth::check() && Auth::user()->isAdmin() && $self_evaluation != null && $self_evaluation->evaluation_button_url != '')
+					<a href="{{url($self_evaluation->self_evaluation_sheet_url)}}" target="__blank" style="width: 200px; height: 60px">
+						<img src="{{$self_evaluation->evaluation_button_url}}" alt="" style="width: 200px; height: 60px">
+					</a>
+				@endif
+			</div>
+		</div> -->
 		</div>
 	</div>
-
 	
 @stop
 @section('scripts')
@@ -204,15 +230,24 @@
 		var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');
 		//login view in 一括操作
 		var msgloginid = '{!! Request::session()->get('msglogin') !!}';
+		console.log("msg_id===>", msgloginid);
 		if(msgloginid != '' && msgloginid !== null){
 			var msglogin = '{!! Request::session()->put('msglogin', '') !!}';
-			socket.emit('msglogin', msgloginid);
+			console.log("msglogin==>", msglogin);
+			var data = {
+				logedin_id: msgloginid
+			}
+			socket.emit('msglogin', JSON.stringify(data));
 		}
 		//logout view in 一括操作
 		var msglogoutid = '{!! Request::session()->get('msglogout') !!}';
 		if(msglogoutid != '' && msglogoutid !== null){
 			var msglogout = '{!! Request::session()->put('msglogout', '') !!}';
-			socket.emit('msglogout', msglogoutid);
+			console.log("msglogout==>", msglogout);
+			var data = {
+				logedout_id: msglogoutid
+			}
+			socket.emit('msglogout', JSON.stringify(data));
 		}
 
 		$('#pwd_checker').click(function(){

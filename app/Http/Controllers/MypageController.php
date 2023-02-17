@@ -6195,13 +6195,13 @@ class MypageController extends Controller{
                     on classes.group_id=table3.id and classes.grade=table3.grade and classes.year=table3.year)".
                 ") as table1";
             
-            for ($k = 1; $k < 5; $k++) {
+            for ($k = 1; $k < 9; $k++) {
                 $date = date_sub(now(), date_interval_create_from_date_string($k * 3 . " months"));
-                $cur_season[4-$k] = MypageController::CurrentSeaon_Pupil($date);
-                $sql_term1[4-$k]=$sql_average_front."created_date between '".$cur_season[4-$k]['begin_season']."' and '". $cur_season[4-$k]['end_season'].$sql_average_end;
+                $cur_season[8-$k] = MypageController::CurrentSeaon_Pupil($date);
+                $sql_term1[8-$k]=$sql_average_front."created_date between '".$cur_season[8-$k]['begin_season']."' and '". $cur_season[8-$k]['end_season'].$sql_average_end;
             }
             
-            for($i=0;$i<4;$i++){
+            for($i=0;$i<8;$i++){
                $sum=0; 
                $temp_avg=MypageController::Get_AvgPoint($sql_term1[$i]);
   
@@ -6216,7 +6216,13 @@ class MypageController extends Controller{
                 $myavgPoints[$i][0] = $schoolpercent;
 
             }
-   
+
+            // for($i=4;$i<8;$i++){
+            //      $myavgPoints[$i][0] = 0;
+            //      $myavgPoints[$i][1] = 0;
+            //     //  $cur_season[$i] = 0;
+            //  }
+    
             $sql[1]="(select users.id,IFNULL(table1.sum,0) as sum,If(id='".$id."',1,0) as flag 
             from users left join 
                 (select user_id, SUM(user_quizes.point) AS sum 
@@ -8353,7 +8359,7 @@ class MypageController extends Controller{
     }
 
 
-    public function rank_by_age(Request $request, $id = null){
+    public function rank_by_age(Request $request, $id = null, $other_flag = false){
         //        if(!Auth::user()->isGeneral() && !Auth::user()->isOverseer()){
         //            return Redirect::to('/');
         //        }
@@ -8363,7 +8369,7 @@ class MypageController extends Controller{
         }
         $user = User::find($id);
         $this->point_ranking_is_public = $user->point_ranking_is_public;
-        if($id != Auth::id()) 
+        if($id != Auth::id() || ($id != null && $other_flag)) 
             $otherview_flag = true;
 
         $rankingage = 1;
@@ -9559,7 +9565,7 @@ class MypageController extends Controller{
             ->with('page_info', $this->page_info);
     }
 
-    public function rank_bq(Request $request, $id = null){
+    public function rank_bq(Request $request, $id = null, $other_flag = false){
         
         //        if(!Auth::user()->isGeneral()){
         //            return Redirect::to('/');
@@ -9570,7 +9576,7 @@ class MypageController extends Controller{
         }
         $user = User::find($id);
         $this->register_point_ranking_is_public = $user->register_point_ranking_is_public;
-        if($id != Auth::id()) 
+        if($id != Auth::id() || ($id != null && $other_flag)) 
             $otherview_flag = true;
         $rankingage = 1;
         $type = 0;
@@ -10233,7 +10239,7 @@ class MypageController extends Controller{
     }
 
 
-    public function history_all(Request $request, $id = null){
+    public function history_all(Request $request, $id = null, $other_flag = false){
         //        if(!Auth::user()->isGeneral() && !Auth::user()->isOverseer()){
         //            return Redirect::to('/');
         //        }
@@ -10242,7 +10248,7 @@ class MypageController extends Controller{
             $id = Auth::id();
         }
         $user = User::find($id);
-        if($id != Auth::id()) 
+        if($id != Auth::id() || ($id != null && $other_flag)) 
             $otherview_flag = true;
         $today = now();
         if($user->isPupil() && $user->active == 1){
@@ -10415,7 +10421,7 @@ class MypageController extends Controller{
             ->with('page_info', $this->page_info);
     }
 
-    public function pass_history(Request $request, $id = null){
+    public function pass_history(Request $request, $id = null, $other_flag = false){
 
         
         //        if(!Auth::user()->isGeneral() && !Auth::user()->isOverseer()){
@@ -10430,14 +10436,14 @@ class MypageController extends Controller{
             $id = Auth::id();
         }
         $user = User::find($id);
-        if($id != Auth::id()) 
+        if($id != Auth::id() || ($id != null && $other_flag)) 
             $otherview_flag = true;
 
         $passed_records_is_public = $user->passed_records_is_public;
         $myAllHistories = UserQuiz::select('user_quizes.*')
                                     ->where("user_quizes.user_id", $id)
                                     ->leftjoin('books', 'user_quizes.book_id', DB::raw('books.id and books.active <> 7'))
-                                    ->where("user_quizes.type", 2)->where("user_quizes.status", 3)->orderby("user_quizes.created_date", "desc");
+                                    ->where("user_quizes.type", 2)->where("user_quizes.status", 3)->orderby("user_quizes.finished_date", "desc");
         if($otherview_flag)
             $myAllHistories = $myAllHistories->where('is_public', 1);
         $myAllHistories = $myAllHistories->get();
@@ -10450,7 +10456,7 @@ class MypageController extends Controller{
             ->with('passed_records_is_public', $passed_records_is_public);
     }
 
-    public function quiz_history(Request $request, $id = null){
+    public function quiz_history(Request $request, $id = null, $other_flag = false){
         //        if(!Auth::user()->isGeneral() && !Auth::user()->isOverseer()){
         //            return Redirect::to('/');
         //        }
@@ -10459,7 +10465,7 @@ class MypageController extends Controller{
             $id = Auth::id();
         }
         $user = User::find($id);
-        if($id != Auth::id()) 
+        if($id != Auth::id() || ($id != null && $other_flag)) 
             $otherview_flag = true;
 
         $this->page_info['side'] = 'site_history';
@@ -10483,7 +10489,7 @@ class MypageController extends Controller{
             ->with('page_info', $this->page_info);
     }
 
-    public function book_reg_history(Request $request, $id = null){
+    public function book_reg_history(Request $request, $id = null, $other_flag = false){
         //        if(!Auth::user()->isGeneral() && !Auth::user()->isOverseer()){
         //            return Redirect::to('/');
         //        }
@@ -10492,7 +10498,7 @@ class MypageController extends Controller{
             $id = Auth::id();
         }
         $user = User::find($id);
-        if($id != Auth::id()) 
+        if($id != Auth::id() || ($id != null && $other_flag)) 
             $otherview_flag = true;
         $this->page_info['side'] = 'site_history';
         $this->page_info['subside'] = 'book_reg_history';
@@ -10501,7 +10507,7 @@ class MypageController extends Controller{
 
         $allowed_books = UserQuiz::where("user_quizes.user_id", $id)
                                    ->join('books', 'user_quizes.book_id', DB::raw('books.id and books.active <> 7'))
-                                   ->where("user_quizes.type", 0)->where("user_quizes.status", 1)->get();
+                                   ->where("user_quizes.type", 0)->where("user_quizes.status", 1)->orderBy('user_quizes.finished_date', 'desc')->get();
 
         return view('mypage.personal.history.book_reg_history')
             ->with('book_allowed_record_is_public', $book_allowed_record_is_public)
@@ -12886,7 +12892,7 @@ class MypageController extends Controller{
 
     }
 
-    public function last_report(Request $request, $mode = 0, $id=null){
+    public function last_report(Request $request, $mode = 0, $id=null, $other_flag = false){
         $this->page_info['side'] = 'site_history';
         $this->page_info['subside'] = 'last_report';
 
@@ -12894,7 +12900,7 @@ class MypageController extends Controller{
         if(!isset($id) || $id == null) {
             $id = Auth::id();
         }
-        if($id != Auth::id()) 
+        if($id != Auth::id() || ($id != null && $other_flag)) 
             $otherview_flag = true;
         //$last5SeasonList = $this->getLast5SeasonList(now());
         $user = User::find($id);
@@ -13840,7 +13846,7 @@ class MypageController extends Controller{
             $user = Auth::user();
             $index = $request->session()->get('index');
             $certi_back = CertiBackup::where(['user_id' => $user->id, 'index' => $index])->first();
-    
+   
             if(!isset($user)){
                 return response('Unauthorized.', 401);
             }
@@ -13860,7 +13866,7 @@ class MypageController extends Controller{
             $current_year = date("Y");
             $current_month = date("n");
             $current_date = date("d");
-            if($certi_back->settlement_date === null || $certi_back->settlement_date == '')
+            if($certi_back === null || $certi_back->settlement_date === null || $certi_back->settlement_date == '')
                 $period = date_format(date_add(now(), date_interval_create_from_date_string("6 months")), "Y-m-d");
             else
                 $period = date_format(date_add(date_create($certi_back->settlement_date), date_interval_create_from_date_string("5 months")), "Y-m-d");
@@ -13940,6 +13946,7 @@ class MypageController extends Controller{
                 // }
                 // else{
                     $personworkHistory->device = $this->get_device();
+                    $personworkHistory->certi_backup_id = $certi_back->id;
                     $personworkHistory->save();
                 // }
                 $message = new Messages;
@@ -14110,6 +14117,10 @@ class MypageController extends Controller{
             }
         }
 
+        if($request->input("sort_dir")){
+            $request->session()->put('sort_dir', $request->input("sort_dir"));
+        }
+
         if($index == 1){
             return Redirect::to('/mypage/settlement_certi/'.$index.'/a');
             // return Redirect::to('/mypage/certi_pay/'.$index);           
@@ -14138,7 +14149,7 @@ class MypageController extends Controller{
         $books = [];
         if($request->input('search')){
             
-            $books = Books::MyBooks(-1)->orderBy(DB::raw("books.firstname_yomi asc, books.lastname_yomi"), 'asc');
+            $books = Books::MyBooks(-1);
 
             if($request->input('title') !== null && $request->input('title') != ""){
                 $books = $books->where('books.title', 'like', '%'.$request->input('title').'%');
@@ -14159,12 +14170,12 @@ class MypageController extends Controller{
                 $books = $books->where('books.id',$book_id);
             }
             if($request->input('key_s_date')){
-                $date  = $request->input('key_s_date');
-                $books4 = $books->where('books.qc_date', '>=', Carbon::create(date_format(date_create($date),"Y"), date_format(date_create($date),"m"),date_format(date_create($date),"d"),0,0,0));
+                $date1  = $request->input('key_s_date');
+                $books4 = $books->where('user_quizes.finished_date', '>=', Carbon::create(date_format(date_create($date1),"Y"), date_format(date_create($date1),"m"),date_format(date_create($date1),"d"),0,0,0));
             }
             if($request->input('key_e_date')){
-                $date  = $request->input('key_e_date');
-                $books = $books->where('books.qc_date', '<=', Carbon::create(date_format(date_create($date),"Y"), date_format(date_create($date),"m"),date_format(date_create($date),"d"),23,59,59));
+                $date2  = $request->input('key_e_date');
+                $books = $books->where('user_quizes.finished_date', '<=', Carbon::create(date_format(date_create($date2),"Y"), date_format(date_create($date2),"m"),date_format(date_create($date2),"d"),23,59,59));
             }
             if($request->input('key_type')){
                 $books = $books->where('key_type', '<=', $request->input('key_type'));
@@ -14189,7 +14200,8 @@ class MypageController extends Controller{
                 }
             }
 
-            $books = $books->groupby('books.id')->get();      
+            // orderBy(DB::raw("books.firstname_yomi asc, books.lastname_yomi"), 'asc')->
+            $books = $books->orderBy('user_quizes.finished_date', 'desc')->groupBy('books.id')->limit(10)->get();      
         }
 
 
@@ -14209,6 +14221,11 @@ class MypageController extends Controller{
     public function settlement_certi(Request $request, $index=null, $bookitems=''){
         $this->page_info['side'] = 'create_certi';
         $this->page_info['subside'] = 'create_certi';
+        $sort_dir = 'asc';
+        if($request->session()->has('sort_dir')) {
+            $sort_dir = $request->session()->pull('sort_dir');
+        }
+
         $user = Auth::user();
 
         $total_point = UserQuiz::TotalPoint();
@@ -14222,7 +14239,10 @@ class MypageController extends Controller{
             }
         }
 
-        $certibackup = CertiBackup::where(['user_id' => $user->id, 'index' => $index])->first();
+        $certibackup = CertiBackup::where(['user_id' => $user->id, 'index' => $index])
+                                // ->where('passcode', '!=', " ")
+                                // ->whereNotNull('passcode')
+                                ->first();
         if(!isset($certibackup)){
             $certibackup = new CertiBackup();
             $certibackup->user_id = $user->id;
@@ -14231,6 +14251,9 @@ class MypageController extends Controller{
             $certibackup->backup_date = date_format(now(), "Y-m-d");
             $certibackup->level = $my_rank;
             $certibackup->sum_point = $total_point;
+        }
+        if($certibackup->passcode == null || $certibackup->passcode == ""){
+            $certibackup->backup_date = date_format(now(), "Y-m-d");
         }
 
 
@@ -14253,9 +14276,13 @@ class MypageController extends Controller{
         }elseif($index == 3){
 
             $items = preg_split('/,/', $bookitems);
-            $myAllHistories = UserQuiz::where("user_quizes.user_id", Auth::id())
-                                        ->join('books', 'user_quizes.book_id', DB::raw('books.id and books.active <> 7'))
-                                        ->where("user_quizes.type", 2)->where("user_quizes.status", 3)->whereIn('user_quizes.book_id', $items)->get();
+            $myAllHistories = [];
+            foreach($items as $item){
+                $myAllHistories_temp = UserQuiz::where("user_quizes.user_id", Auth::id())
+                                ->join('books', 'user_quizes.book_id', DB::raw('books.id and books.active <> 7'))
+                                ->where("user_quizes.type", 2)->where("user_quizes.status", 3)->where('user_quizes.book_id', $item)->first();
+                array_push($myAllHistories, $myAllHistories_temp);
+            }
             
             $book_temp = ""; 
             foreach ($myAllHistories as $key => $history) {
@@ -14267,9 +14294,14 @@ class MypageController extends Controller{
         }elseif($index == 4){
 
             $items = preg_split('/,/', $bookitems);
-            $myAllHistories = UserQuiz::where("user_quizes.user_id", Auth::id())
-                                       ->join('books', 'user_quizes.book_id', DB::raw('books.id and books.active <> 7'))
-                                       ->where("user_quizes.type", 2)->where("user_quizes.status", 3)->whereIn('user_quizes.book_id', $items)->get();
+            $myAllHistories = [];
+            foreach($items as $item){
+                $myAllHistories_temp = UserQuiz::where("user_quizes.user_id", Auth::id())
+                            ->join('books', 'user_quizes.book_id', DB::raw('books.id and books.active <> 7'))
+                            ->where("user_quizes.type", 2)->where("user_quizes.status", 3)->where('user_quizes.book_id', $item)->first();
+                array_push($myAllHistories, $myAllHistories_temp);
+            }
+            
             $book_temp = "";
             foreach ($myAllHistories as $key => $history) {
                 $book_temp .= date_format(date_create($history->finished_date), "Y年m月d日").":".$history->Book->title.":".$history->Book->fullname_nick().":".$history->Book->publish.":dq".$history->book_id;
@@ -16667,10 +16699,24 @@ class MypageController extends Controller{
                 }
                 break;
             case 3:
-                
+                if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59)){
+                    $search_birthday['start_day'] = date_format(Carbon::createFromDate((Date("Y")-17), 4, 1), "Y-m-d");
+                    $search_birthday['end_day'] = date_format(Carbon::createFromDate((Date("Y")), 3, 31), "Y-m-d");
+                }
+                else{
+                    $search_birthday['start_day'] = date_format(Carbon::createFromDate((Date("Y")-16), 4, 1), "Y-m-d");
+                    $search_birthday['end_day'] = date_format(Carbon::createFromDate((Date("Y")), 3, 31), "Y-m-d");
+                }
                 break;
             case 4:
-                
+                if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59)){
+                    $search_birthday['start_day'] = date_format(Carbon::createFromDate((Date("Y")-18), 4, 1), "Y-m-d");
+                    $search_birthday['end_day'] = date_format(Carbon::createFromDate((Date("Y")), 3, 31), "Y-m-d");
+                }
+                else{
+                    $search_birthday['start_day'] = date_format(Carbon::createFromDate((Date("Y")-17), 4, 1), "Y-m-d");
+                    $search_birthday['end_day'] = date_format(Carbon::createFromDate((Date("Y")), 3, 31), "Y-m-d");
+                }
                 break;
             case 5:
                 if($today <= Carbon::create((Date("Y")), 3, 31,23,59,59)){

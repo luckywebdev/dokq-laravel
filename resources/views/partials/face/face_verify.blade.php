@@ -209,11 +209,11 @@
             <input type="hidden" name="cameraImg" id="cameraImg"/>
             
             <div id="face" style="display: none;">
-                <p>顔認識します。顔を枠の中に入れ、「〇」をクリックして、レンズを見てください。</p>
+                <p>顔認識します。「顔認証」をクリックして、レンズを見てください。</p>
                 <div class="form-group row" >
                     <div class="col-md-12">
                         <div class="camera-widget camera-placeh1older" align="center">
-                            <video style="width:100%; height:100%;" autoplay="autoplay"></video>
+                            <video style="width:100%; height:90%;" autoplay="autoplay"></video>
                         </div>
                     </div>
                 </div>

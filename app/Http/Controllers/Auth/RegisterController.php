@@ -73,7 +73,7 @@ class RegisterController extends Controller
         $start_month = $real_pay_start_arr[1];
         $start_day = $real_pay_start_arr[2];
         if(strpos(strtolower($pay_content), "yearly") === false){
-            if($start_year == 12){
+            if($start_month == 12){
                 $period_month = 1;
                 $period_year = $start_year + 1;
                 $end_day_of_period_year_month = cal_days_in_month(CAL_GREGORIAN,$period_month,$period_year);
@@ -177,12 +177,16 @@ class RegisterController extends Controller
         $current_day = date("Y-n-d");
         $real_pay_start = date_add(date_create($current_day), date_interval_create_from_date_string('14 days'));
         $real_pay_start = date_format($real_pay_start, 'Y-n-j');
+
         $next_pay_date = $this->get_next_pay_date($real_pay_start, $pay_content);
+
+        // echo config('consts')['PAY_LIST'][strtolower($pay_content)];
+        // echo $real_pay_start . "&&&" . $pay_content . "&&&" . $next_pay_date;
+        // exit;
+
         $period = date_sub(date_create($next_pay_date), date_interval_create_from_date_string('1 days'));
         $user->period = date_format($period, 'Y-m-d');
         $user->properties = 1;
-
-        // echo config('consts')['PAY_LIST'][$pay_content];
 
         $user->save();
         return Redirect::back();
@@ -285,6 +289,12 @@ class RegisterController extends Controller
      * @return void
      */
     public function viewregister(Request $request, $type, $step){
+        $deleted=User::where(function($query){
+            $query->where('active','=',0)
+                ->where('created_at','<',date_sub(date_create(date("Y-m-d h:i:sa")),date_interval_create_from_date_string("7 days")))
+                ->delete();
+        });
+
         $user = config('consts')['USER']['TYPE'][$type];
         $title = '新規会員登録(' . config('consts')['USER']['TYPE'][$type] . ')';
         $isAuthor = 0;
@@ -532,6 +542,7 @@ class RegisterController extends Controller
         $teacher = $request->input('teacher');
         $prev_username = $request->input('prev_username');
         $rule['email'] = 'required|email';
+
        
         if(isset($prev_username) && $prev_username !== null && strlen($prev_username) > 0){
 
@@ -564,6 +575,8 @@ class RegisterController extends Controller
                 ->withInput()
                 ->withTitle($title);
         }
+
+
 
         //create refresh_token
         $data['refresh_token'] = md5($data['email']).md5(time());
@@ -606,6 +619,7 @@ class RegisterController extends Controller
                 $user->password = "";
                 $user->r_password = "";
                 $user->org_id = 0;
+                $user->active = 0;
 
                 $rister_flag = true;
             }
@@ -619,10 +633,19 @@ class RegisterController extends Controller
             } else {
                 $user->t_username = $request->input("group_roma").$request->input("address4").$request->input("address5");
             }
+
+            $group_yomi = $request->input("group_yomi");
+
             $user->group_roma = $request->input("group_roma");
             $user->t_password = str_random(8);
             $user->password = md5($user->t_password);
-            $user->save();
+            $local_ip = \Request::ip();
+            $user->ip_global_address = $local_ip;
+        
+            if(RegisterController::isHiragana($group_yomi)){
+                $user->save();
+            }
+
         } else {
             //if org is exist register to it
             $group = User::Where("group_name","like",trim($request->input('group_name')))->get();
@@ -683,31 +706,51 @@ class RegisterController extends Controller
             || $role == config('consts')['USER']['ROLE']['OTHER']) {
             $user->aptitude = 1;
         }
-        
-        try{
-            Mail::to($user->email)->send(new Restore($user));
-            //admin
-            $admin = User::find(1);
-            $personadminHistory = new PersonadminHistory();
-            $personadminHistory->user_id = $admin->id;
-            $personadminHistory->username = $admin->username;
-            $personadminHistory->item = 0;
-            $personadminHistory->work_test = 13;
-            $personadminHistory->bookregister_name = $user->username;
-            $personadminHistory->content = '会員登録申請回答';
-            $personadminHistory->save();
-        }catch(Swift_TransportException $e){
-            //$user->delete();
-            return Redirect::back()
-                ->withErrors(["servererr" => config('consts')['MESSAGES']['EMAIL_SERVER_ERROR']])
-                ->withInput()
-                ->withTitle($title);
-        } 
-        $user->replied_date1 = now();       
-        $user->save();
+        // if($role == config('consts')['USER']['ROLE']['GROUP']) {
+        //     if(RegisterController::isHiragana($group_yomi)){
+        //         $user->save();
+        //     }
+        // }
+        // else{
+        //     $user->save();
+        // }        
+        if ($role == config('consts')['USER']['ROLE']['GENERAL']) {
+            try{
+                Mail::to($user->email)->send(new Restore($user));
+                //admin
+                $admin = User::find(1);
+                $personadminHistory = new PersonadminHistory();
+                $personadminHistory->user_id = $admin->id;
+                $personadminHistory->username = $admin->username;
+                $personadminHistory->item = 0;
+                $personadminHistory->work_test = 13;
+                $personadminHistory->bookregister_name = $user->username;
+                $personadminHistory->content = '会員登録申請回答';
+                $personadminHistory->save();
+            }catch(Swift_TransportException $e){
+                //$user->delete();
+                return Redirect::back()
+                    ->withErrors(["servererr" => config('consts')['MESSAGES']['EMAIL_SERVER_ERROR']])
+                    ->withInput()
+                    ->withTitle($title);
+            } 
+            $user->replied_date1 = now();      
+        }
+        if($role == config('consts')['USER']['ROLE']['GROUP']) {
+            if(RegisterController::isHiragana($group_yomi)){
+                $user->save();
+            }
+        }
+        else{
+            $user->save();
+        }
 
         return Redirect::to('auth/reg_step1/'.$role.'/suc')
             ->withTitle($title);
+    }
+
+    public function isHiragana($str) {
+        return preg_match('/[\x{3040}-\x{309F}]/u', $str) > 0;
     }
 
     public function step1_suc($role){
@@ -782,6 +825,7 @@ class RegisterController extends Controller
             $user->islogged = 1;
             $user->namepwd_check = 0;
             $user->replied_date3 = now();
+            $user->active = 1;
             if($user->role == config('consts')['USER']['ROLE']['OVERSEER'])
                 $user->replied_date4 = now(); //適性検査合格日
             //$user->t_username = "";

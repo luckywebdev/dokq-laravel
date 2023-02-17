@@ -297,16 +297,16 @@
                                     <?php $__currentLoopData = $classes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $class): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr class="info">
                                             <td class="col-md-3">
-                                            <?php if($class->grade == 0): ?>                                 
+                                                <?php if($class->grade == 0): ?>                                 
                                                     <?php echo e($class->class_number); ?>組
-                                            <?php elseif($class->class_number == '' || $class->class_number == null): ?>
-                                                <?php echo e($class->grade); ?>年
-                                            <?php else: ?>
-                                                <?php echo e($class->grade); ?>年<?php echo e($class->class_number); ?>組 
-                                            <?php endif; ?> 
-                                            <?php if($class->member_counts != 0 && $class->member_counts !== null): ?>
-                                                 <?php echo e($class->member_counts); ?>名
-                                             <?php endif; ?>          
+                                                <?php elseif($class->class_number == '' || $class->class_number == null): ?>
+                                                    <?php echo e($class->grade); ?>年
+                                                <?php else: ?>
+                                                    <?php echo e($class->grade); ?>年<?php echo e($class->class_number); ?>組 
+                                                <?php endif; ?> 
+                                                <?php if($class->member_counts != 0 && $class->member_counts !== null): ?>
+                                                    <?php echo e($class->member_counts); ?>名
+                                                <?php endif; ?>          
                                             </td>
 
                                             <td class="col-md-9">
@@ -411,16 +411,38 @@
         </form>
         </div>
         <div class="row" style="margin-top:8px">
-            <div class="col-md-5 text-md-left"></div>
+            <div class="col-md-4 text-md-left"></div>
             <div class="col-md-1 text-md-right col-xs-6">
                 <button type="button" class="btn btn-success save-continue"  style="margin-bottom:8px">保　存</button>
             </div>
-            <div class="col-md-6 text-md-right col-xs-6">
+            <div class="offset-md-1 col-md-1 text-md-right col-xs-4">
+                <button type="button" class="btn btn-danger delete-continue" style="margin-bottom:8px">削　除</button>
+            </div>
+            <div class="col-md-5 text-md-right col-xs-4">
                 <a href="<?php echo e(url('/top')); ?>" class="btn btn-info pull-right" role="button" style="margin-bottom:8px;">協会トップへ戻る</a>
             </div>
         </div>
     </div>
 </div>
+<div id="perdelModal" class="modal fade draggable draggable-modal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title"><strong style="font-family: 'Judson'">読Q</strong></h4>
+        </div>
+        <div class="modal-body">
+            <span id="alert_perdel_text"></span>
+        </div>
+        <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn btn-warning perdelete modal-close" >実　行</button>
+            <button type="button" data-dismiss="modal" class="btn btn-info modal-close" >戻　る</button>
+        </div>
+    </div>
+  </div>
+</div>
+
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('scripts'); ?>
 <script type="text/javascript" src="<?php echo e(asset('plugins/bootstrap-fileinput/bootstrap-fileinput.js')); ?>"></script>
@@ -440,6 +462,15 @@
         $(".save-continue").click(function(){
             $("#validate-form").submit();
         });
+        $(".delete-continue").click(function(){
+            $("#alert_perdel_text").html("<?php echo e(config('consts')['MESSAGES']['CONFIRM_ORG_DELETE']); ?>");
+            $("#perdelModal").modal();
+        });
+        $(".perdelete").click(function() {
+            $("#validate-form").attr("action", '<?php echo e(url("/admin/deleteorgByAdmin")); ?>');
+            $("#validate-form").submit();
+        });
+
 
         var handleDatePickers = function () {
 
@@ -476,4 +507,6 @@
 	</script>
 	<script type="text/javascript" src="<?php echo e(asset('js/group/group.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
+
+<!-- 120.74.2.108 -->
 <?php echo $__env->make('layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

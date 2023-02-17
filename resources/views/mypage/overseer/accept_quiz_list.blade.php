@@ -88,7 +88,7 @@
 									@foreach($quizes as $key => $quiz)
 									<tr>
 										<td>{{with($quiz->created_at)->format("Y/m/d")}} @if($quiz->active < 2) <br><span style="color:red">新着</span> @endif</td>
-										<td><?php $st = str_replace_first("#", "<span style='text-decoration:underline !important'>", $quiz->question); $st = str_replace_first("#", "</span>", $st); 
+										<td class="text-md-left"><?php $st = str_replace_first("#", "<span style='text-decoration:underline !important'>", $quiz->question); $st = str_replace_first("#", "</span>", $st); 
 														$st = str_replace_first("＃", "<span style='text-decoration:underline;'>", $st); $st = str_replace_first("＃", "</span>", $st);
 														for($i = 0; $i < 30; $i++) {
 														 	$st = str_replace_first("*", "<span class='font_gogic' style='font-size:10px;font-family:HGP明朝B;'>(", $st); $st = str_replace_first("*", ")</span>", $st);
@@ -99,7 +99,8 @@
 										<td><?php echo $quiz->AppearPosition() ?></td>
 										<td>{{$quiz->RegisterShow()}}
 										</td>
-										<td>dq{{$book->id}}-{{$key + 1}}</td>
+										<!-- <td>dq{{$book->id}}-{{$key + 1}}</td> -->
+										<td>{{$quiz->doq_quizid}}</td>
 										<!-- <td>
 											<div><a class="quiz_edit font-blue" href="#" qid="{{$quiz->id}}">編集</a></div>
 											<div><a class="quiz_delete font-red" href="#" qid="{{$quiz->id}}">削除</a></div>

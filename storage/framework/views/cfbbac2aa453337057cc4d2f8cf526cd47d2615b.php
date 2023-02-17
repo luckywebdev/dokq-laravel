@@ -85,35 +85,35 @@
 									<tbody class="text-md-center">
 										<tr class="danger">
 											<td><?php echo e($current_season['year']); ?>年度 冬</td>
-											<td><?php echo e($avg_point['winter']); ?></td>
-											<td><?php echo e($rank_grade['winter']); ?></td>
-											<td><?php echo e($rank_city['winter']); ?></td>
-											<td><?php echo e($rank_province['winter']); ?></td>
-											<td><?php echo e($rank_overall['winter']); ?></td>
+											<td><?php echo e($current_season['term'] >= 3 ? $avg_point['winter'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 3 ? $rank_grade['winter'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 3 ? $rank_city['winter'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 3 ? $rank_province['winter'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 3 ? $rank_overall['winter'] : '-'); ?></td>
 										</tr>
 										<tr class="warning">
 											<td><?php echo e($current_season['year']); ?>年度 秋</td>
-											<td><?php echo e($avg_point['autumn']); ?></td>
-											<td><?php echo e($rank_grade['autumn']); ?></td>
-											<td><?php echo e($rank_city['autumn']); ?></td>
-											<td><?php echo e($rank_province['autumn']); ?></td>
-											<td><?php echo e($rank_overall['autumn']); ?></td>
+											<td><?php echo e($current_season['term'] >= 2 ? $avg_point['autumn'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 2 ? $rank_grade['autumn'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 2 ? $rank_city['autumn'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 2 ? $rank_province['autumn'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 2 ? $rank_overall['autumn'] : '-'); ?></td>
 										</tr>
 										<tr class="danger">
 											<td><?php echo e($current_season['year']); ?>年度 夏</td>
-											<td><?php echo e($avg_point['summer']); ?></td>
-											<td><?php echo e($rank_grade['summer']); ?></td>
-											<td><?php echo e($rank_city['summer']); ?></td>
-											<td><?php echo e($rank_province['summer']); ?></td>
-											<td><?php echo e($rank_overall['summer']); ?></td>
+											<td><?php echo e($current_season['term'] >= 1 ? $avg_point['summer'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 1 ? $rank_grade['summer'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 1 ? $rank_city['summer'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 1 ? $rank_province['summer'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 1 ? $rank_overall['summer'] : '-'); ?></td>
 										</tr>
 										<tr class="warning">
 											<td><?php echo e($current_season['year']); ?>年度 春</td>
-											<td><?php echo e($avg_point['spring']); ?></td>
-											<td><?php echo e($rank_grade['spring']); ?></td>
-											<td><?php echo e($rank_city['spring']); ?></td>
-											<td><?php echo e($rank_province['spring']); ?></td>
-											<td><?php echo e($rank_overall['spring']); ?></td>
+											<td><?php echo e($current_season['term'] >= 0 ? $avg_point['spring'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 0 ? $rank_grade['spring'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 0 ? $rank_city['spring'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 0 ? $rank_province['spring'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 0 ? $rank_overall['spring'] : '-'); ?></td>
 										</tr>
 										<tr class="danger">
 											<td><?php echo e($current_season['year']); ?>年度 累計</td>
@@ -147,7 +147,7 @@
 			</div>
 		</div>
 		<form action=<?php echo e(url('/group/rank/1')); ?> id="selectClass" name="rank1-form" method = "GET">
-					<input type="hidden" name="_token" value="<?php echo e(csrf_field()); ?>">
+					<!-- <input type="hidden" name="_token" value="<?php echo e(csrf_field()); ?>"> -->
 					<input type="hidden" name="class_id" id="class_id" value=""/>
 		</form>
 	</div>

@@ -1,6 +1,15 @@
 
 <?php $__env->startSection('styles'); ?>
- 
+	<style>
+		.full-response-width {
+			width: 100%;
+		}
+		@media  screen and (max-width: 590px) {
+			.full-response-width {
+				width: 120%;
+			}
+		}
+	</style>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('breadcrumb'); ?>
 	<div class="breadcum">
@@ -37,7 +46,7 @@
 						
 						<div class="form-body row">
 							<?php if($counts > 0): ?>
-							<div class="col-md-12">
+							<div class="col-md-12" style="width: 100%; overflow-x: auto">
 								<?php echo $__env->make('books.book.search_result.results', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 							</div>
 							<?php elseif($counts == 0): ?>
@@ -187,8 +196,14 @@
 
 			$(".author_view").on('click', function(e){
 				var writher_id = $(this).attr('did');
+				var fullname = $(this).attr('fullname');
+				console.log('[first name and last name nick]', fullname);
 				if(writher_id == 0 || writher_id == "" || writher_id == null){
-					$("#myAuthorModal").modal('show');
+					var queryString = window.location.search;
+					var baseUrl = location.origin;
+
+					location.href = "<?php echo e(url('book/search_books_byauthor')); ?>" + "?fullname=" + fullname;
+					// $("#myAuthorModal").modal('show');
 				}
 				else{
 					location.href = "<?php echo e(url('mypage/other_view')); ?>/" + writher_id

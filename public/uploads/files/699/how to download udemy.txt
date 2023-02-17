@@ -1,0 +1,4 @@
+﻿- udemy site에서 요구되는 자료를 검색하여 해당 자료의 제목을 복사한다.
+- https://ftuforum.com/의 검색창(Search here...)에 복사한 제목을 입력하고 아래에 나오는 자료들중 적합한 자료를 선택하여 클릭한다.
+- 이때 현시되는 페지에서 스크롤을 내려 DownLoad Turtorial을 눌러 torrent화일을 내리적재한다.
+- qBittorrent app을 설치하고 실행한다. File/Add torrent file을 선택하고 해당 torrent 화일을 불러들이면 그에 해당한 자료가 내리적재된다.

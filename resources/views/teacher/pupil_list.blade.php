@@ -365,17 +365,72 @@
 			// var socket = io('http://localhost:3000');
 
 			var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');
+			@if(Auth::check())
+				socket.on('msglogin', function(msg){
+					console.log(msg);
+					var data = JSON.parse(msg);
+					var id = '<?php echo Auth::id();?>';
+					var pupil_id = data.logedin_id;
+					var pupils = $(".pupil");
+					console.log(pupil_id);
+					pupils.each(function(){
+						var p_id_temp = $(this).attr("tdid");
+						if(p_id_temp == pupil_id){
+							console.log(p_id_temp);
+							$(this).removeClass('danger');
+							$(this).removeClass('grey');
+							$(this).removeClass('warning');
+							$(this).removeClass('primary');
+						}
+						else{
+							// $(this).removeClass('danger');
+						}
+					});
+				}); 
+				socket.on('msglogout', function(msg){
+					console.log(msg);
+					var data = JSON.parse(msg);
+					var id = '<?php echo Auth::id();?>';
+					var pupil_id = data.logedout_id;
+					var pupils = $(".pupil");
+					console.log(pupil_id);
+					pupils.each(function(){
+						var p_id_temp = $(this).attr("tdid");
+						if(p_id_temp == pupil_id){
+							console.log(p_id_temp);
+							if($(this).hasClass('danger')){
+								$(this).removeClass('danger');
+							}
+							if($(this).hasClass('primary')){
+								$(this).removeClass('primary');
+							}
+							if($(this).hasClass('warning')){
+								$(this).removeClass('warning');
+							}
+							if(!$(this).hasClass('grey')){
+								$(this).addClass('grey');
+							}
+						}
+						else{
+							// $(this).removeClass('danger');
+						}
+					});
+				}); 
+			@endif
 			socket.on('test-pupil', function(msg){
-				console.log(msg);
+				console.log("text-pupil-msg===>", msg);
 				var data = JSON.parse(msg);
 				var id = '<?php echo Auth::id();?>';
 				var pupil_id = data.id;
 				var pupils = $(".pupil");
-				console.log(pupil_id);
 				pupils.each(function(){
 					var p_id_temp = $(this).attr("tdid");
 					if(p_id_temp == pupil_id){
-						console.log(p_id_temp);
+						$(this).removeClass('danger');
+						$(this).removeClass('grey');
+						$(this).removeClass('warning');
+						$(this).removeClass('primary');
+
 						$(this).addClass('danger');
 					}
 					else{
@@ -384,59 +439,55 @@
 				});
 		    }); 
 			socket.on('test-start', function(msg){
-				console.log(msg);
+				console.log("test-start-msg====>", msg);
 				var data = JSON.parse(msg);
 				var id = '<?php echo Auth::id();?>';
 				var pupil_id = data.id;
 				var pupils = $(".pupil");
-				console.log(pupil_id);
 				pupils.each(function(){
 					var p_id_temp = $(this).attr("tdid");
 					if(p_id_temp == pupil_id){
-						console.log(p_id_temp);
 						$(this).removeClass('danger');
+						$(this).removeClass('grey');
+						$(this).removeClass('warning');
+						$(this).removeClass('primary');
+
 						$(this).addClass('primary');
-					}
-					else{
-						// $(this).removeClass('danger');
 					}
 				});
 		    }); 
 			socket.on('test-failed', function(msg){
-				console.log(msg);
+				console.log("test-failed-msg=====>", msg);
 				var data = JSON.parse(msg);
 				var id = '<?php echo Auth::id();?>';
 				var pupil_id = data.id;
 				var pupils = $(".pupil");
-				console.log(pupil_id);
 				pupils.each(function(){
 					var p_id_temp = $(this).attr("tdid");
 					if(p_id_temp == pupil_id){
-						console.log(p_id_temp);
+						$(this).removeClass('danger');
+						$(this).removeClass('grey');
+						$(this).removeClass('warning');
 						$(this).removeClass('primary');
+
 						$(this).addClass('warning');
-					}
-					else{
-						// $(this).removeClass('danger');
 					}
 				});
 		    }); 
 			socket.on('test-success', function(msg){
-				console.log(msg);
+				console.log("test-success-msg===>", msg);
 				var data = JSON.parse(msg);
 				var id = '<?php echo Auth::id();?>';
 				var pupil_id = data.id;
 				var pupils = $(".pupil");
-				console.log(pupil_id);
 				pupils.each(function(){
 					var p_id_temp = $(this).attr("tdid");
 					if(p_id_temp == pupil_id){
-						console.log(p_id_temp);
+						$(this).removeClass('danger');
+						$(this).removeClass('grey');
+						$(this).removeClass('warning');
 						$(this).removeClass('primary');
 						$(this).addClass('danger');
-					}
-					else{
-						// $(this).removeClass('danger');
 					}
 				});
 		    }); 
@@ -444,7 +495,26 @@
 				test: 1
 			}
 			socket.emit('test-overseer', JSON.stringify(data));
-
+			
+			socket.on('test-success-confirm', function(msg){
+				console.log('test-success-confirm-msg======>', msg);
+				var data = JSON.parse(msg);
+				var id = '<?php echo Auth::id();?>';
+				var pupil_id = data.id;
+				var pupils = $(".pupil");
+				pupils.each(function(){
+					var p_id_temp = $(this).attr("tdid");
+					if(p_id_temp == pupil_id){
+						$(this).removeClass('danger');
+						$(this).removeClass('grey');
+						$(this).removeClass('warning');
+						$(this).removeClass('primary');
+					}
+					else{
+						// $(this).removeClass('danger');
+					}
+				});
+		    }); 
 
 			$("#btn_process").click(function(){
 				//get pupil ids
@@ -549,10 +619,10 @@
 							ids: pupilids
 						};
 						socket.emit('test-password', JSON.stringify(data));
-						/*setTimeout(function() {
+						setTimeout(function() {
 							history.go(0);
 							
-						}, 500);*/													
+						}, 1000);													
 						$("#alert_text1").html("{{config('consts')['MESSAGES']['SUCCEED']}}");
     					$("#alertSuccessModal").modal();
 						break;
@@ -561,9 +631,9 @@
 						
 						var pupilids = checkids.join(",");
 						socket.emit('logout', pupilids);
-						/*setTimeout(function(){
+						setTimeout(function(){
 							history.go(0);	
-						}, 500);*/							
+						}, 1000);							
 						$("#alert_text1").html("{{config('consts')['MESSAGES']['SUCCEED']}}");
     					$("#alertSuccessModal").modal();
 						break;
@@ -604,17 +674,6 @@
 				}
 			}
 
-			//var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');
-            @if(Auth::check())
-	            socket.on('msglogin', function(msg){
-			var pupilid = msg;
-			$("#"+pupilid).removeClass("grey");
-	            });
-                socket.on('msglogout', function(msg){
-			var pupilid = msg;
-			$("#"+pupilid).addClass("grey");
-            });
-		@endif
 			
 		$(".group-checkable").change(function(e){
 			if($(".group-checkable").prop('checked')){

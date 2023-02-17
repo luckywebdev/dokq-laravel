@@ -5,7 +5,7 @@
 		</div>
   	</div>
 	{{csrf_field()}}
-	<input type="hidden" name="register_id" value="{{Auth::id()}}">
+	<input type="hidden" name="register_id" value="{{isset($book) ? $book->register_id : Auth::id()}}">
 	<input type="hidden" name="action" id="action" value="">
 	<input type="hidden" name="subsave" value="0" id="subsave">
 	<input type="hidden" name="active" id="active" value="{{isset($book) ? $book->active : 0}}">

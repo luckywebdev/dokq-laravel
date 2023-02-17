@@ -49,9 +49,9 @@
                     <div class="col-md-1"></div>   
                     <div class="col-md-2">               
                         <div class="tools">
-                            <label class="label-above">読Q本ID</label>                                                   
+                            <label class="label-above" style="color: #31708f">読Q本ID</label>                                                   
                         </div>
-                        <input type="{{"text"}}" class="form-control base_info" id="dqid" name="dqid" value="dq{{$book->id}}" readonly>
+                        <input type="{{"text"}}" class="form-control base_info" id="dqid" name="dqid" value="dq{{$book->id}}" readonly  style="color: #31708f; cursor: pointer; background: #d9edf7; border-color: #9ad3ef">
                     </div>
                     <div class="col-md-4 margin-bottom-5 {{ $errors->has('title') ? ' has-danger' : '' }}">               
                         <div class="tools">
@@ -582,6 +582,11 @@
             $("input[name=recommend_coefficient]").val(recommend);
             
         });
+
+        $("#dqid").click(function () {
+            var book_id = $("#id").val();
+            location.href = `{{url('book/${book_id}/detail')}}`
+        })
 
         var articledel = function(delete_id){
             $("#delete_id").val(delete_id); 

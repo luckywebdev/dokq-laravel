@@ -990,12 +990,12 @@ class GroupController extends Controller
         }
 
        /* select c.group_id, c.grade, c.class_number, sum(b.point) as sumpoint 
-from `classes` as `c` 
-left join `users` as `a` on `a`.`org_id` = `c`.`id` 
-left join `user_quizes` as `b` on `a`.`id` = `b`.`user_id`
-where `a`.`role` = 9 and ((`b`.`type` = 0 and `b`.`status` = 1) or (`b`.`type` = 1 and `b`.`status` = 1) or (`b`.`type` = 2 and `b`.`status` = 3)) 
-group by c.group_id, c.grade, c.class_number 
-order by sumpoint desc */
+        from `classes` as `c` 
+        left join `users` as `a` on `a`.`org_id` = `c`.`id` 
+        left join `user_quizes` as `b` on `a`.`id` = `b`.`user_id`
+        where `a`.`role` = 9 and ((`b`.`type` = 0 and `b`.`status` = 1) or (`b`.`type` = 1 and `b`.`status` = 1) or (`b`.`type` = 2 and `b`.`status` = 3)) 
+        group by c.group_id, c.grade, c.class_number 
+        order by sumpoint desc */
 
         $avgYear = DB::table("classes as c")
             ->select(DB::raw("c.group_id, c.grade, c.class_number, sum(b.point) as sumpoint ,ROUND(sum(b.point) / COUNT(a.id), 2) as avgpoint"))
@@ -1058,12 +1058,12 @@ order by sumpoint desc */
         }
 
        /* select c.group_id, c.grade, c.class_number, sum(b.point) as sumpoint 
-from `classes` as `c` 
-left join `users` as `a` on `a`.`org_id` = `c`.`id` 
-left join `user_quizes` as `b` on `a`.`id` = `b`.`user_id`
-where `a`.`role` = 9 and ((`b`.`type` = 0 and `b`.`status` = 1) or (`b`.`type` = 1 and `b`.`status` = 1) or (`b`.`type` = 2 and `b`.`status` = 3)) 
-group by c.group_id, c.grade, c.class_number 
-order by sumpoint desc */
+        from `classes` as `c` 
+        left join `users` as `a` on `a`.`org_id` = `c`.`id` 
+        left join `user_quizes` as `b` on `a`.`id` = `b`.`user_id`
+        where `a`.`role` = 9 and ((`b`.`type` = 0 and `b`.`status` = 1) or (`b`.`type` = 1 and `b`.`status` = 1) or (`b`.`type` = 2 and `b`.`status` = 3)) 
+        group by c.group_id, c.grade, c.class_number 
+        order by sumpoint desc */
 
         $avgYear = DB::table("classes as c")
             ->select(DB::raw("c.group_id, c.grade, c.class_number, sum(b.point) as sumpoint , count(a.id) as pupils, ROUND(sum(b.point) / COUNT(a.id), 2) as avgpoint"))
@@ -2146,21 +2146,21 @@ order by sumpoint desc */
         return redirect('/top')->withMessage($message);
     }
 
-//    public function edit_class_search(Request $request){
-//      if(Auth::user()->isGroup()){
-//        $group = User::find(Auth::id());
-//      }else if(Auth::user()->isSchoolMember()){
-//        $group = Auth::user()->School;
-//      }
-//      $classes = Classes::where('group_id','=',$group->id)->where('grade','=',$request->input('grade'))->where('classname','=',$request->input('classname'))->get();
-//		$teacher_ids = $classes->map(function($class){
-//			return $class->teacher_id;
-//		})->toArray();
-//	  	$teacher = User::find($teacher_ids);
-//	  	return redirect('/group/teacher/edit_class')
-//	  	->withTeacher($teacher)
-//	  	->withInput();
-//    }
+    //    public function edit_class_search(Request $request){
+    //      if(Auth::user()->isGroup()){
+    //        $group = User::find(Auth::id());
+    //      }else if(Auth::user()->isSchoolMember()){
+    //        $group = Auth::user()->School;
+    //      }
+    //      $classes = Classes::where('group_id','=',$group->id)->where('grade','=',$request->input('grade'))->where('classname','=',$request->input('classname'))->get();
+    //		$teacher_ids = $classes->map(function($class){
+    //			return $class->teacher_id;
+    //		})->toArray();
+    //	  	$teacher = User::find($teacher_ids);
+    //	  	return redirect('/group/teacher/edit_class')
+    //	  	->withTeacher($teacher)
+    //	  	->withInput();
+    //    }
 
     //get Class options by Year and Grade in edit Class Page 2.2f
     public function getClassOption(Request $request){
@@ -2817,6 +2817,8 @@ order by sumpoint desc */
         $user->role = $request->input('role');//teacher 4,5,6,7,8
         $user->active = 1;
         $user->refresh_token = md5($request->input('email')).md5(time());
+        $user->replied_date1 = now();       
+
         $user->save();
         return Redirect::to('/group/teacher/'.$user->id.'/edit/card');
 

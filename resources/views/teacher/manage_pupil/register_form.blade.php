@@ -470,8 +470,11 @@
 				<button type="button" class="btn btn-success save-continue"  style="margin-bottom:8px">保　存</button>
 			</div>
 			@endif		
-			<div class="col-md-4 text-md-left">
+			<div class="col-md-2 text-md-left">
 				<button class="btn btn-danger" type="button" onclick="javascript:location.reload()"> キャンセル </button>
+			</div>
+			<div class="col-md-2 text-md-left">
+				<button class="btn btn-info" type="button" onclick="javascript:history.go(-1)"> 戻　る </button>
 			</div>
 		</div>
 

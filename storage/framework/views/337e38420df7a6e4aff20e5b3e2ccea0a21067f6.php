@@ -56,10 +56,9 @@
 				}	
 			    $title .= 'さんのマイ書斎';
 			    ?>
-			    <?php echo e($title); ?>
-
+			    <?php echo e($title); ?> 
+				<a href='' id="user_name" userId="<?php echo e($user->id); ?>"><?php echo e(Auth::user()->role == config('consts')['USER']['ROLE']['ADMIN'] ? $user->username : ''); ?></a>
 			</h3>
-
 			<div class="row">
 				<div class="col-md-12">
 					<div class="top-news" style="width:320px;height:50px">
@@ -667,7 +666,7 @@
 							<div id="threemonth-chart5" style="width:30%; float:left;" class="chart-holder"></div>
 							<div id="horizontal-chart5" style="width:30%; float:left;" class="chart-holder"></div>
 							<div id="all-chart5" style="width:30%; float:left;" class="chart-holder"></div>
-							<a class="text-md-center font-blue-madison" href="<?php if($user->isPupil()): ?><?php echo e(url('/mypage/rank_child/'.$user->id)); ?><?php else: ?><?php echo e(url('/mypage/rank_by_age')); ?><?php endif; ?>">もっと見る</a>
+							<a class="text-md-center font-blue-madison" href="<?php if($user->isPupil()): ?><?php echo e(url('/mypage/rank_child_pupil/'.$user->id)); ?><?php else: ?><?php echo e(url('/mypage/rank_by_age')); ?><?php endif; ?>">もっと見る</a>
 						</div>
 					</div>
 				</div>
@@ -828,6 +827,14 @@
 			$(".form-horizontal").attr("action", "/group/rank/6");
 		    $(".form-horizontal").submit();
 		});
+		$("#user_name").click(function(e) {
+			e.preventDefault();
+			var queryString = window.location.search;
+			var baseUrl = location.origin;
+			var userId = $("#user_name").attr("userId");
+			console.log('[go detail]', queryString, baseUrl, userId)
+			window.location.href=`${baseUrl}/admin/personaldata/${userId}${queryString}`
+		})
 
 		/*
 		var quarters_point = [

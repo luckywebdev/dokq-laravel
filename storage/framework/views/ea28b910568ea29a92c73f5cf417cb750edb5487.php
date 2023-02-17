@@ -65,31 +65,31 @@
 									<tbody class="text-md-center">
 										<tr class="danger">
 											<td><?php echo e($current_season['year']); ?>年度 冬</td>
-											<td><?php echo e($school_avg_point['winter']); ?></td>
-											<td><?php echo e($school_rank_city['winter']); ?></td>
-											<td><?php echo e($school_rank_province['winter']); ?></td>
-											<td><?php echo e($school_rank_overall['winter']); ?></td>
+											<td><?php echo e($current_season['term'] >= 3 ? $school_avg_point['winter'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 3 ? $school_rank_city['winter'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 3 ? $school_rank_province['winter'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 3 ? $school_rank_overall['winter'] : '-'); ?></td>
 										</tr>
 										<tr class="warning">
 											<td><?php echo e($current_season['year']); ?>年度 秋</td>
-											<td><?php echo e($school_avg_point['autumn']); ?></td>
-											<td><?php echo e($school_rank_city['autumn']); ?></td>
-											<td><?php echo e($school_rank_province['autumn']); ?></td>
-											<td><?php echo e($school_rank_overall['autumn']); ?></td>
+											<td><?php echo e($current_season['term'] >= 2 ? $school_avg_point['autumn'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 2 ? $school_rank_city['autumn'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 2 ? $school_rank_province['autumn'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 2 ? $school_rank_overall['autumn'] : '-'); ?></td>
 										</tr>
 										<tr class="danger">
 											<td><?php echo e($current_season['year']); ?>年度 夏</td>
-											<td><?php echo e($school_avg_point['summer']); ?></td>
-											<td><?php echo e($school_rank_city['summer']); ?></td>
-											<td><?php echo e($school_rank_province['summer']); ?></td>
-											<td><?php echo e($school_rank_overall['summer']); ?></td>
+											<td><?php echo e($current_season['term'] >= 1 ? $school_avg_point['summer'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 1 ? $school_rank_city['summer'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 1 ? $school_rank_province['summer'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 1 ? $school_rank_overall['summer'] : '-'); ?></td>
 										</tr>
 										<tr class="warning">
 											<td><?php echo e($current_season['year']); ?>年度 春</td>
-											<td><?php echo e($school_avg_point['spring']); ?></td>
-											<td><?php echo e($school_rank_city['spring']); ?></td>
-											<td><?php echo e($school_rank_province['spring']); ?></td>
-											<td><?php echo e($school_rank_overall['spring']); ?></td>
+											<td><?php echo e($current_season['term'] >= 0 ? $school_avg_point['spring'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 0 ? $school_rank_city['spring'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 0 ? $school_rank_province['spring'] : '-'); ?></td>
+											<td><?php echo e($current_season['term'] >= 0 ? $school_rank_overall['spring'] : '-'); ?></td>
 										</tr>
 										<tr class="danger">
 											<td><?php echo e($current_season['year']); ?>年度 累計</td>

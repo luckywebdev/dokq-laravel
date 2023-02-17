@@ -6,7 +6,7 @@
   	</div>
 	<?php echo e(csrf_field()); ?>
 
-	<input type="hidden" name="register_id" value="<?php echo e(Auth::id()); ?>">
+	<input type="hidden" name="register_id" value="<?php echo e(isset($book) ? $book->register_id : Auth::id()); ?>">
 	<input type="hidden" name="action" id="action" value="">
 	<input type="hidden" name="subsave" value="0" id="subsave">
 	<input type="hidden" name="active" id="active" value="<?php echo e(isset($book) ? $book->active : 0); ?>">
@@ -202,6 +202,7 @@
 					<?php endif; ?>
 				</div>
 			</div>
+			<?php if(Auth::user()->isAdmin()): ?>
 			<div class="col-md-12  margin-bottom-5">
 				<label class="control-label col-md-7 text-md-left"><strong>10.&nbsp;&nbsp;&nbsp;&nbsp;表紙画像のファイルを添付してください。</strong></label>
 				<div class="col-md-5">
@@ -225,17 +226,31 @@
 				<div class="col-md-5">
 					<textarea id="seven_net_url" name="seven_net_url" rows="3" style="width: 100%"><?php echo e($data['seven_net_url']); ?></textarea>
 				</div>
+			</div>	
+			<?php else: ?>
+			<div class="col-md-12  margin-bottom-5">
+				<label class="control-label col-md-7 text-md-left"><strong>10.&nbsp;&nbsp;&nbsp;&nbsp;表紙画像のファイルを添付してください。</strong></label>
+				<div class="col-md-5">
+					協会側でのみ編集可能
+				</div>
+			</div>
+			<div class="col-md-12  margin-bottom-5 <?php echo e($errors->has('url') ? ' has-danger' : ''); ?>">
+				<label class="control-label col-md-7 text-md-left"><strong>11.&nbsp;&nbsp;&nbsp;&nbsp;楽天ブックスで見る。</strong></label>
+				<div class="col-md-5">
+				協会側でのみ編集可能
+				</div>
 			</div>				
+			<?php endif; ?>
 		<h4 class="form-section warning">
 			<strong>本の内容量を測定して、読Q本ポイントを算出します。</strong>
-			<label class="control-label warning col-md-12 text-md-left">※青空文庫など総字数をカウント済みの場合は、16番の総字数欄に直接入力してください。</label>
+			<label class="control-label warning col-md-12 text-md-left">※本文の総字数をカウント済みの場合は、12～15番をとばして、16番に直接入力してください。</label>
 		</h4>
 			<div class="col-md-12  margin-bottom-5 <?php echo e($errors->has('pages') ? ' has-danger' : ''); ?>">
-				<label class="control-label col-md-7 text-md-left"><strong>12.&nbsp;&nbsp;&nbsp;&nbsp;本文の最終ページは何ページですか。</strong></label>
+				<label class="control-label col-md-7 text-md-left"><strong>12.&nbsp;&nbsp;&nbsp;&nbsp;本文の最終ページは、何ページですか。（あとがき等は除きます）</strong></label>
 				<div class="form-group col-md-5">
 					<div class="col-md-1"><h4>p</h4></div>
 					<div class="col-md-9 spin">
-						<input type="number" min="0" name="pages" value="<?php echo e(old('pages')!='' ? old('pages'): (isset($data)? $data['pages']: '')); ?>" class="param spinner-input form-control" maxlength="3" id="input_8">
+						<input type="number" min="0" name="pages" value="<?php echo e(old('pages')!='' ? old('pages'): (isset($data)? $data['pages']: '')); ?>" class="param spinner-input form-control" maxlength="3" id="input_8" <?php if(old('type') != '' && old('type') == '2'): ?> readonly <?php endif; ?>>
 						<?php if($errors->has('pages')): ?>
 							<span class="form-control-feedback">
 								<span><?php echo e($errors->first('pages')); ?></span>
@@ -254,7 +269,7 @@
 				<label class="control-label col-md-6 col-md-offset-1 text-md-left">a.&nbsp;&nbsp;&nbsp;&nbsp;行数…　１ページの中には最大で何行ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-						<input type="number" min="0" name="max_rows" value="<?php echo e(old('max_rows')!='' ? old('max_rows'): (isset($data)? $data['max_rows']: '')); ?>" class="param calc form-control" maxlength="3" id="input_9">
+						<input type="number" min="0" name="max_rows" value="<?php echo e(old('max_rows')!='' ? old('max_rows'): (isset($data)? $data['max_rows']: '')); ?>" class="param calc form-control" maxlength="3" id="input_9" <?php if(old('type') != '' && old('type') == '2'): ?> readonly <?php endif; ?>>
 						<?php if($errors->has('max_rows')): ?>
 							<span class="form-control-feedback">
 								<span><?php echo e($errors->first('max_rows')); ?></span>
@@ -268,7 +283,7 @@
 				<label class="control-label col-md-6 col-md-offset-1 text-md-left">b.&nbsp;&nbsp;&nbsp;&nbsp;字数…　１行の中には最大で何文字ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-						<input type="number" min="0" name="max_chars" value="<?php echo e(old('max_chars')!='' ? old('max_chars'): (isset($data)? $data['max_chars']: '')); ?>" class="param calc form-control" maxlength="3" id="input_10">
+						<input type="number" min="0" name="max_chars" value="<?php echo e(old('max_chars')!='' ? old('max_chars'): (isset($data)? $data['max_chars']: '')); ?>" class="param calc form-control" maxlength="3" id="input_10" <?php if(old('type') != '' && old('type') == '2'): ?> readonly <?php endif; ?>>
 						<?php if($errors->has('max_chars')): ?>
 							<span class="form-control-feedback">
 								<span><?php echo e($errors->first('max_chars')); ?></span>
@@ -288,7 +303,7 @@
 				<div class="col-md-7"></div>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-						<input type="number" min="0" name="entire_blanks" value="<?php echo e(old('entire_blanks')!='' ? old('entire_blanks'): (isset($data)? $data['entire_blanks']: '')); ?>" class="param calc form-control" maxlength="3" id="input_11">
+						<input type="number" min="0" name="entire_blanks" value="<?php echo e(old('entire_blanks')!='' ? old('entire_blanks'): (isset($data)? $data['entire_blanks']: '')); ?>" class="param calc form-control" maxlength="3" id="input_11" <?php if(old('type') != '' && old('type') == '2'): ?> readonly <?php endif; ?>>
 						<?php if($errors->has('entire_blanks')): ?>
 							<span class="form-control-feedback">
 								<span><?php echo e($errors->first('entire_blanks')); ?></span>
@@ -303,7 +318,7 @@
 				<div class="col-md-7"></div>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-						<input type="number" min="0" name="quarter_filled" value="<?php echo e(old('quarter_filled')!='' ? old('quarter_filled'): (isset($data)? $data['quarter_filled']: '')); ?>" class="param calc form-control" maxlength="3" id="input_12">
+						<input type="number" min="0" name="quarter_filled" value="<?php echo e(old('quarter_filled')!='' ? old('quarter_filled'): (isset($data)? $data['quarter_filled']: '')); ?>" class="param calc form-control" maxlength="3" id="input_12" <?php if(old('type') != '' && old('type') == '2'): ?> readonly <?php endif; ?>>
 						<?php if($errors->has('quarter_filled')): ?>
 							<span class="form-control-feedback">
 								<span><?php echo e($errors->first('quarter_filled')); ?></span>
@@ -318,7 +333,7 @@
 				<div class="col-md-7"></div>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-						<input type="number" min="0" name="half_blanks" value="<?php echo e(old('half_blanks')!='' ? old('half_blanks'): (isset($data)? $data['half_blanks']: '')); ?>" class="param calc form-control" maxlength="3" id="input_13">
+						<input type="number" min="0" name="half_blanks" value="<?php echo e(old('half_blanks')!='' ? old('half_blanks'): (isset($data)? $data['half_blanks']: '')); ?>" class="param calc form-control" maxlength="3" id="input_13" <?php if(old('type') != '' && old('type') == '2'): ?> readonly <?php endif; ?>>
 						<?php if($errors->has('half_blanks')): ?>
 							<span class="form-control-feedback">
 								<span><?php echo e($errors->first('half_blanks')); ?></span>
@@ -333,7 +348,7 @@
 				<div class="col-md-7"></div>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-						<input type="number" min="0" name="quarter_blanks" value="<?php echo e(old('quarter_blanks')!='' ? old('quarter_blanks'): (isset($data)? $data['quarter_blanks']: '')); ?>" class="param calc form-control" maxlength="3" id="input_14">
+						<input type="number" min="0" name="quarter_blanks" value="<?php echo e(old('quarter_blanks')!='' ? old('quarter_blanks'): (isset($data)? $data['quarter_blanks']: '')); ?>" class="param calc form-control" maxlength="3" id="input_14" <?php if(old('type') != '' && old('type') == '2'): ?> readonly <?php endif; ?>>
 						<?php if($errors->has('quarter_blanks')): ?>
 							<span class="form-control-feedback">
 								<span><?php echo e($errors->first('quarter_blanks')); ?></span>
@@ -355,7 +370,7 @@
 				<label class="control-label col-md-6 col-md-offset-1 text-md-left">a.&nbsp;&nbsp;&nbsp;&nbsp;p30の中に、字数が半分以下の行は、何行ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-					<input type="number" min="0" name="p30" value="<?php echo e(old('p30')!='' ? old('p30'): (isset($data)? $data['p30']: '')); ?>" class="param calc form-control" maxlength="3" id="input_15">
+					<input type="number" min="0" name="p30" value="<?php echo e(old('p30')!='' ? old('p30'): (isset($data)? $data['p30']: '')); ?>" class="param calc form-control" maxlength="3" id="input_15" <?php if(old('type') != '' && old('type') == '2'): ?> readonly <?php endif; ?>>
 					<?php if($errors->has('p30')): ?>
 						<span class="form-control-feedback">
 							<span><?php echo e($errors->first('p30')); ?></span>
@@ -369,7 +384,7 @@
 				<label class="control-label col-md-6 col-md-offset-1 text-md-left">b.&nbsp;&nbsp;&nbsp;&nbsp;P50の中に、字数が半分以下の行は、何行ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-					<input type="number" min="0" name="p50" value="<?php echo e(old('p50')!='' ? old('p50'): (isset($data)? $data['p50']: '')); ?>" class="param calc form-control" maxlength="3" id="input_16">
+					<input type="number" min="0" name="p50" value="<?php echo e(old('p50')!='' ? old('p50'): (isset($data)? $data['p50']: '')); ?>" class="param calc form-control" maxlength="3" id="input_16" <?php if(old('type') != '' && old('type') == '2'): ?> readonly <?php endif; ?>>
 					<?php if($errors->has('p50')): ?>
 						<span class="form-control-feedback">
 							<span><?php echo e($errors->first('p50')); ?></span>
@@ -383,7 +398,7 @@
 				<label class="control-label col-md-6 col-md-offset-1 text-md-left">c.&nbsp;&nbsp;&nbsp;&nbsp;P70の中に、字数が半分以下の行は、何行ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-					<input type="number" min="0" name="p70" value="<?php echo e(old('p70')!='' ? old('p70'): (isset($data)? $data['p70']: '')); ?>" class="param calc form-control" maxlength="3" id="input_17">
+					<input type="number" min="0" name="p70" value="<?php echo e(old('p70')!='' ? old('p70'): (isset($data)? $data['p70']: '')); ?>" class="param calc form-control" maxlength="3" id="input_17" <?php if(old('type') != '' && old('type') == '2'): ?> readonly <?php endif; ?>>
 					<?php if($errors->has('p70')): ?>
 						<span class="form-control-feedback">
 							<span><?php echo e($errors->first('p70')); ?></span>
@@ -397,7 +412,7 @@
 				<label class="control-label col-md-6 col-md-offset-1 text-md-left">d.&nbsp;&nbsp;&nbsp;&nbsp;P90の中に、字数が半分以下の行は、何行ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-					<input type="number" min="0" name="p90" value="<?php echo e(old('p90')!='' ? old('p90'): (isset($data)? $data['p90']: '')); ?>" class="param calc form-control" maxlength="3" id="input_18">
+					<input type="number" min="0" name="p90" value="<?php echo e(old('p90')!='' ? old('p90'): (isset($data)? $data['p90']: '')); ?>" class="param calc form-control" maxlength="3" id="input_18" <?php if(old('type') != '' && old('type') == '2'): ?> readonly <?php endif; ?>>
 					<?php if($errors->has('p90')): ?>
 						<span class="form-control-feedback">
 							<span><?php echo e($errors->first('p90')); ?></span>
@@ -411,7 +426,7 @@
 				<label class="control-label col-md-6 col-md-offset-1 text-md-left">e.&nbsp;&nbsp;&nbsp;&nbsp;P110の中に、字数が半分以下の行は、何行ありますか。</label>
 				<div class="form-group col-md-5">					
 					<div class="col-md-10 spin">
-					<input type="number" min="0" name="p110" value="<?php echo e(old('p110')!='' ? old('p110'): (isset($data)? $data['p110']: '')); ?>" class="param calc form-control" maxlength="3" id="input_19">
+					<input type="number" min="0" name="p110" value="<?php echo e(old('p110')!='' ? old('p110'): (isset($data)? $data['p110']: '')); ?>" class="param calc form-control" maxlength="3" id="input_19" <?php if(old('type') != '' && old('type') == '2'): ?> readonly <?php endif; ?>>
 					<?php if($errors->has('p110')): ?>
 						<span class="form-control-feedback">
 							<span><?php echo e($errors->first('p110')); ?></span>

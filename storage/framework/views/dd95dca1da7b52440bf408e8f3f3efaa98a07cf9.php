@@ -80,16 +80,29 @@
 						<?php for($i = 0; $i <= $row; $i++): ?>
 						<tr style="height:300px;font-size:16px;padding:12px;">
 							<?php for($j = 0; $j < 20; $j++): ?>
-							<?php if(isset($myBooks[$i*20+(19-$j)])): ?>
-							<?php if($myBooks[$i*20+(19-$j)]->point >= 0 && $myBooks[$i*20+(19-$j)]->point <= 2) $color = '#ffb5fc'; //help/about_target.blade.php
-								  elseif($myBooks[$i*20+(19-$j)]->point > 2 && $myBooks[$i*20+(19-$j)]->point <= 5) $color = '#facaca';//ff0000
-								  elseif($myBooks[$i*20+(19-$j)]->point > 5 && $myBooks[$i*20+(19-$j)]->point <= 8) $color = '#f9d195'; //FF9900
-								  elseif($myBooks[$i*20+(19-$j)]->point > 8 && $myBooks[$i*20+(19-$j)]->point <= 11) $color = '#f6f99a'; //f4fd00
-								  elseif($myBooks[$i*20+(19-$j)]->point > 11 && $myBooks[$i*20+(19-$j)]->point <= 15) $color = '#e1f98f'; //d6f432
-								  elseif($myBooks[$i*20+(19-$j)]->point > 15 && $myBooks[$i*20+(19-$j)]->point <= 19) $color = '#92fab2'; //26a69a
-								  elseif($myBooks[$i*20+(19-$j)]->point > 19 && $myBooks[$i*20+(19-$j)]->point <= 25) $color = '#a7d4fb'; //5C9BD1
-								  elseif($myBooks[$i*20+(19-$j)]->point > 25) $color = '#f0f5fa';	
+							<?php
+								if($i % 3 == 0){
+									if($j % 4 == 0)     $color = "#FFB5FC";
+									elseif($j % 4 == 1) $color = "#F6F99A";
+									elseif($j % 4 == 2) $color = "#92FAB2";
+									elseif($j % 4 == 3) $color = "#A7D4FB";
+								}
+								elseif($i % 3 == 1){
+									if($j % 4 == 0) $color     = "#F6F99A";
+									elseif($j % 4 == 1) $color = "#92FAB2";
+									elseif($j % 4 == 2) $color = "#A7D4FB";
+									elseif($j % 4 == 3) $color = "#FFB5FC";
+								}
+								elseif($i % 3 == 2){
+									if($j % 4 == 0)     $color = "#92FAB2";
+									elseif($j % 4 == 1) $color = "#A7D4FB";
+									elseif($j % 4 == 2) $color = "#FFB5FC";
+									elseif($j % 4 == 3) $color = "#F6F99A";
+								}
 							?>
+
+							<?php if(isset($myBooks[$i*20+(19-$j)])): ?>
+
 							<td class="col-md-1 text-md-center" style="background-color:<?php echo e($color); ?>;padding-left:0px;padding-right:0px;">
 								<div class="row col-md-12" style="writing-mode:vertical-rl;margin-left:0px;margin-right:0px;padding-left:0px;padding-right:0px;height:300px;">
 									<h5 class="font_gogic text-md-left" style="align-self:center;font-family:HGP明朝B;">

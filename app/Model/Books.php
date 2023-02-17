@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class Books extends Model
 {
     protected $table="books";
-    protected $fillable = array(
+    protected $fillable = [
     	'title', 
     	'title_furi', 
     	'firstname_nick', 
@@ -60,7 +60,7 @@ class Books extends Model
         'rakuten_url',
         'seven_net_url',
         'honto_url'
-    );
+    ];
 	
     
 //    if active = 0: registered yourself

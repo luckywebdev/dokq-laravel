@@ -355,9 +355,9 @@
 					<div class="col-md-12 col-xs-12" style="padding:0px;">
 						<div class="col-md-12 col-xs-3" style="padding:0px;">
 							@if($data!=null)
-							<input  type="text" name="address6" value="{{ $data->address6 }}" class="big-form-control" id="address6" placeholder="5"/>
+							<input  type="text" name="address6" value="{{ $data->address6 }}" class="big-form-control @if($errors->has('address6')) red-border @endif" id="address6" placeholder="5"/>
 							@else
-							<input  type="text" name="address6" value="{{ old('address6') }}" class="big-form-control" id="address6" placeholder="5"/>
+							<input  type="text" name="address6" value="{{ old('address6') }}" class="big-form-control @if($errors->has('address6')) red-border @endif" id="address6" placeholder="5"/>
 							@endif
 						</div>
 						 <div class="col-xs-9" style="font-size:10px;padding-left:10px;">
@@ -367,11 +367,6 @@
 							<span class="show-xs" style="color:red;padding-left:0px;">数字5行しか入らないように欄を小さく</span>
 						</div> -->
 					</div>
-					@if($errors->has('address6') || $errors->has('address7') || $errors->has('address8') || $errors->has('address10'))
-					<span class="form-control-feedback">
-						<span>住所を正確に入力してください。</span>
-					</span>
-					@endif
 
 				</div>
 				<span class="cross2-xs" >―</span>
@@ -380,9 +375,9 @@
 					<div class="col-md-12 col-xs-12" style="padding:0px;">
 						<div class="col-md-12 col-xs-3" style="padding:0px;">
 							@if($data!=null)
-							<input  type="text" name="address7" value="{{ $data->address7 }}" class="big-form-control" id="address7" placeholder="8"/>
+							<input  type="text" name="address7" value="{{ $data->address7 }}" class="big-form-control @if($errors->has('address6')) red-border @endif" id="address7" placeholder="8"/>
 							@else
-							<input  type="text" name="address7" value="{{ old('address7') }}" class="big-form-control" id="address7" placeholder="8"/>
+							<input  type="text" name="address7" value="{{ old('address7') }}" class="big-form-control @if($errors->has('address6')) red-border @endif" id="address7" placeholder="8"/>
 							@endif
 						</div>
 						<div class="col-xs-9" style="font-size:10px;padding-left:10px;">
@@ -399,9 +394,9 @@
 					<div class="col-md-12 col-xs-12" style="padding:0px;">
 						<div class="col-md-12 col-xs-3" style="padding:0px;">
 							@if($data!=null)
-							<input  type="text" name="address8" value="{{ $data->address8 }}" class="big-form-control" id="address8" placeholder="24"/>
+							<input  type="text" name="address8" value="{{ $data->address8 }}" class="big-form-control @if($errors->has('address6')) red-border @endif" id="address8" placeholder="24"/>
 							@else
-							<input  type="text" name="address8" value="{{ old('address8') }}" class="big-form-control" id="address8" placeholder="24"/>
+							<input  type="text" name="address8" value="{{ old('address8') }}" class="big-form-control @if($errors->has('address6')) red-border @endif" id="address8" placeholder="24"/>
 							@endif
 						</div>
 						<div class="col-xs-9" style="font-size:10px;padding-left:10px;">
@@ -511,7 +506,7 @@
 			
 			<div class="form-group row">
 				<label class="control-label col-md-6 text-md-right" for="teacher" id="descripte" style="align-self:center">					
-				<span style="margin-right: 5%">再開可能な読Ｑネームをお持ちの方は、右記に入力</span> &nbsp;読Qネーム（半角） :  
+				<span style="margin-right: 5%">再開可能な読Ｑネームをお持ちの方は、入力</span> &nbsp;読Qネーム（半角） :  
 					<!-- 読Ｑネームを持っている場合、入力　	 -->
 				</label>
 				<div class="col-md-3">
@@ -637,19 +632,19 @@
 			var pdfheight  = $(window).height() - 55;
 			$("#pdfheight").val(pdfheight);
 			
-	        $.extend($.inputmask.defaults, {
-	            'autounmask': true
-	        });
+			$.extend($.inputmask.defaults, {
+					'autounmask': true
+			});
 
-	        $("#birthday").inputmask("y/m/d", {
-	            "placeholder": "yyyy/mm/dd"
-	        }); //multi-char placeholder
-	        $("#phone").inputmask("mask", {
-	            "mask": "<?php echo config('consts')['PHONE_MASK'] ?>"
-	        });
-	        $("#address4").inputmask("mask", {
-		        "mask":"999"
-	        });
+			$("#birthday").inputmask("y/m/d", {
+					"placeholder": "yyyy/mm/dd"
+			}); //multi-char placeholder
+			$("#phone").inputmask("mask", {
+					"mask": "<?php echo config('consts')['PHONE_MASK'] ?>"
+			});
+			$("#address4").inputmask("mask", {
+				"mask":"999"
+			});
 			$("#address5").inputmask("mask", {
 		        "mask":"9999"
 	        });

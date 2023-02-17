@@ -89,7 +89,7 @@
 									<?php $__currentLoopData = $quizes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $quiz): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 									<tr>
 										<td><?php echo e(with($quiz->created_at)->format("Y/m/d")); ?> <?php if($quiz->active < 2): ?> <br><span style="color:red">新着</span> <?php endif; ?></td>
-										<td><?php $st = str_replace_first("#", "<span style='text-decoration:underline !important'>", $quiz->question); $st = str_replace_first("#", "</span>", $st); 
+										<td class="text-md-left"><?php $st = str_replace_first("#", "<span style='text-decoration:underline !important'>", $quiz->question); $st = str_replace_first("#", "</span>", $st); 
 														$st = str_replace_first("＃", "<span style='text-decoration:underline;'>", $st); $st = str_replace_first("＃", "</span>", $st);
 														for($i = 0; $i < 30; $i++) {
 														 	$st = str_replace_first("*", "<span class='font_gogic' style='font-size:10px;font-family:HGP明朝B;'>(", $st); $st = str_replace_first("*", ")</span>", $st);
@@ -101,7 +101,8 @@
 										<td><?php echo e($quiz->RegisterShow()); ?>
 
 										</td>
-										<td>dq<?php echo e($book->id); ?>-<?php echo e($key + 1); ?></td>
+										<!-- <td>dq<?php echo e($book->id); ?>-<?php echo e($key + 1); ?></td> -->
+										<td><?php echo e($quiz->doq_quizid); ?></td>
 										<!-- <td>
 											<div><a class="quiz_edit font-blue" href="#" qid="<?php echo e($quiz->id); ?>">編集</a></div>
 											<div><a class="quiz_delete font-red" href="#" qid="<?php echo e($quiz->id); ?>">削除</a></div>

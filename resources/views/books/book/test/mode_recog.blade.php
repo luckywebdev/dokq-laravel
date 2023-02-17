@@ -39,23 +39,29 @@
 						@endif
 						<input type="hidden" name="examinemethod" id="examinemethod" value="">
 						<div class="form-body">
-							<div class="form-group row">
+							<!-- <div class="form-group row">
 								<label class="col-md-5 control-label" style="font-size: 16px">教師パスワード自動入力</label>
 								<div class="col-md-3">
 									<input type="password" class="form-control" name="password" id="password" value="" placeholder="●●●●●●●" readonly>
 								</div>								
+							</div> -->
+							<div class="form-group row">
+								<label class="col-md-6 pr-2 control-label" style="font-size: 16px">リモート</label>
+								<div class="col-md-3 pl-2" style="display: flex; align-items: center">
+									<input name="teacher_cert" id="teacher_cert" type="checkbox" style="margin-top: 20%">
+								</div>								
 							</div>
 							<div class="form-group row">
-								<label class="col-md-5 control-label" style="font-size: 16px">監督の顔認証</label>
-								<div class="col-md-3" style="display: flex; align-items: center">
+								<label class="col-md-6 pr-2 control-label" style="font-size: 16px">顔認証</label>
+								<div class="col-md-3 pl-2" style="display: flex; align-items: center">
 									<input name="is_face" id="is_face" type="checkbox" style="margin-top: 20%">
 								</div>								
 							</div>
-						</div>	
+						</div>
 						<div class="form-body">
 							<div class="row">
 								<div class="col-md-12 text-md-center">
-									<button class="btn btn-primary" id="next_btn" disabled style="margin-bottom:8px">次　へ</button>
+									<button type="button" class="btn btn-primary" id="next_btn" disabled style="margin-bottom:8px">次　へ</button>
 									<a class="btn btn-info pull-right" style="margin-bottom:8px" href="{{url('/')}}">トップに戻る</a>
 								</div>
 							</div>
@@ -76,7 +82,12 @@
 			var datas = {
 				id: '<?php echo Auth::id(); ?>'
 			};
-			socket.emit('test-pupil', JSON.stringify(datas));
+
+			$('#teacher_cert').change(function() {
+				if($(this).attr("checked") == "checked"){
+					socket.emit('test-pupil', JSON.stringify(datas));
+				}
+			})
 
 			socket.on('test-password', function(msg){
 				var data = JSON.parse(msg);
@@ -107,18 +118,33 @@
 				location.reload();
 			});
 			$('input[type="checkbox"]').change(function(){
-                if($(this).attr("checked") == "checked"){
-                    $("#next_btn").removeAttr("disabled");
-                }else{
-                    $("#next_btn").attr("disabled","");
-                }
+				var id = $(this).attr("id");
+				if (id == "teacher_cert" && $(this).attr("checked") == "checked") {
+					$("#is_face").removeAttr("checked");
+					$("#uniform-is_face").find("span").removeClass("checked")
+				} else if (id == "teacher_cert" && $(this).attr("checked") != "checked") {
+					$("#is_face").attr("checked", "checked");
+					$("#uniform-is_face").find("span").addClass("checked")
+				} else if (id != "teacher_cert" && $(this).attr("checked") == "checked") {
+					$("#teacher_cert").removeAttr("checked");
+					$("#uniform-teacher_cert").find("span").removeClass("checked")
+				} else {
+					$("#teacher_cert").attr("checked", "checked");
+					$("#uniform-teacher_cert").find("span").addClass("checked")
+				}
+				if($("#teacher_cert").attr("checked") == "checked" || $("#is_face").attr("checked") == "checked"){
+						$("#next_btn").removeAttr("disabled");
+				}else{
+						$("#next_btn").attr("disabled","");
+				}
 			});
 			$("#next_btn").click(function(){
 				var is_face = $("#is_face").attr("checked");
+				var teacher_cert = $("#teacher_cert").attr("checked");
 				if(is_face == "checked"){
 					$("#test-password-form").attr("action", "/book/test/signin_overseer");
-				} else {
-				    $("#test-password-form").attr("action", "/book/test/start");
+				} else if (teacher_cert == "checked") {
+					$("#test-password-form").attr("action", "/book/test/start");
 				}
 				$("#test-password-form").submit();
 			});		

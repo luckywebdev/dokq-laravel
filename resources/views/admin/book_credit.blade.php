@@ -51,18 +51,20 @@
                                     <th class="align-middle" style="width:15%;">閲覧終了日</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-md-center">                          
+                            <tbody class="text-md-center">   
                             @foreach($bookcredits as $key=> $bookcredit)
+                                @if($bookcredit->passcode && $bookcredit->settlement_date)
                                 <tr class="info">
-                                    <td>{{date_format(date_add(date_create($bookcredit->backup_date), date_interval_create_from_date_string("1 days")), "Y-m-d")}}</td>
+                                    <td>{{date_format(date_add(date_create($bookcredit->updated_at), date_interval_create_from_date_string("1 days")), "Y-m-d")}}</td>
                                     <td>{{$bookcredit->username}}</td>
-                                    <td>@if($bookcredit->index == 1)〇@endif</td>
-                                    <td>@if($bookcredit->index == 2)〇@endif</td>
-                                    <td>@if($bookcredit->index == 3)〇@endif</td>
-                                    <td>@if($bookcredit->index == 4)〇@endif</td>
+                                    <td>@if($bookcredit->index == 1 && $bookcredit->personworkHistory && count($bookcredit->personworkHistory) < 2)〇@endif</td>
+                                    <td>@if($bookcredit->index == 2 && $bookcredit->personworkHistory && count($bookcredit->personworkHistory) < 2)〇@endif</td>
+                                    <td>@if($bookcredit->index == 3 && $bookcredit->personworkHistory && count($bookcredit->personworkHistory) < 2)〇@endif</td>
+                                    <td>@if($bookcredit->index == 4 && $bookcredit->personworkHistory && count($bookcredit->personworkHistory) < 2)〇@endif</td>
                                     <td>{{$bookcredit->passcode}}</td>
-                                    <td>{{date_format(date_add(date_create($bookcredit->backup_date), date_interval_create_from_date_string("6 months")), "Y-m-d")}}</td>
+                                    <td>{{$bookcredit->settlement_date}}</td>
                                 </tr>
+                                @endif
                             @endforeach  
                             </tbody>    
                         </table>

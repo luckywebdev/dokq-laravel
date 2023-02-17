@@ -116,16 +116,15 @@
 		<?php if(isset($book)&&Auth::check()): ?>
 			<input type="hidden" name="book_id" value="<?php echo e($book->id); ?>">
 		<?php endif; ?>
-			<h3 style="text-align:center;"><?php echo e($book->title); ?>
-
-									(<?php $__currentLoopData = $book->categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+			<h3 style="text-align:center;"><?php echo e($book->title); ?></h3>
+			<!-- (<?php $__currentLoopData = $book->categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 										<?php if($key + 1 == count($book->categories)): ?>
 											<?php echo e($category->name); ?>
 
 										<?php else: ?>
 											<?php echo e($category->name); ?>、
 										<?php endif; ?>
-									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>)</h3>
+									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>) -->
 			<h4 style="text-align:center;"><?php echo e($book->fullname_nick()); ?></h4>
 			<div class="clearfix"></div>
 			<h4 style="text-align:center;">問題数　···　
@@ -141,8 +140,8 @@
 			<h4 style="text-align:center;color:red;">回答方法</h4>
 			<div class="row">
 				<div class="offset-md-2 col-md-10">
-					<div class="form-body h4"  style="color:red;">
-					問題文の<span style='text-decoration:underline !important'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>線部が、本の内容と合っていれば〇（①）、違っていれば×（②）を選んで、「次へ」をクリックしてください。
+					<div class="form-body h5"  style="color:red; line-height: 1.3">
+					問題文の<span style='text-decoration:underline !important'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>線のひいてあるところが本の内容と合っていれば①ちがっていれば②を選んで「次へ」をクリック！。
 					</div>
 				</div>
 			</div>

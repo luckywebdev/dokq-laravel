@@ -116,8 +116,10 @@ var TableManaged = function () {
                 "orderable": false
             }, {
                 "orderable": false
-            }]
-            
+            }],
+            "order": [
+                [0, "desc"]
+            ]            
         });
         table = $('#sample_');
 

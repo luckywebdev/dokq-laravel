@@ -46,6 +46,10 @@
 					</p>
 				</div>
 				@endif
+				@if(count($errors) > 0)
+					@include('partials.alert', array('errors' => $errors->all()))
+				@endif
+
 				<div class="table-scrollable">	
 					<table class="table table-striped table-bordered table-hover data-table" cellpadding="0" cellspacing="0"  width="100%">
 					    <thead>
@@ -78,7 +82,14 @@
 								<td width="20%">〒 {{$user->address4}}―{{$user->address5}} {{$user->address1}} {{$user->address2}} {{$user->address3}}</td>
 								<td width="5%"><a href="mailto:{{$user->email}}">{{$user->email}}</a></td>
 								<td width="5%">{{$user->totalMemberCounts()}}</td>
-								<td width="5%">{{$user->replied_date1?with(date_create($user->replied_date1))->format("Y/m/d"):""}}</td>
+								<td width="5%" style="white-space: nowrap">
+								@if ($user->replied_date1)
+									{{with(date_create($user->replied_date1))->format("Y/m/d")}}
+								@else
+									<a class="btn btn-info sendmail" href="{{url('/admin/reg_sendMail/'.$user->id)}}" data-user="{{$user->id}}" >送信</a>
+									<a class="btn btn-danger" href="{{url('/admin/unapproved/'.$user->id)}}">削除</button>
+								@endif
+								</td>
 								<td width="5%">{{$user->t_username}}</td>
 								<td width="5%">{{$user->t_password}}</td>
 								<td width="5%">{{$user->replied_date2?with(date_create($user->replied_date2))->format("Y/m/d"):""}}</td>
@@ -165,6 +176,39 @@
 	            });
 			
 		}
+
+		// $(".sendmail").click(function() {
+		// 	var user_id = $(this).data("user");
+		// 	reg_sendMail(user_id);
+		// })
+
+		// function reg_sendMail (userId) {
+		// 	var info = {
+		// 		_token: $('meta[name="csrf-token"]').attr('content'),
+		// 		userId: userId
+		// 	};
+		// 	var post_url = "/register/reg_sendMail";
+		// 	$.ajax({
+		// 		type: "post",
+		// 		url: post_url,
+		// 		data: info,
+		// 		beforeSend: function (xhr) {
+		// 			var token = $('meta[name="csrf-token"]').attr('content');
+		// 			if (token) {
+		// 					return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+		// 			}
+		// 		},
+		// 		success: function (response) {
+		// 			console.log("response===>", response);
+		// 			if(response.sendStatus){
+		// 				// window.location.reload();
+		// 			}
+		// 			else
+		// 				alert('{{config('consts')['MESSAGES']['EMAIL_SERVER_ERROR']}}') ;
+		// 		}
+		// 	}); 
+
+		// }
 	</script>
 	<script type="text/javascript" src="{{asset('js/group/group.js')}}"></script>
 @stop

@@ -78,7 +78,7 @@
 							<tr>
 								<td><?php echo e($key+1); ?></td>
 								<td><?php if(Date("Y") - Date("Y", strtotime($rank->birthday)) >= 15): ?>
-										<?php if($rank->firstname != '' && $rank->firstname !== null): ?> 
+										<?php if($rank->firstname != '' && $rank->firstname !== null && $rank->fullname_is_public == 1): ?> 
 											<a href="<?php echo e(url('mypage/other_view/' . $rank->id)); ?>" class="font-blue"><?php echo e($rank->firstname); ?> <?php echo e($rank->lastname); ?></a>
 										<?php else: ?>
 											<a href="<?php echo e(url('mypage/other_view/' . $rank->id)); ?>" class="font-blue"> <?php echo e($rank->username); ?></a>
@@ -112,7 +112,7 @@
 						                超段
 						            <?php endif; ?>
 								</td>
-								<td><?php if($rank->address1 != '' && $rank->address1 !== null): ?> <?php echo e($rank->address1); ?> <?php endif; ?></td>
+								<td><?php if($rank->address1 != '' && $rank->address1 !== null): ?> <?php echo e($rank->address1 != '0' ? $rank->address1 : '国外'); ?> <?php endif; ?></td>
 							</tr>
 							<?php endif; ?>
 							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -135,7 +135,7 @@
 							<tr>
 								<td><?php echo e($key+1); ?></td>
 								<td><?php if(Date("Y") - Date("Y", strtotime($rank->birthday)) >= 15): ?>
-										<?php if($rank->firstname != '' && $rank->firstname !== null): ?> 
+										<?php if($rank->firstname != '' && $rank->firstname !== null && $rank->fullname_is_public == 1): ?> 
 											<a href="<?php echo e(url('mypage/other_view/' . $rank->id)); ?>" class="font-blue"><?php echo e($rank->firstname); ?> <?php echo e($rank->lastname); ?></a>
 										<?php else: ?>
 											<a href="<?php echo e(url('mypage/other_view/' . $rank->id)); ?>" class="font-blue"> <?php echo e($rank->username); ?></a>
@@ -167,7 +167,7 @@
 						                超段
 						            <?php endif; ?>
 								</td>
-								<td><?php if($rank->address1 != '' && $rank->address1 !== null): ?> <?php echo e($rank->address1); ?> <?php endif; ?></td>
+								<td><?php if($rank->address1 != '' && $rank->address1 !== null): ?> <?php echo e($rank->address1 != '0' ? $rank->address1 : '国外'); ?>  <?php endif; ?></td>
 							</tr>
 							<?php endif; ?>
 							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

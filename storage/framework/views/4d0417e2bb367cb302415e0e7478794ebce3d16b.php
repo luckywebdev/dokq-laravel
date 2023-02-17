@@ -45,13 +45,12 @@
 						<table class="table table-bordered table-hover" id="table-quiz-allowed-records">
 							<thead>
 								<tr class="blue">
-									<th class="col-md-1">提出日</th>
+									<th class="col-md-1">認定日</th>
 									<th class="col-md-2">タイトル</th>
 									<th class="col-md-1">著者</th>
 									<th class="col-md-1">著者名ひらがな</th>
-									<th class="col-md-2">クイズ</th>
+									<th class="col-md-3">クイズ</th>
 									<th class="col-md-1">読Q本ID</th>
-									<th class="col-md-1">認定日</th>
 									<th class="col-md-1">クイズ№</th>
 									<th class="col-md-2">得たポイント</th>
 								</tr>
@@ -76,7 +75,6 @@
 										<?php endif; ?>
 									</td>
 									<td><a <?php if($allowed_quiz->Book->active >= 3): ?> href="<?php echo e(url('book/' . $allowed_quiz->book_id . '/detail')); ?>" <?php endif; ?> class="font-blue-madison">dq<?php echo e($allowed_quiz->book_id); ?></a></td>
-									<td><?php echo e(date_create($allowed_quiz->finished_date)->format('Y/m/d')); ?></td>
 									<td><?php echo e($allowed_quiz->doq_quizid); ?></td>
 									<td><?php echo e(floor($allowed_quiz->point*100)/100); ?></td>
 								</tr>
@@ -88,7 +86,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-12 mt-3">
 					<button type="button" class="btn btn-info pull-right" onclick="javascript:history.go(-1)">戻　る</button>
 				</div>
 			</div>

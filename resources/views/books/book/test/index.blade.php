@@ -112,14 +112,14 @@
 		@if(isset($book)&&Auth::check())
 			<input type="hidden" name="book_id" value="{{$book->id}}">
 		@endif
-			<h3 style="text-align:center;">{{$book->title}}
-									(@foreach($book->categories as $key=>$category)
+			<h3 style="text-align:center;">{{$book->title}}</h3>
+			<!-- (@foreach($book->categories as $key=>$category)
 										@if($key + 1 == count($book->categories))
 											{{$category->name}}
 										@else
 											{{$category->name}}、
 										@endif
-									@endforeach)</h3>
+									@endforeach) -->
 			<h4 style="text-align:center;">{{$book->fullname_nick()}}</h4>
 			<div class="clearfix"></div>
 			<h4 style="text-align:center;">問題数　···　
@@ -135,8 +135,8 @@
 			<h4 style="text-align:center;color:red;">回答方法</h4>
 			<div class="row">
 				<div class="offset-md-2 col-md-10">
-					<div class="form-body h4"  style="color:red;">
-					問題文の<span style='text-decoration:underline !important'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>線部が、本の内容と合っていれば〇（①）、違っていれば×（②）を選んで、「次へ」をクリックしてください。
+					<div class="form-body h5"  style="color:red; line-height: 1.3">
+					問題文の<span style='text-decoration:underline !important'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>線のひいてあるところが本の内容と合っていれば①ちがっていれば②を選んで「次へ」をクリック！。
 					</div>
 				</div>
 			</div>

@@ -41,13 +41,21 @@
                         <div class="form-body col-md-12">
                             
                         <div class="col-md-3">
-                        <button type="button" class="btn btn-primary save-close" style="margin-top:8px;"><i class="fa fa-save"></i> 登録して終了する</button>
+                            <?php if(isset($book) && $book->register_id == Auth::id()): ?>
+                                <button type="button" class="btn btn-primary save-close" style="margin-top:8px;"><i class="fa fa-save"></i> 登録して終了する</button>
+                            <?php endif; ?>
                         </div>
                         <div class="col-md-3">
-                        <button type="button" class="btn btn-success quiz-make" style="margin-top:8px;"><i class="fa fa-check"></i> 登録してクイズを作る</button>
+                            <?php if(isset($book) && $book->register_id == Auth::id()): ?>
+                                <button type="button" class="btn btn-success quiz-make" style="margin-top:8px;"><i class="fa fa-check"></i> 登録してクイズを作る</button>
+                            <?php else: ?>
+                                <button type="button" class="btn btn-success update-close" style="margin-top:8px;"><i class="fa fa-check"></i>情報を更新する</button>
+                            <?php endif; ?>
                         </div>
                         <div class="col-md-4">
-                        <button type="button" class="btn btn-warning recreate" style="margin-top:8px;">登録してもう1冊本を登録する</button>
+                            <?php if(isset($book) && $book->register_id == Auth::id()): ?>
+                                <button type="button" class="btn btn-warning recreate" style="margin-top:8px;">登録してもう1冊本を登録する</button>
+                            <?php endif; ?>
                     	</div>
                     	<div class="col-md-2">
                     	<button type="button" class="btn btn-info" style="margin-top:8px;" onclick="javascript:history.go(-1)">戻　る</button>
@@ -98,6 +106,11 @@
             })
             $(".recreate").click(function(){
                 $("#action").val("recreate");
+                $("#book-register-form").submit();
+            })
+
+            $(".update-close").click(function() {
+                $("#book-register-form").attr("action", "/book/subsave");
                 $("#book-register-form").submit();
             })
 

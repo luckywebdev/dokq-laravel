@@ -47,6 +47,10 @@
 					</p>
 				</div>
 				<?php endif; ?>
+				<?php if(count($errors) > 0): ?>
+					<?php echo $__env->make('partials.alert', array('errors' => $errors->all()), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+				<?php endif; ?>
+
 				<div class="table-scrollable">	
 					<table class="table table-striped table-bordered table-hover data-table" cellpadding="0" cellspacing="0"  width="100%">
 					    <thead>
@@ -80,7 +84,15 @@
 								<td width="20%">〒 <?php echo e($user->address4); ?>―<?php echo e($user->address5); ?> <?php echo e($user->address1); ?> <?php echo e($user->address2); ?> <?php echo e($user->address3); ?></td>
 								<td width="5%"><a href="mailto:<?php echo e($user->email); ?>"><?php echo e($user->email); ?></a></td>
 								<td width="5%"><?php echo e($user->totalMemberCounts()); ?></td>
-								<td width="5%"><?php echo e($user->replied_date1?with(date_create($user->replied_date1))->format("Y/m/d"):""); ?></td>
+								<td width="5%" style="white-space: nowrap">
+								<?php if($user->replied_date1): ?>
+									<?php echo e(with(date_create($user->replied_date1))->format("Y/m/d")); ?>
+
+								<?php else: ?>
+									<a class="btn btn-info sendmail" href="<?php echo e(url('/admin/reg_sendMail/'.$user->id)); ?>" data-user="<?php echo e($user->id); ?>" >送信</a>
+									<a class="btn btn-danger" href="<?php echo e(url('/admin/unapproved/'.$user->id)); ?>">削除</button>
+								<?php endif; ?>
+								</td>
 								<td width="5%"><?php echo e($user->t_username); ?></td>
 								<td width="5%"><?php echo e($user->t_password); ?></td>
 								<td width="5%"><?php echo e($user->replied_date2?with(date_create($user->replied_date2))->format("Y/m/d"):""); ?></td>
@@ -118,9 +130,9 @@
 			
 			if(user_active == 1){
 				$("#userdata_tag").attr('disabled', true);
-				var str="<a href='/admin/data_card_org/"+user_id+"' style='color:#757b87;'>データ画面へ遷移</a>"	
-				$("#userdata_tag").html(str);
 			}
+			var str="<a href='/admin/data_card_org/"+user_id+"' style='color:#757b87;'>データ画面へ遷移</a>"	
+				$("#userdata_tag").html(str);
 
 	     };
         
@@ -167,6 +179,39 @@
 	            });
 			
 		}
+
+		// $(".sendmail").click(function() {
+		// 	var user_id = $(this).data("user");
+		// 	reg_sendMail(user_id);
+		// })
+
+		// function reg_sendMail (userId) {
+		// 	var info = {
+		// 		_token: $('meta[name="csrf-token"]').attr('content'),
+		// 		userId: userId
+		// 	};
+		// 	var post_url = "/register/reg_sendMail";
+		// 	$.ajax({
+		// 		type: "post",
+		// 		url: post_url,
+		// 		data: info,
+		// 		beforeSend: function (xhr) {
+		// 			var token = $('meta[name="csrf-token"]').attr('content');
+		// 			if (token) {
+		// 					return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+		// 			}
+		// 		},
+		// 		success: function (response) {
+		// 			console.log("response===>", response);
+		// 			if(response.sendStatus){
+		// 				// window.location.reload();
+		// 			}
+		// 			else
+		// 				alert('<?php echo e(config('consts')['MESSAGES']['EMAIL_SERVER_ERROR']); ?>') ;
+		// 		}
+		// 	}); 
+
+		// }
 	</script>
 	<script type="text/javascript" src="<?php echo e(asset('js/group/group.js')); ?>"></script>
 <?php $__env->stopSection(); ?>

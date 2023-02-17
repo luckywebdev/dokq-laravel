@@ -1,4 +1,4 @@
-<table class="table table-striped table-bordered table-hover data-table" style="width:100%" id="sample_1">
+<table class="table table-striped table-bordered table-hover data-table full-response-width" id="sample_1">
     <thead>
         <tr class="bg-primary">
             <th width="30%">タイトル</th>
@@ -30,7 +30,7 @@
             </td>
             <td style="vertical-align:middle; width: 15%">  
             <b hidden="true">{{$book->fullname_yomi()}}</b>
-            <a href="#" class="font-blue-madison author_view" did="{{$book->writer_id}}">
+            <a href="#" class="font-blue-madison author_view" did="{{$book->writer_id}}" fullname="{{$book->fullname_nick()}}" >
                 {{$book->fullname_nick()}}</a>
                 </td>
             <td style="vertical-align:middle; width: 5%">{{floor($book->point*100)/100}}</td>

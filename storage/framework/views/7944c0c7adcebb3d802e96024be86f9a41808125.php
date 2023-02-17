@@ -23,10 +23,10 @@
                     <?php $__currentLoopData = $newBooks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $newBook): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <p><a href="/book/search_one/<?php echo e($newBook->id); ?>"><?php echo e($newBook->title); ?></a></p>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-					<a href="<?php echo e(url('/book/search/latest1')); ?>" class="news-block-btn font-blue">もっと見る</a>
 					<?php endif; ?>
 
-					
+					<a href="<?php echo e(url('/book/search/latest1')); ?>" class="news-block-btn font-blue">もっと見る</a>
+
 				</div>
 			</div>
 
@@ -39,7 +39,7 @@
 							<ul class="feeds">
 							    <?php $__currentLoopData = $notices; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notice): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 								<li>
-									<a href="#">
+									<!-- <a href="#"> -->
 										<div class="col1">
 											<div class="date">
 												  <?php echo e(date_format($notice->updated_at,"Y")."-".date_format($notice->updated_at,"m")."-".date_format($notice->updated_at,"d")); ?>
@@ -56,7 +56,25 @@
 												</div>
 											</div>
 										</div>
-									</a>
+										<?php if($notice->outside_link != ''): ?>
+										<div class="col2" style="display: flex; flex-direction: column; align-items: flex-start">
+											<div class="cont">
+												<div class="cont-col2">
+													<div class="desc">
+														詳細については下記URLをクリック！
+													</div>
+												</div>
+											</div>
+											<div class="cont">
+												<div class="cont-col2">
+													<div class="desc">
+														<a href="<?php echo e($notice->outside_link); ?>" target="__blank"><?php echo e($notice->outside_link); ?></a>
+													</div>
+												</div>
+											</div>
+										</div>
+										<?php endif; ?>
+									<!-- </a> -->
 								</li>
 								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							</ul>
@@ -120,7 +138,7 @@
 					</div>
 					<div class="col-sm-4 rank-layout2">
 						<div class="top-news text-md-center">
-							<a href="<?php if(Auth::check()): ?> <?php echo e(url('/mypage/book_ranking')); ?> <?php endif; ?>" class="btn blue">
+							<a href="<?php echo e(url('/mypage/book_ranking')); ?>" class="btn blue">
 								<span style="text-align:center;">読書量ランキング100</span>
 							</a>
 						</div>
@@ -174,19 +192,27 @@
 							</div>
 						</div>
 						<div class="form-group row">
-						<?php if($errors->has('invalid_pwd')): ?>
+						<?php if($errors->has('invalid_pwd') || $errors->has('passcode_error')): ?>
 							<h5 class="offset-md-2 col-md-10 text-md-left" style="color:#f00;">パスコードが間違っています。</h5>
-						<?php elseif($errors->has('passcode_error')): ?>
-							<h5 class="offset-md-2 col-md-10 text-md-left" style="color:#f00;">認定書の有効期限が切れてされました。</h5>
+						<!-- <?php elseif($errors->has('passcode_error')): ?>
+							<h5 class="offset-md-2 col-md-10 text-md-left" style="color:#f00;">認定書の有効期限が切れてされました。</h5> -->
 						<?php endif; ?>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<!-- <div class="row">
+			<div class="col-md-12">
+				<?php if(Auth::check() && Auth::user()->isAdmin() && $self_evaluation != null && $self_evaluation->evaluation_button_url != ''): ?>
+					<a href="<?php echo e(url($self_evaluation->self_evaluation_sheet_url)); ?>" target="__blank" style="width: 200px; height: 60px">
+						<img src="<?php echo e($self_evaluation->evaluation_button_url); ?>" alt="" style="width: 200px; height: 60px">
+					</a>
+				<?php endif; ?>
+			</div>
+		</div> -->
 		</div>
 	</div>
-
 	
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('scripts'); ?>
@@ -207,15 +233,24 @@
 		var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');
 		//login view in 一括操作
 		var msgloginid = '<?php echo Request::session()->get('msglogin'); ?>';
+		console.log("msg_id===>", msgloginid);
 		if(msgloginid != '' && msgloginid !== null){
 			var msglogin = '<?php echo Request::session()->put('msglogin', ''); ?>';
-			socket.emit('msglogin', msgloginid);
+			console.log("msglogin==>", msglogin);
+			var data = {
+				logedin_id: msgloginid
+			}
+			socket.emit('msglogin', JSON.stringify(data));
 		}
 		//logout view in 一括操作
 		var msglogoutid = '<?php echo Request::session()->get('msglogout'); ?>';
 		if(msglogoutid != '' && msglogoutid !== null){
 			var msglogout = '<?php echo Request::session()->put('msglogout', ''); ?>';
-			socket.emit('msglogout', msglogoutid);
+			console.log("msglogout==>", msglogout);
+			var data = {
+				logedout_id: msglogoutid
+			}
+			socket.emit('msglogout', JSON.stringify(data));
 		}
 
 		$('#pwd_checker').click(function(){
@@ -250,7 +285,7 @@
 						for(x in res){
 							var notice_res = res[x];
 							content += '<li>';
-							content += '<a href="#">';
+							// content += '<a href="#">';
 							content += '<div class="col1">';
 							content += '<div class="date">';
 							var notice_date = notice_res.updated_at.split(" ")[0];
@@ -266,7 +301,7 @@
 							content += '</div>';
 							content += '</div>';
 							content += '</div>';
-							content += '</a>';
+							// content += '</a>';
 							content += '</li>';
 						}
 						content += '</ul>';
@@ -289,7 +324,7 @@
 						for(x in res){
 							var notice_res = res[x];
 							content += '<li>';
-							content += '<a href="#">';
+							// content += '<a href="#">';
 							content += '<div class="col1">';
 							content += '<div class="date">';
 							var notice_date = notice_res.updated_at.split(" ")[0];
@@ -305,7 +340,7 @@
 							content += '</div>';
 							content += '</div>';
 							content += '</div>';
-							content += '</a>';
+							// content += '</a>';
 							content += '</li>';
 						}
 						content += '</ul>';

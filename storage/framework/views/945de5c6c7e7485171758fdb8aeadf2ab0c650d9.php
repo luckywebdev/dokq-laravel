@@ -86,6 +86,8 @@
 							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						</tbody>
 					</table>
+					<?php echo e($books->links()); ?>
+
 				</div>
 			</div>
 			<div id="popup" style="display:none;z-index:1000;">

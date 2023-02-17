@@ -83,7 +83,7 @@
 			ComponentsDropdowns.init();
 
 			//$("#ErrorISBN").hide();	
-			if ($("select[name=type]").val()==2){
+			if ($("select[name=type]").val()==0){
 				$(".param").each(function(index, item){
 					if($(item).val() == '')
 						$(item).val("0");
@@ -168,7 +168,7 @@
 					$(item).val("");
 				})
 				
-				if ($("select[name=type]").val()== 2){
+				if ($("select[name=type]").val()== 0){
 					$(".param").each(function(index, item){
 						if($(item).val() == '')
 							$(item).val("0");
@@ -179,7 +179,7 @@
 			});
 
 			$("select[name=type]").change(function(){
-				if ($(this).val() == "0" || $(this).val() == "1"){
+				if ($(this).val() == "1"){
 					
 					$(".param").each(function(index, item){
 							$(item).val("");
@@ -187,7 +187,7 @@
 					$("input[name=total_chars]").val("");
 					$("input[name=point]").val("");
 				}
-				else if (($(this).val() == "2")){
+				else if (($(this).val() == "0")){
 
 					$(".param").each(function(index, item){
 						$(item).val("0");
@@ -204,27 +204,27 @@
 	    	}
 
 			$(".subsave").click(function(){
-		    	$("#book-register-form").attr("action", "/book/subsave");
-		    	$("#book-register-form").submit();
-		    })
-		    $(".save-close").click(function(){
-		    	$("#action").val("close");
-		    	$("#book-register-form").submit();
-		    })
-		    $(".quiz-make").click(function(){
-		    	$("#action").val("quiz");
-		    	$("#book_form_flag").val('issetflag');
-		    	$("#book-register-form").submit();
-		    })
-		    $(".recreate").click(function(){
-		    	$("#action").val("recreate");
-		    	$("#book-register-form").submit();
-		    })
+				$("#book-register-form").attr("action", "/book/subsave");
+				$("#book-register-form").submit();
+			})
+			$(".save-close").click(function(){
+				$("#action").val("close");
+				$("#book-register-form").submit();
+			})
+			$(".quiz-make").click(function(){
+				$("#action").val("quiz");
+				$("#book_form_flag").val('issetflag');
+				$("#book-register-form").submit();
+			})
+			$(".recreate").click(function(){
+				$("#action").val("recreate");
+				$("#book-register-form").submit();
+			})
 
-		    $(".btn_back").click(function(){
-		    	$("#book-register-form").attr("method", "get");
-				$("#book-register-form").attr("action", "/book/register/caution");
-		    	$("#book-register-form").submit();
+			$(".btn_back").click(function(){
+				$("#book-register-form").attr("method", "get");
+			$("#book-register-form").attr("action", "/book/register/caution");
+				$("#book-register-form").submit();
 			})
 
 		    /*$(".back").click(function(){

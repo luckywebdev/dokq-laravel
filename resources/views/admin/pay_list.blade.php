@@ -67,7 +67,6 @@
 								<td class="align-middle col-md-1">{{ $user->address1."  ".$user->address2 }}</td>
 								<td class="align-middle col-md-1">{{$user->passcodes}}</td>
 								<td class="align-middle col-md-1">{{$user->pay_point}}</td>
-								
 							</tr>
 							@endforeach
 						</tbody>

@@ -72,7 +72,13 @@
 						<div class="portlet-body">
                             <div class="form-group row {{ $errors->has('firstname') ? ' has-danger' : '' }} {{ $errors->has('lastname') ? ' has-danger' : '' }}">
                                 <label class="control-label col-md-2 text-md-right" for="firstname">名前(全角）姓名:</label>
-                                <label class="control-label col-md-6" for="lastname">@if(Auth::user()->isAuthor()){{ $user->fullname_nick() }}@else{{ $user->fullname() }}@endif</label>
+                                <label class="control-label col-md-6" for="lastname">
+                                @if(Auth::user()->fullname_is_public == 1)
+                                    @if(Auth::user()->isAuthor()){{ $user->fullname_nick() }}@else{{ $user->fullname() }}@endif
+                                @else
+                                    {{ Auth::user()->username }}
+                                @endif
+                                </label>
                             </div>
 
                             <div class="form-group row
@@ -140,11 +146,11 @@
 									<select class="form-control select2me calc" name="categories[]" id="categories[]" multiple placeholder="選択...">
                                         <option></option>
                                         @foreach($books as $book)
-                                        @if (count(old('books')) > 0)
+                                        @if (is_array(old('books')) && count(old('books')) > 0)
                                             <option value="{{ $book->id }}" @if (in_array($book->id,  old('books'))) selected @endif>{{ $book->title }}</option>
                                         @elseif(isset($overseerbook_list)&&count($overseerbook_list) > 0)
                                             <option value="{{ $book->id }}" @if (in_array($book->id,  $overseerbook_list)) selected @endif>{{ $book->title }}</option>
-                                        @elseif(count(old('books')) == 0 && (!isset($data) || count($data['books']) == 0))
+                                        @elseif(is_array(old('books')) && count(old('books')) == 0 && (!isset($data) || count($data['books']) == 0))
                                             <option value="{{ $book->id }}" >{{ $book->title }}</option>
                                         @else
                                             <option value="{{ $book->id }}">{{ $book->title }}</option>

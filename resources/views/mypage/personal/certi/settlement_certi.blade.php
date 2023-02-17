@@ -67,8 +67,7 @@
 						<input type="hidden" name="currency_code" value="JPY">
 						<input type="image" src="https://www.sandbox.paypal.com/ja_JP/JP/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - オンラインでより安全・簡単にお支払い">
 						<img alt="" border="0" src="https://www.sandbox.paypal.com/ja_JP/i/scr/pixel.gif" width="1" height="1">
-					</form>
- -->
+					</form> -->
 				</div>
 
 

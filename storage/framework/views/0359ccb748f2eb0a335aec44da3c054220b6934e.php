@@ -53,7 +53,7 @@
 
 			<div class="col-md-2 form-group" style="text-align:right;">
 				<div class="tools">
-					<label class="label-above">氏(よみ)</label>													
+					<label class="label-above">氏(ヨミ)</label>													
 				</div>
 				<label class="label-above text-danger text-md-right">非公開</label>
 				<input required type="text" class="form-control " id="firstname_yomi" maxlength="20" value="<?php echo e(isset($pupil)? $pupil->firstname_yomi: old('firstname_yomi')); ?>" name="firstname_yomi" placeholder="スズキ">
@@ -62,7 +62,7 @@
 
 			<div class="col-md-2 form-group" style="text-align:right;">
 				<div class="tools">
-					<label class="label-above">名(よみ)</label>													
+					<label class="label-above">名(ヨミ)</label>													
 				</div>
 				<label class="label-above text-danger text-md-right">非公開</label>
 				<input required type="text" class="form-control " id="lastname_yomi" maxlength="20" value="<?php echo e(isset($pupil)? $pupil->lastname_yomi: old('lastname_yomi')); ?>" name="lastname_yomi" placeholder="タロウ">
@@ -473,8 +473,11 @@
 				<button type="button" class="btn btn-success save-continue"  style="margin-bottom:8px">保　存</button>
 			</div>
 			<?php endif; ?>		
-			<div class="col-md-4 text-md-left">
+			<div class="col-md-2 text-md-left">
 				<button class="btn btn-danger" type="button" onclick="javascript:location.reload()"> キャンセル </button>
+			</div>
+			<div class="col-md-2 text-md-left">
+				<button class="btn btn-info" type="button" onclick="javascript:history.go(-1)"> 戻　る </button>
 			</div>
 		</div>
 

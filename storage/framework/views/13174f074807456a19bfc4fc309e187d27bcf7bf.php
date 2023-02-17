@@ -108,8 +108,39 @@ $(document).ready(function(){
                     $(".btn-failed").addClass('disabled');
                     setTimeout(function(){
                         if(mode == 3){
-                            $("#success_form").attr("action", "/book/test/success");
-                            $("#success_form").submit();
+                            var info = {
+                                book_id: $("#book_id").val(),
+                                passed_quiz_count: $("#quiz_count").val(),
+                                page_count: $("#page_count").val(),
+                                passed_test_time: $("#passed_test_time").val(),
+                                passed_point: $("#passed_point").val(),
+                                _token: $('meta[name="csrf-token"]').attr('content')
+                            };
+                            console.log("quize-ajaxRegTest===>", info);
+                            $.ajax({
+                                type: "post",
+                                url: "<?php echo e(url('/book/regTestSuccessGeneral')); ?>",
+                                data: info,
+
+                                beforeSend: function (xhr) {
+                                    var token = $('meta[name="csrf-token"]').attr('content');
+                                    if (token) {
+                                        return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                                    }
+                                },
+                                success: function (response){
+                                    if(response.status == 'success'){
+                                        $("#success_form").attr("action", "/book/test/success");
+                                        $("#success_form").submit();
+                                    } else if(response.status == 'failed') {
+                                        $(".failed-alert").css('display','block');
+                                    }
+                                },
+                                error: function (err) {                                
+                                    $(".failed-alert").css('display','block');
+                                }
+                            });
+
                         }else{
                             $("#examinemethod").val(0);
                             $("#test-start-form").attr("action", "/book/test/start");
@@ -194,15 +225,19 @@ $(document).ready(function(){
                     <?php echo e(csrf_field()); ?>
 
                     <input type="hidden" name="book_id" id="book_id" value="<?php echo e($bookId); ?>"/>
+                    <input type="hidden" name="passed_quiz_count" value="<?php echo e($passed_quiz_count); ?>" id="quiz_count"/>
+                    <input type="hidden" name="passed_point" id="passed_point" value="<?php echo e($passed_point); ?>"/>
+                    <input type="hidden" name="page_count" id="page_count" value="<?php echo e($page_count); ?>"/>
+                    <input type="hidden" name="passed_test_time" id="passed_test_time" value="<?php echo e($passed_test_time); ?>">
                 </form>
             <?php endif; ?>
         <?php endif; ?>
         <div id="face">
-            <p>顔認識します。顔を枠の中に入れ、「顔認証」をクリックして、レンズを見てください。</p>
+            <p>顔認識します。「顔認証」をクリックして、レンズを見てください。</p>
             <div class="form-group row" >
                 <div class="col-md-12">
                     <div class="camera-widget camera-placeh1older" align="center">
-                        <video style="width:100%; height:100%;" autoplay="autoplay"></video>
+                        <video style="width:100%; height:90%;" autoplay="autoplay"></video>
                     </div>
                 </div>
             </div>

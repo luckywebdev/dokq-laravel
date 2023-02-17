@@ -67,7 +67,6 @@
 									<li>・本の種類を選択してください。ワードや字数カウントソフトで、本文の字数をカウント済の場合は、「字数カウント済の本」を選択し、16番に、総字数を入力してください。</li>
 									<li>・全角、半角など、画面の指示通りに入力してください。プルダウンメニューは必ず選択してください。</li>
 									<li>・ISBN・・・下１桁を除いた、４から始まる9桁の数字を入力してください。例：夏目漱石「坊ちゃん」：IBSN978-4-80-204179-9 の場合、最後の9を除き、４から始まる下9桁　「480204179」　と入力。</li>
-									<li>・表紙画像・・・表示画像をアップロードしてください。ネット書店のページURLを貼り付けていただいても構いません。</li>
 									<li>・推奨年代・学齢・・・書籍に推奨年代の記載がない場合、もっとも適切と思われる推奨年代を選択してください。但し、古典（明治大正の現代仮名遣いの本、古文の現代語訳の本など）、名作、学術、教養の分野に相当する、難易度の高い本は、いちばん下を選択してください。読Ｑ本の検定合格で得られるポイントは、本の総字数および、推奨年代や難易度による係数(0.1∼2.0）によって自動計算され、決定しますので、適正な推奨年代を選択していただきますようお願いします。</li>
 									
 									<li><strong>２．本の内容量を測定</strong></li>
@@ -90,7 +89,7 @@
 							</div>	
 							<div class="form-body text-md-right">
 							 <?php if(isset($cautionflag)): ?>
-								<a class="btn btn-warning" href="<?php echo e(url('/book/register?cautionflag='.$cautionflag)); ?>">本の登録画面へ</a>
+								<a class="btn btn-warning" href="<?php echo e(url('/book/record_book?cautionflag='.$cautionflag)); ?>">本の登録画面へ</a>
 							 <?php else: ?>
 								<button type="button" class="btn btn-warning" onclick="javascript:history.go(-1)">本の登録画面へ</button>
 							 <?php endif; ?>

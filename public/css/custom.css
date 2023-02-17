@@ -347,6 +347,9 @@ button{
     padding: 0px;
     color: #f00;
 }
+.red-border {
+  border: 1px solid red;
+}
 .doq_btn {
     padding: 5px 10px;
     font-size: 10px;

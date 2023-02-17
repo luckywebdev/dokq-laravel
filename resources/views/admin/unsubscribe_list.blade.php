@@ -59,19 +59,36 @@
 					      </tr>
 					    </thead>
 					    <tbody class="text-md-center">
-                            @foreach ($users as $user)
+							@foreach ($users as $user)
 							<tr class="text-md-center">
 								<td class="align-middle col-md-1">{{ with(date_create($user->escape_date))->format('Y/m/d') }}</td>
 								<td class="align-middle col-md-1"><a id="user_a" href="{{url('mypage/other_view/' . $user->id)}}" class="font-blue" oncontextmenu="handleRightClick('{{$user->id}}','{{$user->email}}','{{$user->active}}'); return false;">@if($user->isAuthor()){{ $user->fullname_nick() }}@else{{ $user->fullname() }}@endif</a></td>
 								<td class="align-middle col-md-1">{{ $user->username }}</td>
-                                <td class="align-middle col-md-1">{{ date_diff(date_create($user->birthday ), date_create('today'))->y }}</td>
-                                <td class="align-middle col-md-1">{{$user->level}}</td>
-                                <td class="align-middle">{{$user->replied_date2? with(date_create($user->replied_date2))->format('Y/m/d'): ""}}</td>
+								<td class="align-middle col-md-1">{{ date_diff(date_create($user->birthday ), date_create('today'))->y }}</td>
+								<td class="align-middle col-md-1">{{$user->level}}</td>
+								<td class="align-middle">{{$user->replied_date2? with(date_create($user->replied_date2))->format('Y/m/d'): ""}}</td>
 								<td class="align-middle col-md-1">{{config('consts')['USER']['TYPE'][$user->role]}}</td>
 								<td class="align-middle col-md-1">{{ $user->address1."  ".$user->address2 }}</td>
 								<td class="align-middle"><a href="mailto:{{$user->email}}">{{$user->email}}</a></td>
-								<td class="align-middle"></td>
-								<td class="align-middle"><a class="btn btn-email btn-warning" href="{{url('/admin/unsubscribe_email/'.$user->id)}}" style="padding-top: 0; padding-bottom:0; color: #FFF; font-weight:600">送信</a></td>
+								<td class="align-middle">
+									@if ($user->paypal_stop_date != null)
+									<input required type="text" readonly="true" name="paypal_stop_date" value="{{ $user->paypal_stop_date }}" id="paypal_stop_date" user_id="{{$user->id}}" class="big-form-control date-picker paypal_stop_date" placeholder="（西暦を２回タップして選択）">
+									@else
+									<input required type="text" readonly="true" name="paypal_stop_date" value="{{ old('paypal_stop_date') }}" id="paypal_stop_date" user_id="{{$user->id}}" class="big-form-control date-picker paypal_stop_date" placeholder="（西暦を２回タップして選択）">
+									@endif
+									@if ($errors->has('paypal_stop_date'))
+									<span class="form-control-feedback">
+										<span>{{ $errors->first('paypal_stop_date') }}</span>
+									</span>
+									@endif
+								</td>
+								<td class="align-middle">
+									@if (!$user->unsubscribe_date) 
+									<a class="btn btn-email btn-warning" href="#" user_id="{{$user->id}}" style="padding-top: 0; padding-bottom:0; color: #FFF; font-weight:600">送信</a>
+									@else
+									{{"送信済"}}
+									@endif
+								</td>
 								<td class="align-middle">{{$user->unsubscribe_date? with(date_create($user->unsubscribe_date))->format('Y/m/d'): ""}}</td>
 								
 							</tr>
@@ -110,10 +127,9 @@
      };
          
 	$(function () {
-       
-  		var $contextMenu = $("#contextMenu");
-  		$("body").click(function(){
-		    $("#popup").hide();
+		var $contextMenu = $("#contextMenu");
+		$("body").click(function(){
+			$("#popup").hide();
 		});
 		$("body").on("contextmenu", "a#user_a", function(e) {
 		    $contextMenu.css({
@@ -129,14 +145,62 @@
 		    return false;
 		});
 
-        $(".btn-email").on("click", function(){
+		$(".btn-email").on("click", function(e){
+			e.preventDefault();
+			var user_id = $(this).attr("user_id");
+			var paypal_stop_date = "";
+			//  href="{{url('/admin/unsubscribe_email/'.$user->id)}}"
+			$(".paypal_stop_date").each(function () {
+				var user = $(this).attr("user_id");
+				if (user == user_id) {
+					paypal_stop_date = $(this).val();
+				}
+			})
+			var info = {
+				_token: $('meta[name="csrf-token"]').attr('content'),
+				paypal_stop_date: paypal_stop_date
+			}
+			var err = "<?php echo config('consts')['MESSAGES']['EMAIL_SERVER_ERROR'] ?>";
+			var post_url = "<?php echo (isset($_SERVER['HTTPS']) ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'] ?>/admin/unsubscribe_email/" + $(this).attr('user_id');
+			$.ajax({
+				type: "get",
+				url: post_url,
+				data: info,
+				beforeSend: function (xhr) {
+					var token = $('meta[name="csrf-token"]').attr('content');
+					if (token) {
+								return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+					}
+				},
+				success: function (response){
+					console.log("response", response);
+					if(response.success == true){
+						location.reload();
+					} else {
+						window.alert(err);
+					}
+				}
+			});
+		});
 
-        });
 	});
-		
-		$("#phone").inputmask("mask", {
-            "mask": "<?php echo config('consts')['PHONE_MASK'] ?>"
-        });
-	</script>
+	$("#phone").inputmask("mask", {
+		"mask": "<?php echo config('consts')['PHONE_MASK'] ?>"
+	});
+
+	var handleDatePickers = function () {
+		if (jQuery().datepicker) {
+				$('.date-picker').datepicker({
+						rtl: Metronic.isRTL(),
+						orientation: "left",
+						autoclose: true,
+						language: 'ja'
+				});
+		}
+	}
+
+	handleDatePickers();
+
+</script>
 	<script type="text/javascript" src="{{asset('js/group/group.js')}}"></script>
 @stop

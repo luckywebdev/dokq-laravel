@@ -32,7 +32,7 @@
 					</div>
 					<a href="<?php echo e(url('/auth/register/0/1')); ?>">
 						<div class="details">
-							<label class="number">
+							<label class="number" style="cursor: pointer">
 								 学校団体様新規登録
 							</label>
 							
@@ -44,7 +44,7 @@
 					<input type="hidden" name="helpdoc" id="helpdoc" value="">
 					<input type="hidden" name="role" id="role" value="">
 					<button type="button" id="viewpdf0" class="btn btn-primary more col-md-12" style="width:100%;color:white;text-align:left;border:0px">
-						団体会員利用規約と申込の流れはこちら <i class="m-icon-swapright m-icon-white"></i>
+						団体会員利用規約と申込の流れはこちら 
 					</button>
 					
 				</div>
@@ -54,9 +54,9 @@
 					<div class="visual">
 						<i class="fa fa-bar-chart-o"></i>
 					</div>
-					<a href="<?php echo e(url('/auth/register/2/1')); ?>">
-						<div class="details">
-							<label class="number">
+					<a href="<?php echo e(url('/auth/register/2/1')); ?>" style="cursor: pointer">
+						<div class="details" style="cursor: pointer">
+							<label class="number" style="cursor: pointer">
 								 監修者志望の方 新規登録
 							</label>
 							
@@ -67,7 +67,7 @@
 					</a>-->
 					
 					<button type="button" id="viewpdf2" class="btn btn-primary more col-md-12" style="width:100%;color:white;text-align:left;border:0px">
-						監修者会員利用規約と申込の流れはこちら <i class="m-icon-swapright m-icon-white"></i>
+						監修者会員利用規約と申込の流れはこちら 
 					</button>
 					
 				</div>
@@ -81,7 +81,7 @@
 					</div>
 					<a href="<?php echo e(url('/auth/register/1/1')); ?>">
 						<div class="details">
-							<label class="number">
+							<label class="number" style="cursor: pointer">
 								 一般の方 新規登録
 							</label>
 						</div>
@@ -90,7 +90,7 @@
 					一般会員利用規約と申込の流れはこちら <i class="m-icon-swapright m-icon-white"></i>
 					</a>-->
 					<button type="button" id="viewpdf1" class="btn btn-primary more col-md-12" style="width:100%;color:white;text-align:left;border:0px">
-						一般会員利用規約と申込の流れはこちら <i class="m-icon-swapright m-icon-white"></i>
+						一般会員利用規約と申込の流れはこちら 
 					</button>
 				</div>
 			</div>
@@ -101,7 +101,7 @@
 					</div>
 					<a href="<?php echo e(url('/auth/register/3/1')); ?>">
 						<div class="details">
-							<label class="number">
+							<label class="number" style="cursor: pointer">
 								 著者の方 新規登録
 							</label>
 						</div>
@@ -110,7 +110,7 @@
 						著者会員利用規約と申込の流れはこちら <i class="m-icon-swapright m-icon-white"></i>
 					</a>-->
 					<button type="button" id="viewpdf3" class="btn btn-primary more col-md-12" style="width:100%;color:white;text-align:left;border:0px">
-						著者会員利用規約と申込の流れはこちら <i class="m-icon-swapright m-icon-white"></i>
+						著者会員利用規約と申込の流れはこちら 
 					</button>
 				</div>
 			</div>

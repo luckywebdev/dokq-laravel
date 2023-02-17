@@ -51,7 +51,7 @@
 							<tbody class="text-md-center">
 								@foreach($mywriteBooks as $book)
 								<tr>
-									<td style="vertical-align:middle;">@if(count($book->Overseer) == 0) {{with((date_create($book->replied_date1)))->format('Y/m/d')}} @else {{with((date_create($book->replied_date3)))->format('Y/m/d')}}@endif</td>
+									<td style="vertical-align:middle;">@if(is_array($book->Overseer) && count($book->Overseer) == 0) {{with((date_create($book->replied_date1)))->format('Y/m/d')}} @else {{with((date_create($book->replied_date3)))->format('Y/m/d')}}@endif</td>
 									<td style="vertical-align:middle;"><a @if($book->active >= 3) href="{{url('/book/'.$book->id.'/detail')}}" @endif class="font-blue-madison">{{$book->title}}</a></td>
 									<td style="vertical-align:middle;">dq{{$book->id}}</td>
 									<td style="vertical-align:middle;">{{with((date_create($book->updated_at)))->format('Y/m/d')}}</td>								

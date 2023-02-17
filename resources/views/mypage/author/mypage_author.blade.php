@@ -260,8 +260,8 @@
 													</div>
 													<div class="row col-md-12" style="writing-mode:vertical-rl;margin-left:0px;margin-right:0px;padding-left:0px;padding-right:0px;height:100px;">
 														<h5 class="font_gogic text-md-left" style="align-self:center;font-family:HGP明朝B;">
-															<a class="font_gogic" style="text-decoration:none;font-family:HGP明朝B;" href="{{url('book/search_books_byauthor?writer_id=' . $book->writer_id.'&fullname='.$book->fullname_nick())}}">
-															{{$book->fullname_nick()}}
+															<a class="font_gogic" style="text-decoration:none;font-family:HGP明朝B;" href="{{url('book/search_books_byauthor?writer_id=' . $book->writer_id.'&fullname='.$book->firstname_nick.' '.$book->lastname_nick)}}">
+															{{$book->firstname_nick.' '.$book->lastname_nick}}
 															</a>
 														</h5>
 													</div>

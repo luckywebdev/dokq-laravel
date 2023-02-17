@@ -67,8 +67,20 @@
                                         </div>
                                         
                                     </div>
+                                    <div class="form-group">                                   
+                                        <label class="control-label col-sm-1" for="outside_link">外部 URL:</label>
+                                        <div class="col-sm-5 <?php echo e($errors->has('content') ? ' has-danger' : ''); ?>">          
+                                            <input required type="text" class="form-control" id="outside_link" name="outside_link" >
+                                            <?php if($errors->has('content')): ?>
+                                                <span class="form-control-feedback">
+                                                    <span><?php echo e($errors->first('content')); ?></span>
+                                                </span>
+                                            <?php endif; ?>
+                                        </div>
+                                        
+                                    </div>
                                 </div>
-                                <input type="hidden" id="contentflag" name="contentflag" value="<?php echo e(isset($contentflag)? $contentflag : ""); ?>" />
+                                <input type="hidden" id="contentflag" name="contentflag" value="<?php echo e(isset($contentflag)? $contentflag : ''); ?>" />
                             </form>
                         </div>
                     </div>
@@ -97,6 +109,7 @@
                                     <tr>
                                         <th>日付</th>
                                         <th>文面</th>
+                                        <th>外部 URL</th>
                                         <th style="text-align:center;">編集する</th>
                                         <th style="text-align:center;">削除</th>
                                     </tr>
@@ -113,7 +126,10 @@
                                                 <?php echo e($notice->content); ?>
 
                                             </td>
+                                            <td id = "update-outside_link<?php echo e($notice->id); ?>">
+                                                <?php echo e($notice->outside_link); ?>
 
+                                            </td>
                                         <td>
                                             <a class="edit" id = "<?php echo e($notice->id); ?>" href="javascript:;">
                                                 編集する
@@ -136,6 +152,7 @@
                                         <input type="hidden" name ="update_id" id ="update_id"> 
                                         <input type="hidden" name ="update_date" id ="update_date"> 
                                         <input type="hidden" name ="update_content" id ="update_content"> 
+                                        <input type="hidden" name ="update_outside_link" id ="update_outside_link"> 
                                     </div>
                                 </div> 
                             </form>
@@ -221,6 +238,7 @@
                 var info = {
                     add_date: $("#add_date").val(),
                     content: $("#content").val(),
+                    outside_link: $("#outside_link").val(),
                     _token: $('meta[name="csrf-token"]').attr('content')
                 };
                 $.ajax({

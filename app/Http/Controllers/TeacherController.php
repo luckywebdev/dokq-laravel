@@ -205,7 +205,7 @@ class TeacherController extends Controller
         $this->page_info['subside'] = 'password_history';
         $this->page_info['subtop'] = 'password_history';
  		
-        $overseers = PwdHistory::where('overseer_id', Auth::id())->get();
+        $overseers = PwdHistory::where('overseer_id', Auth::id())->orderBy('created_at', 'desc')->get();
         return view('teacher.pwd_history')
             ->with('page_info', $this->page_info)
             ->withOverseers($overseers);

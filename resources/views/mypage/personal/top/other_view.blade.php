@@ -266,8 +266,8 @@
 							</div>
 						</div>
 					@endif
-					
-					@if(($user->mybookcase_is_public == 1  && $user->age() >= 15) || $otherviewable == 1)
+
+					@if($user->mybookcase_is_public == 1 || $otherviewable == 1)
                     	<div class="portlet box red">
 							<div class="portlet-title">
 								<div class="caption">マイ本棚（クイズに合格した本リスト）</div>
@@ -282,16 +282,15 @@
 												@for($i = 0; $i < (12 - count($myBooks)); $i++)
 												<td class="col-md-1"></td>
 												@endfor
+												<?php $j = 0; ?>
 												@foreach($myBooks as $book)
-												<?php if($book->point >= 0 && $book->point <= 2) $color = '#ffb5fc'; //help.about_target.blade.php
-													  elseif($book->point > 2 && $book->point <= 5) $color = '#facaca';//ff0000 
-													  elseif($book->point > 5 && $book->point <= 8) $color = '#f9d195'; //FF9900
-													  elseif($book->point > 8 && $book->point <= 11) $color = '#f6f99a'; //f4fd00
-													  elseif($book->point > 11 && $book->point <= 15) $color = '#e1f98f'; //d6f432
-													  elseif($book->point > 15 && $book->point <= 19) $color = '#92fab2'; //26a69a
-													  elseif($book->point > 19 && $book->point <= 25) $color = '#a7d4fb'; //5C9BD1
-													  elseif($book->point > 25) $color = '#f0f5fa';	
+												<?php
+														if($j % 4 == 0)     $color = "#FFB5FC";
+														elseif($j % 4 == 1) $color = "#F6F99A";
+														elseif($j % 4 == 2) $color = "#92FAB2";
+														elseif($j % 4 == 3) $color = "#A7D4FB";
 												?>
+
 												<td class="col-md-1 text-md-center" style="background-color:{{$color}};padding-left:0px;padding-right:0px;">
 													<div class="row col-md-12" style="writing-mode:vertical-rl;margin-left:0px;margin-right:0px;padding-left:0px;padding-right:0px;height:200px;">
 														<h5 class="font_gogic text-md-left" style="align-self:center;font-family:HGP明朝B;">
@@ -308,6 +307,7 @@
 														</h5>
 													</div>
 												</td>
+												<?php $j++; ?>
 												@endforeach																					
 											</tr>
 										</tbody>
@@ -400,7 +400,7 @@
 							<tr>
 								<td class="col-md-8 col-xs-8">
 									@if ($user->history_all_is_public || $otherviewable == 1)
-								    <a href="{{url('mypage/history_all/'.$user->id)}}" class="font-blue-madison">読Q活動の全履歴を見る</a>
+								    <a href="{{url('mypage/history_all/'.$user->id.'/true')}}" class="font-blue-madison">読Q活動の全履歴を見る</a>
 								    @else
 									読Q活動の全履歴を見る
 									@endif
@@ -410,7 +410,7 @@
 							<tr>
 								<td>
 								    @if ($user->passed_records_is_public || $otherviewable == 1)
-								    <a href="{{url('mypage/pass_history/'.$user->id)}}" class="font-blue-madison">合格履歴を見る</a>
+								    <a href="{{url('mypage/pass_history/'.$user->id.'/true')}}" class="font-blue-madison">合格履歴を見る</a>
 								    @else
 								    合格履歴を見る
 								    @endif
@@ -420,7 +420,7 @@
 							<tr>
 								<td>
 								    @if ($user->point_ranking_is_public || $otherviewable == 1)
-								    <a href="{{url('mypage/rank_by_age/'.$user->id)}}" class="font-blue-madison">ポイントランキングを見る</a>
+								    <a href="{{url('mypage/rank_by_age/'.$user->id.'/true')}}" class="font-blue-madison">ポイントランキングを見る</a>
 								    @else
 								    ポイントランキングを見る
 								    @endif
@@ -430,7 +430,7 @@
 							<tr>
 								<td>
 								    @if ($user->register_point_ranking_is_public || $otherviewable == 1)
-								    <a href="{{url('mypage/rank_bq/'.$user->id)}}" class="font-blue-madison">読書推進活動ランキングを見る</a>
+								    <a href="{{url('mypage/rank_bq/'.$user->id.'/true')}}" class="font-blue-madison">読書推進活動ランキングを見る</a>
 								    @else
 								    読書推進活動ランキングを見る
 								    @endif
@@ -440,7 +440,7 @@
 							<tr>
 								<td>
 								    @if ($user->book_allowed_record_is_public || $otherviewable == 1)
-								    <a href="{{url('mypage/book_reg_history/'.$user->id)}}" class="font-blue-madison">本の登録認定記録を見る</a>
+								    <a href="{{url('mypage/book_reg_history/'.$user->id.'/true')}}" class="font-blue-madison">本の登録認定記録を見る</a>
 								    @else
 								    本の登録認定記録を見る
 								    @endif
@@ -450,7 +450,7 @@
 							<tr>
 								<td>
 								    @if ($user->quiz_allowed_record_is_public || $otherviewable == 1)
-								    <a href="{{url('mypage/quiz_history/'.$user->id)}}" class="font-blue-madison">作成クイズの認定記録</a>
+								    <a href="{{url('mypage/quiz_history/'.$user->id.'/true')}}" class="font-blue-madison">作成クイズの認定記録</a>
 								    @else
 								    作成クイズの認定記録
 								    @endif
@@ -460,7 +460,7 @@
 							<tr>
 								<td>
 								@if ($user->last_report_is_public || $otherviewable == 1)
-							    <a href="{{url('mypage/last_report/0/'.$user->id)}}" class="font-blue-madison">読Qレポートバックナンバーを見る</a>
+							    <a href="{{url('mypage/last_report/0/'.$user->id.'/true')}}" class="font-blue-madison">読Qレポートバックナンバーを見る</a>
 							    @else
 								読Qレポートバックナンバーを見る
 								@endif
@@ -474,7 +474,7 @@
 								<td>@if ($user->article_is_public == 0) 非公開 @endif</td>
 							</tr>
 							<tr>
-								<td><a href="{{url('mypage/other_view_info/'.$user->id)}}" class="font-blue-madison">公開基本情報を見る</a></td>
+								<td><a href="{{url('mypage/other_view_info/'.$user->id.'/true')}}" class="font-blue-madison">公開基本情報を見る</a></td>
 								<td></td>
 							</tr>
 						</table>

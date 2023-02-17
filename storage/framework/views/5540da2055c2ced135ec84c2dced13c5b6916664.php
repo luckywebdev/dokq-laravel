@@ -49,6 +49,7 @@
 					        <th>分類</th>
 					        <th>住所</th>
 					        <th>メールアドレス</th>
+							<th >返信日</th>
 					        <th>正式登録日</th>
 					        <th>読Qネーム</th>
 					        <th>パスワード</th>
@@ -63,10 +64,30 @@
 								<td class="align-middle col-md-1"><?php echo e(config('consts')['USER']['TYPE'][$user->role]); ?></td>
 								<td class="align-middle col-md-3"><?php echo e($user->address1); ?> <?php echo e($user->address2); ?></td>
 								<td class="align-middle"><a href="mailto:<?php echo e($user->email); ?>"><?php echo e($user->email); ?></a></td>
+								<td class="align-middle" style="white-space: nowrap">
+								<?php if($user->isSchoolMember() || $user->isPupil()): ?>
+									<?php echo e("-"); ?>
+
+								<?php elseif($user->replied_date1): ?>
+									<?php echo e(with(date_create($user->replied_date1))->format("Y/m/d")); ?>
+
+								<?php else: ?>
+									<a class="btn btn-info sendmail" href="<?php echo e(url('/admin/reg_sendMail/'.$user->id)); ?>" data-user="<?php echo e($user->id); ?>" >送信</a>
+									<a class="btn btn-danger" href="<?php echo e(url('/admin/unapproved/'.$user->id)); ?>">削除</button>
+								<?php endif; ?>
+								</td>
 								<td class="align-middle"><?php echo e($user->replied_date2? with(date_create($user->replied_date2))->format('Y/m/d'): ""); ?></td>
 								<td class="align-middle"><?php echo e($user->username); ?></td>
 								<td class="align-middle"><?php echo e($user->r_password); ?></td>
-								<td class="align-middle"><?php echo e($user->pay_date? with(date_add(date_create($user->pay_date), date_interval_create_from_date_string("2 weeks"))->format('Y/m/d')): ""); ?></td>
+								<td class="align-middle">
+								<?php if($user->isSchoolMember() || $user->isPupil()): ?>
+									<?php echo e("-"); ?>
+
+								<?php else: ?>
+									<?php echo e($user->pay_date? with(date_add(date_create($user->pay_date), date_interval_create_from_date_string("2 weeks"))->format('Y/m/d')): ""); ?>
+
+								<?php endif; ?>
+								</td>
 								
 							</tr>
 							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

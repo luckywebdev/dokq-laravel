@@ -73,7 +73,14 @@
 						<div class="portlet-body">
                             <div class="form-group row <?php echo e($errors->has('firstname') ? ' has-danger' : ''); ?> <?php echo e($errors->has('lastname') ? ' has-danger' : ''); ?>">
                                 <label class="control-label col-md-2 text-md-right" for="firstname">名前(全角）姓名:</label>
-                                <label class="control-label col-md-6" for="lastname"><?php if(Auth::user()->isAuthor()): ?><?php echo e($user->fullname_nick()); ?><?php else: ?><?php echo e($user->fullname()); ?><?php endif; ?></label>
+                                <label class="control-label col-md-6" for="lastname">
+                                <?php if(Auth::user()->fullname_is_public == 1): ?>
+                                    <?php if(Auth::user()->isAuthor()): ?><?php echo e($user->fullname_nick()); ?><?php else: ?><?php echo e($user->fullname()); ?><?php endif; ?>
+                                <?php else: ?>
+                                    <?php echo e(Auth::user()->username); ?>
+
+                                <?php endif; ?>
+                                </label>
                             </div>
 
                             <div class="form-group row
@@ -141,11 +148,11 @@
 									<select class="form-control select2me calc" name="categories[]" id="categories[]" multiple placeholder="選択...">
                                         <option></option>
                                         <?php $__currentLoopData = $books; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $book): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <?php if(count(old('books')) > 0): ?>
+                                        <?php if(is_array(old('books')) && count(old('books')) > 0): ?>
                                             <option value="<?php echo e($book->id); ?>" <?php if(in_array($book->id,  old('books'))): ?> selected <?php endif; ?>><?php echo e($book->title); ?></option>
                                         <?php elseif(isset($overseerbook_list)&&count($overseerbook_list) > 0): ?>
                                             <option value="<?php echo e($book->id); ?>" <?php if(in_array($book->id,  $overseerbook_list)): ?> selected <?php endif; ?>><?php echo e($book->title); ?></option>
-                                        <?php elseif(count(old('books')) == 0 && (!isset($data) || count($data['books']) == 0)): ?>
+                                        <?php elseif(is_array(old('books')) && count(old('books')) == 0 && (!isset($data) || count($data['books']) == 0)): ?>
                                             <option value="<?php echo e($book->id); ?>" ><?php echo e($book->title); ?></option>
                                         <?php else: ?>
                                             <option value="<?php echo e($book->id); ?>"><?php echo e($book->title); ?></option>

@@ -277,9 +277,9 @@
                         <label class="label-above">現有効期限</label>                                                   
                     </div>  
                     @if($user->isPupil())
-                    <input type="{{"text"}}" name="payment" class="form-control" id="payment" value="@if($user->properties == 0){{config('consts')['PAYMENT_METHOD'][0]}}@elseif($user->pay_content !== null && $user->pay_content !== ''){{config('consts')['PAY_LIST'][$user->pay_content].$user->pay_amount.'円'.$user->period}}@else{{''}}@endif"  readonly>
+                    <input type="{{"text"}}" name="payment" class="form-control" id="payment" value="@if($user->active >= 2){{date_format(date_create($user->updated_at), 'Y年m月d日').'より準会員'}} @else @if($user->properties == 0){{config('consts')['PAYMENT_METHOD'][0]}}@elseif($user->pay_content !== null && $user->pay_content !== ''){{config('consts')['PAY_LIST'][$user->pay_content].$user->pay_amount.'円'.$user->period}}@else{{''}}@endif @endif"  readonly>
                     @else
-                    <input type="{{"text"}}" name="payment" class="form-control" id="payment" value="@if($user->properties == 0){{''}}@elseif($user->pay_content !== null && $user->pay_content !== ''){{config('consts')['PAY_LIST'][$user->pay_content].$user->pay_amount.'円'.$user->period}}@else{{''}}@endif"  readonly>
+                    <input type="{{"text"}}" name="payment" class="form-control" id="payment" value="@if($user->active >= 2){{date_format(date_create($user->updated_at), 'Y年m月d日').'より準会員'}} @else @if($user->properties == 0){{''}}@elseif($user->pay_content !== null && $user->pay_content !== ''){{config('consts')['PAY_LIST'][$user->pay_content].$user->pay_amount.'円'.$user->period}}@else{{''}}@endif @endif"  readonly>
                     @endif
 
                 </div>
@@ -501,6 +501,13 @@
                                     <span style="color:red">本人確認画像のチェック</span>
                                     <input type="checkbox" class="form-control" id="authfile_check" name="authfile_check" @if($user->authfile_check == 1) {{"checked"}} @endif >
                                 </div>
+                                @if ($user->authfile != null && $user->authfile != '' && $user->authfile_check == 1)
+                                <div>
+                                    <a href="#" id="authfile_download" style="color:blue; font-weight: bold">ダウンロード</a>
+                                    <span>&nbsp;/&nbsp;</span>
+                                    <a href="#" id="authfile_delete" style="color:red; font-weight: bold">ファイル削除</a>
+                                </div>
+                                @endif
                             </td>
                             <td style="vertical-align:middle;">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -526,6 +533,13 @@
                                     <span style="color:red">資格書類画像のチェック</span>
                                     <input type="checkbox" class="form-control" id="certifile_check" name="certifile_check" @if($user->certifile_check == 1) {{"checked"}} @endif >
                                 </div>
+                                @if ($user->certifilename != null && $user->certifilename != '' && $user->certifile_check == 1)
+                                <div>
+                                    <a href="#" id="certifile_download" style="color:blue; font-weight: bold">ダウンロード</a>
+                                    <span>&nbsp;/&nbsp;</span>
+                                    <a href="#" id="certifile_delete" style="color:red; font-weight: bold">ファイル削除</a>
+                                </div>
+                                @endif
                             </td>
                         </tr>                                              
                     </tbody>
@@ -543,7 +557,9 @@
                             <td style="vertical-align:middle;">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-preview thumbnail" style="width: 150px; height: 150px;">
-                                        <img src="@if($user->image_path != null) {{url($user->image_path)}} @endif" alt=""/>
+                                        @if($user->imagepath_check != 1)
+                                            <img src="@if($user->image_path != null) {{url($user->image_path)}} @endif" alt=""/>
+                                        @endif
                                     </div>
                                     <div class="text-md-center"><span>&nbsp;@if($user->imagepath_date)登録日 : {{$user->imagepath_date}}@endif</span></div>
                                     <div class="text-md-center" style="height: 34px;">                                      
@@ -723,6 +739,80 @@
             $("#validate-form").submit();
         });
 
+        $("#authfile_download").click(function(e) {
+            e.preventDefault();
+            const link = document.createElement('a')
+            link.href = "{{$user->file}}"
+            link.download = downloadFileName("{{$user->file}}", "{{$user->username}}")
+            document.body.appendChild(link)
+            link.click();
+            document.body.removeChild(link);
+        })
+
+        $("#authfile_delete").click(function (e) {
+            e.preventDefault();
+
+            var info = {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                id: `{{$user->id}}`
+            }
+            $.ajax({
+                type: "post",
+                url: "{{url('/admin/deleteAuthFileByAdmin')}}",
+                data: info,
+            
+                beforeSend: function (xhr) {
+                    var token = $('meta[name="csrf_token"]').attr('content');
+                    if (token) {
+                          return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                    }
+                },           
+                success: function (response){
+                    console.log('response', response)
+                    if (response.status == 'success') {
+                        location.reload();
+                    }
+                }
+            });
+        });
+
+        $("#certifile_download").click(function(e) {
+            e.preventDefault();
+            const link = document.createElement('a')
+            link.href = "{{$user->certifile}}"
+            link.download = downloadFileName("{{$user->certifile}}", "{{$user->username}}")
+            document.body.appendChild(link)
+            link.click();
+            document.body.removeChild(link);
+        })
+
+        $("#certifile_delete").click(function (e) {
+            e.preventDefault();
+
+            var info = {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                id: `{{$user->id}}`
+            }
+            $.ajax({
+                type: "post",
+                url: "{{url('/admin/deleteCertiFileByAdmin')}}",
+                data: info,
+            
+                beforeSend: function (xhr) {
+                    var token = $('meta[name="csrf_token"]').attr('content');
+                    if (token) {
+                          return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                    }
+                },           
+                success: function (response){
+                    console.log('response', response)
+                    if (response.status == 'success') {
+                        location.reload();
+                    }
+                }
+            });
+        });
+
         var handleDatePickers = function () {
 
             if (jQuery().datepicker) {
@@ -755,6 +845,11 @@
         handleComponents();
         handleDatePickers();
         handleInputMasks();
+
+        var downloadFileName = function (path, name) {
+            var ext = path.slice(-4);
+            return name + ext;
+        }
     </script>
     <script type="text/javascript" src="{{asset('js/group/group.js')}}"></script>
 @stop

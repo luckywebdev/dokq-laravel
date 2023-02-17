@@ -58,19 +58,37 @@
 					      </tr>
 					    </thead>
 					    <tbody class="text-md-center">
-                            <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+							<?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 							<tr class="text-md-center">
 								<td class="align-middle col-md-1"><?php echo e(with(date_create($user->escape_date))->format('Y/m/d')); ?></td>
 								<td class="align-middle col-md-1"><a id="user_a" href="<?php echo e(url('mypage/other_view/' . $user->id)); ?>" class="font-blue" oncontextmenu="handleRightClick('<?php echo e($user->id); ?>','<?php echo e($user->email); ?>','<?php echo e($user->active); ?>'); return false;"><?php if($user->isAuthor()): ?><?php echo e($user->fullname_nick()); ?><?php else: ?><?php echo e($user->fullname()); ?><?php endif; ?></a></td>
 								<td class="align-middle col-md-1"><?php echo e($user->username); ?></td>
-                                <td class="align-middle col-md-1"><?php echo e(date_diff(date_create($user->birthday ), date_create('today'))->y); ?></td>
-                                <td class="align-middle col-md-1"><?php echo e($user->level); ?></td>
-                                <td class="align-middle"><?php echo e($user->replied_date2? with(date_create($user->replied_date2))->format('Y/m/d'): ""); ?></td>
+								<td class="align-middle col-md-1"><?php echo e(date_diff(date_create($user->birthday ), date_create('today'))->y); ?></td>
+								<td class="align-middle col-md-1"><?php echo e($user->level); ?></td>
+								<td class="align-middle"><?php echo e($user->replied_date2? with(date_create($user->replied_date2))->format('Y/m/d'): ""); ?></td>
 								<td class="align-middle col-md-1"><?php echo e(config('consts')['USER']['TYPE'][$user->role]); ?></td>
 								<td class="align-middle col-md-1"><?php echo e($user->address1."  ".$user->address2); ?></td>
 								<td class="align-middle"><a href="mailto:<?php echo e($user->email); ?>"><?php echo e($user->email); ?></a></td>
-								<td class="align-middle"></td>
-								<td class="align-middle"><a class="btn btn-email btn-warning" href="<?php echo e(url('/admin/unsubscribe_email/'.$user->id)); ?>" style="padding-top: 0; padding-bottom:0; color: #FFF; font-weight:600">送信</a></td>
+								<td class="align-middle">
+									<?php if($user->paypal_stop_date != null): ?>
+									<input required type="text" readonly="true" name="paypal_stop_date" value="<?php echo e($user->paypal_stop_date); ?>" id="paypal_stop_date" user_id="<?php echo e($user->id); ?>" class="big-form-control date-picker paypal_stop_date" placeholder="（西暦を２回タップして選択）">
+									<?php else: ?>
+									<input required type="text" readonly="true" name="paypal_stop_date" value="<?php echo e(old('paypal_stop_date')); ?>" id="paypal_stop_date" user_id="<?php echo e($user->id); ?>" class="big-form-control date-picker paypal_stop_date" placeholder="（西暦を２回タップして選択）">
+									<?php endif; ?>
+									<?php if($errors->has('paypal_stop_date')): ?>
+									<span class="form-control-feedback">
+										<span><?php echo e($errors->first('paypal_stop_date')); ?></span>
+									</span>
+									<?php endif; ?>
+								</td>
+								<td class="align-middle">
+									<?php if(!$user->unsubscribe_date): ?> 
+									<a class="btn btn-email btn-warning" href="#" user_id="<?php echo e($user->id); ?>" style="padding-top: 0; padding-bottom:0; color: #FFF; font-weight:600">送信</a>
+									<?php else: ?>
+									<?php echo e("送信済"); ?>
+
+									<?php endif; ?>
+								</td>
 								<td class="align-middle"><?php echo e($user->unsubscribe_date? with(date_create($user->unsubscribe_date))->format('Y/m/d'): ""); ?></td>
 								
 							</tr>
@@ -103,17 +121,15 @@
 		
 		if(user_active == 1){
 			$("#userdata_tag").attr('disabled', true);
-			var str="<a href='/admin/personaldata/"+user_id+"' style='color:#757b87;'>データ画面へ遷移</a>"	
-			$("#userdata_tag").html(str);
 		}
-
+		var str="<a href='/admin/personaldata/"+user_id+"' style='color:#757b87;'>データ画面へ遷移</a>"	
+			$("#userdata_tag").html(str);
      };
          
 	$(function () {
-       
-  		var $contextMenu = $("#contextMenu");
-  		$("body").click(function(){
-		    $("#popup").hide();
+		var $contextMenu = $("#contextMenu");
+		$("body").click(function(){
+			$("#popup").hide();
 		});
 		$("body").on("contextmenu", "a#user_a", function(e) {
 		    $contextMenu.css({
@@ -129,15 +145,63 @@
 		    return false;
 		});
 
-        $(".btn-email").on("click", function(){
+		$(".btn-email").on("click", function(e){
+			e.preventDefault();
+			var user_id = $(this).attr("user_id");
+			var paypal_stop_date = "";
+			//  href="<?php echo e(url('/admin/unsubscribe_email/'.$user->id)); ?>"
+			$(".paypal_stop_date").each(function () {
+				var user = $(this).attr("user_id");
+				if (user == user_id) {
+					paypal_stop_date = $(this).val();
+				}
+			})
+			var info = {
+				_token: $('meta[name="csrf-token"]').attr('content'),
+				paypal_stop_date: paypal_stop_date
+			}
+			var err = "<?php echo config('consts')['MESSAGES']['EMAIL_SERVER_ERROR'] ?>";
+			var post_url = "<?php echo (isset($_SERVER['HTTPS']) ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'] ?>/admin/unsubscribe_email/" + $(this).attr('user_id');
+			$.ajax({
+				type: "get",
+				url: post_url,
+				data: info,
+				beforeSend: function (xhr) {
+					var token = $('meta[name="csrf-token"]').attr('content');
+					if (token) {
+								return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+					}
+				},
+				success: function (response){
+					console.log("response", response);
+					if(response.success == true){
+						location.reload();
+					} else {
+						window.alert(err);
+					}
+				}
+			});
+		});
 
-        });
 	});
-		
-		$("#phone").inputmask("mask", {
-            "mask": "<?php echo config('consts')['PHONE_MASK'] ?>"
-        });
-	</script>
+	$("#phone").inputmask("mask", {
+		"mask": "<?php echo config('consts')['PHONE_MASK'] ?>"
+	});
+
+	var handleDatePickers = function () {
+		if (jQuery().datepicker) {
+				$('.date-picker').datepicker({
+						rtl: Metronic.isRTL(),
+						orientation: "left",
+						autoclose: true,
+						language: 'ja'
+				});
+		}
+	}
+
+	handleDatePickers();
+
+</script>
 	<script type="text/javascript" src="<?php echo e(asset('js/group/group.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

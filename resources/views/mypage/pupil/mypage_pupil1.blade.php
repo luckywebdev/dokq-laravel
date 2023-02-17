@@ -207,16 +207,16 @@
 													@for($i = 0; $i < (12 - count($myBooks)); $i++)
 													<td class="col-md-1"></td>
 													@endfor
+
+													<?php $j = 0; ?>
 													@foreach($myBooks as $book)
-													<?php if($book->point >= 0 && $book->point <= 2) $color = '#ffb5fc'; //help.about_target.blade.php
-														  elseif($book->point > 2 && $book->point <= 5) $color = '#facaca';//ff0000 
-														  elseif($book->point > 5 && $book->point <= 8) $color = '#f9d195'; //FF9900
-														  elseif($book->point > 8 && $book->point <= 11) $color = '#f6f99a'; //f4fd00
-														  elseif($book->point > 11 && $book->point <= 15) $color = '#e1f98f'; //d6f432
-														  elseif($book->point > 15 && $book->point <= 19) $color = '#92fab2'; //26a69a
-														  elseif($book->point > 19 && $book->point <= 25) $color = '#a7d4fb'; //5C9BD1
-														  elseif($book->point > 25) $color = '#f0f5fa';	
+													<?php
+															if($j % 4 == 0)     $color = "#FFB5FC";
+															elseif($j % 4 == 1) $color = "#F6F99A";
+															elseif($j % 4 == 2) $color = "#92FAB2";
+															elseif($j % 4 == 3) $color = "#A7D4FB";
 													?>
+
 													<td class="col-md-1 text-md-center" style="background-color:{{$color}};padding-left:0px;padding-right:0px;">
 														<div class="row col-md-12" style="writing-mode:vertical-rl;margin-left:0px;margin-right:0px;padding-left:0px;padding-right:0px;height:200px;">
 															<h5 class="font_gogic text-md-left" style="align-self:center;font-family:HGP明朝B;">
@@ -233,6 +233,7 @@
 															</h5>
 														</div>
 													</td>
+													<?php $j++; ?>
 													@endforeach																					
 												</tr>
 											</tbody>

@@ -54,7 +54,7 @@
                         <div class="form-group row {{ $errors->has('r_password') ? ' has-danger' : '' }}">
                             <label class="control-label col-md-3 text-md-right" for="firstname_roma">ログインパスワード:</label>
                             <div class="col-md-3">
-                                <input type="text" value="{{old('r_password') !='' ? old('r_password') : (isset($user) ?  $user->r_password : '') }}" class="form-control" name="r_password" id="r_password">
+                                <input type="password" value="{{old('r_password') !='' ? old('r_password') : (isset($user) ?  $user->r_password : '') }}" class="form-control" name="r_password" id="r_password">
                                 
                                 @if ($errors->has('r_password'))
                                 <span class="form-control-feedback">

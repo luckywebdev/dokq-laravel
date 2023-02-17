@@ -49,7 +49,7 @@
 
 						<p>
 							読Ｑ有効期限（会費払込済期間）・・・<?php echo e($pay_year); ?>年<?php echo e($pay_month); ?>月 <?php echo e($pay_date); ?>日<br>
-							会費払込方法・・・・・・・・・・・・・・・・・　<?php echo e($pay_content); ?><br>
+							会費払込方法（金額変更は可能です。あしなが援助を始めたい方は、お問合せください）・・・・・・・・・・・・・・・・・　<?php echo e($pay_content); ?><br>
 							読書認定書発行手数料の支払いや退会などは、サイドメニューからお手続きください。<br>
 							その他のお支払い手続きは、<a href="#" id="payment_set_view" class="" style="font-size: 18px;"><strong>こちら</strong></a>
 
