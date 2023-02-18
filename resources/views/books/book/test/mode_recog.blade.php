@@ -38,6 +38,7 @@
 							<input type="hidden" name="mode" value="1">
 						@endif
 						<input type="hidden" name="examinemethod" id="examinemethod" value="">
+						<input type="hidden" name="password" id="password" value="">
 						<div class="form-body">
 							<!-- <div class="form-group row">
 								<label class="col-md-5 control-label" style="font-size: 16px">教師パスワード自動入力</label>
@@ -77,6 +78,7 @@
 	<script>
 	   $(document).ready(function(){
 		   	//connect socket server
+			// var socket = io('http://192.168.1.51:3000');
 			// var socket = io('http://localhost:3000');
 			var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');
 			var datas = {

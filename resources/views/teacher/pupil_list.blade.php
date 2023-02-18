@@ -362,9 +362,10 @@
 			});*/
 
 			//=============tester enter check =====================//
+			// var socket = io('http://192.168.1.51:3000');
 			// var socket = io('http://localhost:3000');
-
 			var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');
+			
 			@if(Auth::check())
 				socket.on('msglogin', function(msg){
 					console.log(msg);
@@ -437,7 +438,7 @@
 						// $(this).removeClass('danger');
 					}
 				});
-		    }); 
+			}); 
 			socket.on('test-start', function(msg){
 				console.log("test-start-msg====>", msg);
 				var data = JSON.parse(msg);
@@ -535,7 +536,9 @@
 
 				var action = $("#form_action").val();
 				//init socket
-				//var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');
+				// var socket = io('http://192.168.1.51:3000');
+				// var socket = io('http://localhost:3000');
+				var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');
 				 
 				switch(action){
 					case "A":
@@ -577,6 +580,7 @@
 				}
 				var action = $("#form_action").val();
 				//init socket
+				// var socket = io('http://192.168.1.51:3000');
 				// var socket = io('http://localhost:3000');
 
 				var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');

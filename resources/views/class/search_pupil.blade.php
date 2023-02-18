@@ -203,6 +203,8 @@
 				}
 				if(flag == 2 && $('#action').val() == "{{config('consts')['TEACHER']['ACTIONS']['G']['ACTION']}}"){
 					
+					// var socket = io('http://192.168.1.51:3000');
+					// var socket = io('http://localhost:3000');
 					var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');
 					var pupilid = $("#pupil").val();
 					socket.emit('faceverifyerror', pupilid);
@@ -252,6 +254,8 @@
 				    		$("#authModal").modal('hide');
 				    		if($('#action').val() == "{{config('consts')['TEACHER']['ACTIONS']['G']['ACTION']}}"){
 					
+								// var socket = io('http://192.168.1.51:3000');
+								// var socket = io('http://localhost:3000');
 								var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');
 								var pupilid = $("#pupil").val();
 								socket.emit('faceverifyerror', pupilid);

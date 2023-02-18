@@ -196,7 +196,6 @@
 			$(".author_view").on('click', function(e){
 				var writher_id = $(this).attr('did');
 				var fullname = $(this).attr('fullname');
-				console.log('[first name and last name nick]', fullname);
 				if(writher_id == 0 || writher_id == "" || writher_id == null){
 					var queryString = window.location.search;
 					var baseUrl = location.origin;

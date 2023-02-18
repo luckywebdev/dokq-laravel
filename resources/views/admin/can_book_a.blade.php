@@ -187,7 +187,6 @@
 		    });
 
             $(".modal-ok").click(function() {
-                console.log('[sdfsdafasf]');
 		    	$("#book-register-form").submit();
             })
 

@@ -916,7 +916,7 @@
           hideTimeout = setTimeout(function(){
             pointer.classList.remove('show');
           }, 1000);
-        });
+        }, { passive: false });
     </script>
   </body>
 </html>

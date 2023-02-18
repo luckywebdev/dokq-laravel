@@ -227,12 +227,14 @@
         	window.scrollTo(100,document.lastChild.offsetHeight);
         @endif
 		//init socket 
+		// var socket = io('http://192.168.1.51:3000');
+		// var socket = io('http://localhost:3000');
 		var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');
 		//login view in 一括操作
-		var msgloginid = '{!! Request::session()->get('msglogin') !!}';
+		var msgloginid = "{!! Request::session()->get('msglogin') !!}";
 		console.log("msg_id===>", msgloginid);
 		if(msgloginid != '' && msgloginid !== null){
-			var msglogin = '{!! Request::session()->put('msglogin', '') !!}';
+			var msglogin = "{!! Request::session()->put('msglogin', '') !!}";
 			console.log("msglogin==>", msglogin);
 			var data = {
 				logedin_id: msgloginid
@@ -240,9 +242,9 @@
 			socket.emit('msglogin', JSON.stringify(data));
 		}
 		//logout view in 一括操作
-		var msglogoutid = '{!! Request::session()->get('msglogout') !!}';
+		var msglogoutid = "{!! Request::session()->get('msglogout') !!}";
 		if(msglogoutid != '' && msglogoutid !== null){
-			var msglogout = '{!! Request::session()->put('msglogout', '') !!}';
+			var msglogout = "{!! Request::session()->put('msglogout', '') !!}";
 			console.log("msglogout==>", msglogout);
 			var data = {
 				logedout_id: msglogoutid

@@ -1,4 +1,2 @@
 User-agent: *
-Disallow: /
-Sitemap:https://dokq.org/sitemap.xml
-Sitemap:https://dokq.org/sitemap_1.xml
+Disallow:

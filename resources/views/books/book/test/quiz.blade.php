@@ -204,8 +204,9 @@
 @stop
 @section('scripts')
 <script>
-    $(document).ready(function() {
-        $('body').addClass('page-full-width');
+	$(document).ready(function() {
+		$('body').addClass('page-full-width');
+		// var socket = io('http://192.168.1.51:3000');
 		// var socket = io('http://localhost:3000');
 		var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');
 		var datas = {
@@ -232,149 +233,150 @@
 			window.onpopstate = function () {
 			history.go(1);
 		};
+	
+		var extratime = 0; 
+		var test_time = 0;
+		resultView();
+		@if(Request::session()->has('quiztime'))
+			$("#time_text").attr('time', parseInt({{session('quiztime')}}));
+		@endif
+		var page_count = parseInt($("#page_count").val());
+		var quiz_count = parseInt($("#quiz_count").val());
 		
-        var extratime = 0; 
-        var test_time = 0;
-        resultView();
-        @if(Request::session()->has('quiztime'))
-        	$("#time_text").attr('time', parseInt({{session('quiztime')}}));
-        @endif
-        var page_count = parseInt($("#page_count").val());
-	    var quiz_count = parseInt($("#quiz_count").val());
-	    
-	    @if($test_success == 0) 	
-	        var timer = setInterval(function() {
-	            var time = parseInt($("#time_text").attr("time"));
-	            time = time -1;
-	            test_time = test_time +1;
-	            
-	            var info = {
+		@if($test_success == 0)
+			var timer = setInterval(function() {
+				var time = parseInt($("#time_text").attr("time"));
+				time = time -1;
+				test_time = test_time +1;
+				
+				var info = {
 					_token: $('meta[name="csrf-token"]').attr('content'),
 					quiztime: time
 				}
 				var post_url = "<?php echo (isset($_SERVER['HTTPS']) ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'] ?>/book/sessionquiztime";
 				$.ajax({
 					type: "post",
-		      		url: "/book/sessionquiztime",
-				    data: info,
-				    
+					url: "/book/sessionquiztime",
+					data: info,
+						
 					beforeSend: function (xhr) {
-			            var token = $('meta[name="csrf_token"]').attr('content');
-			            if (token) {
-			                  return xhr.setRequestHeader('X-CSRF-TOKEN', token);
-			            }
-			        },		    
-				    success: function (response){
-				    	
-			    	}
+						var token = $('meta[name="csrf_token"]').attr('content');
+						if (token) {
+							return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+						}
+					},		    
+					success: function (response){
+						
+					}
 				})
-	            $("#test_time").val(test_time + parseInt({{session('test_time')}}));
-	            $("#passed_test_time").val(test_time + parseInt({{session('test_time')}}));
-	            $("#passed_test_time1").val(test_time + parseInt({{session('test_time')}}));
-	           
-	            if(time >= 0) {
-	                if(time>10) {
-	                    $("#time_text").attr('time',time);
-	                } else {
+				$("#test_time").val(test_time + parseInt({{session('test_time')}}));
+				$("#passed_test_time").val(test_time + parseInt({{session('test_time')}}));
+				$("#passed_test_time1").val(test_time + parseInt({{session('test_time')}}));
+				
+				if(time >= 0) {
+						if(time>10) {
+							$("#time_text").attr('time',time);
+						} else {
+							$("#time_text").attr("time", time);
+							$("#time_text").html("あと<br>"+time+"<br>秒");
+						}
+				} else {
+					clearInterval(timer);
+					nextQuiz();
+				}
+			}, 1000);
+		@else
+			$("#test_time").val(parseInt({{session('test_time')}}));
+			$("#passed_test_time").val(parseInt({{session('test_time')}}));
+			$("#passed_test_time1").val(parseInt({{session('test_time')}}));
+		@endif
 
-	                    $("#time_text").attr("time", time);
-	                    $("#time_text").html("あと<br>"+time+"<br>秒");
-	                }
-	            } else {
-	                clearInterval(timer);
-	                nextQuiz();
-	            }
-	        }, 1000);
-    	@else
-    		$("#test_time").val(parseInt({{session('test_time')}}));
-            $("#passed_test_time").val(parseInt({{session('test_time')}}));
-            $("#passed_test_time1").val(parseInt({{session('test_time')}}));
-    	@endif
+		function failedDlgBox() {
+			bootbox.dialog({
+				message: "残念ながら、不合格です。",
+				title: "読Q",
+				closeButton:false,
+				buttons: {
+					success: {
+						label: "確認",
+						className: "blue",
+						callback: function() {
+							$('#failed_form').submit();
+						}
+					}
+				}
+			});
+		};
 
-	    function failedDlgBox() {
+		function stopedDlgBox() {
+			bootbox.dialog({
+				message: "残念ながら、不合格です。",
+				title: "読Q",
+				closeButton:false,
+				buttons: {
+					success: {
+						label: "確認",
+						className: "blue",
+						callback: function() {
+							$('#stoped_form').submit();
+						}
+					}
+				}
+			});
+		};
 
-	        bootbox.dialog({
-	            message: "残念ながら、不合格です。",
-	            title: "読Q",
-	            closeButton:false,
-	            buttons: {
-	                success: {
-	                    label: "確認",
-	                    className: "blue",
-	                    callback: function() {
-	                        $('#failed_form').submit();
-	                    }
-	                }
-	            }
-	        });
-	    };
+		function nextQuiz() {
+			var point = parseInt($("#point").val());
+			var page_count = parseInt($("#page_count").val());
+			var quiz_count = parseInt($("#quiz_count").val());
+			var correct_point = Math.floor((point / quiz_count)*100)/100;
+			var answer = $("#answer").val();
 
-	    function stopedDlgBox() {
-	        bootbox.dialog({
-	            message: "残念ながら、不合格です。",
-	            title: "読Q",
-	            closeButton:false,
-	            buttons: {
-	                success: {
-	                    label: "確認",
-	                    className: "blue",
-	                    callback: function() {
-	                        $('#stoped_form').submit();
-	                    }
-	                }
-	            }
-	        });
-	    };
+			console.log('[next quiz check 1 =====>]', point, page_count, quiz_count)
+			console.log('[next quiz check 2 =====>]', correct_point, answer)
 
-	    function nextQuiz() {
-	        var point = parseInt($("#point").val());
-	        var page_count = parseInt($("#page_count").val());
-	        var quiz_count = parseInt($("#quiz_count").val());
-	        var correct_point = Math.floor((point / quiz_count)*100)/100;
-	        var answer = $("#answer").val();
+			$("#passed_point").val(correct_point);
+			$("#passed_point1").val(correct_point);
 
-	        $("#passed_point").val(correct_point);
-	        $("#passed_point1").val(correct_point);
+			@if ($test_success == 0)	
+				$("#quiz_form").submit();
+			@endif
+		}
 
-	        @if ($test_success == 0)	
-	        	$("#quiz_form").submit();
+		function resultView(){
 
-	        @endif
-	    }
+			var point = parseInt($("#point").val());
+			var page_count = parseInt($("#page_count").val());
+			var quiz_count = parseInt($("#quiz_count").val());
+			var correct_point = Math.floor((point / quiz_count)*100)/100;
+			var answer = $("#answer").val();
+			
+			$("#passed_point").val(correct_point);
+			$("#passed_point1").val(correct_point);
 
-	    function resultView(){
+			console.log('[result view check =======>]', point, page_count, quiz_count)
+			console.log('[result view check 2 =======>]', correct_point, answer, {{$test_success}})
+			console.log('[result view check 3 =======>]', extratime)
+		
+			@if($test_success == 0) 	
 
-	    	var point = parseInt($("#point").val());
-	        var page_count = parseInt($("#page_count").val());
-	        var quiz_count = parseInt($("#quiz_count").val());
-	        var correct_point = Math.floor((point / quiz_count)*100)/100;
-	        var answer = $("#answer").val();
-	        
-	        $("#passed_point").val(correct_point);
-	        $("#passed_point1").val(correct_point);
+			@else 
+				var quiz_count = parseInt($("#quiz_count").val());
+				@if ($test_success == 2) 
+					$("#passed_test_time").val($('#test_time').val());
+					$("#passed_test_time1").val($('#test_time').val());
 
-	    	
-	        @if($test_success == 0) 	
-
-	        @else 
-	        	//clearInterval(timer);
-	        	
-	            var quiz_count = parseInt($("#quiz_count").val());
-	            
-	            @if ($test_success == 2) 
-	                $("#passed_test_time").val($('#test_time').val());
-	                $("#passed_test_time1").val($('#test_time').val());
-
-	                $("#successModal").modal({
-	                    backdrop: 'static',
-	                    keyboard: false
-	                });
-	                setTimeout(function(){
-	                	$("#successModal").hide();
-			            failedDlgBox();
-			            extratime++;
-			        }, 600000);
-			        if(extratime < 1){
+					$("#successModal").modal({
+							backdrop: 'static',
+							keyboard: false
+					});
+					setTimeout(function(){
+						$("#successModal").hide();
+						failedDlgBox();
+						extratime++;
+					}, 600000);
+					if(extratime < 1) {
+						// var socket = io('http://192.168.1.51:3000');
 						// var socket = io('http://localhost:3000');
 						var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');
 						var datas = {
@@ -382,126 +384,123 @@
 						};
 						socket.emit('test-success', JSON.stringify(datas));
 
-		                socket.on('test-password', function(msg){
+						socket.on('test-password', function(msg){
 							console.log("quize_test_password==>", msg);
-		                    var data = JSON.parse(msg);
-		                    var id = '<?php echo Auth::id();?>';
-		                    var ids = data.ids.split(",");
-		                    for(i = 0; i < ids.length; i++){
-		                        if(ids[i] == id){
-		                            $("#password").val(data.password);
-		                            //$("#success_form").submit();
+							var data = JSON.parse(msg);
+							var id = '<?php echo Auth::id();?>';
+							var ids = data.ids.split(",");
+							for(i = 0; i < ids.length; i++){
+								if(ids[i] == id){
+									$("#password").val(data.password);
+									//$("#success_form").submit();
 
-		                            ajaxRegTest();
-		                        }
-		                    }
-		               });
-			        }
-	            @elseif ($test_success == 1) 
-	            	if ($(this).hasClass("bootbox") == false) 
-	                	failedDlgBox();
-	                
-	            @endif
-	        @endif
-	    }
-	    $('.answer_content .btn').click(function() {
-	        $('#next').removeClass('hidden');
-	    });
-	    $('#next').click(function() {
-	        if ($('#btn_yes').hasClass('active')) {
-	            $("#answer").val(1);
-	            var answer = '{!! Request::session()->put('answer', 1) !!}';
-	        }
-	        if ($('#btn_no').hasClass('active')) {
-	            $("#answer").val(0);
-	            var answer = '{!! Request::session()->put('answer', 0) !!}';
-	        }
-	        nextQuiz();
-	    });
+									ajaxRegTest();
+								}
+							}
+						});
+					}
+				@elseif ($test_success == 1) 
+					if ($(this).hasClass("bootbox") == false) 
+						failedDlgBox();
+				@endif
+			@endif
+		}
+		$('.answer_content .btn').click(function() {
+			$('#next').removeClass('hidden');
+		});
+		$('#next').click(function() {
+			if ($('#btn_yes').hasClass('active')) {
+				$("#answer").val(1);
+				var answer = "{!! Request::session()->put('answer', 1) !!}";
+			}
+			if ($('#btn_no').hasClass('active')) {
+				$("#answer").val(0);
+				var answer = "{!! Request::session()->put('answer', 0) !!}";
+			}
+			nextQuiz();
+		});
 
-	    $('#btn_yes').click(function() {
-	        $('#btn_yes').attr('style', 'margin-top: 0px;margin-bottom: 0px;background-color:#0c40fd;');
-	        $('#btn_no').attr('style', 'margin-bottom: 0px;background-color:#cb5a5e;');
-	    });
+		$('#btn_yes').click(function() {
+			$('#btn_yes').attr('style', 'margin-top: 0px;margin-bottom: 0px;background-color:#0c40fd;');
+			$('#btn_no').attr('style', 'margin-bottom: 0px;background-color:#cb5a5e;');
+		});
 
-	    $('#btn_no').click(function() {
-	        $('#btn_no').attr('style', 'margin-bottom: 0px;background-color:#f00;');
-	        $('#btn_yes').attr('style', 'margin-top: 0px;margin-bottom: 0px;background-color:#3598dc;');
-	    });
+		$('#btn_no').click(function() {
+			$('#btn_no').attr('style', 'margin-bottom: 0px;background-color:#f00;');
+			$('#btn_yes').attr('style', 'margin-top: 0px;margin-bottom: 0px;background-color:#3598dc;');
+		});
 
-	    $('#face_recog').click(function() {
-			$("#recorg_form").submit();
-	    });
-	    $(".send_password").click(function(){
-	        var password = $("#password").val()
-	        if (password == ''){
-	            $("#password").focus()
-	            $("#password").parent('.form-group').addClass('has-error')
-	            return;
-	        }
-	        var data = {_token: $('meta[name="csrf-token"]').attr('content') , password: password, id: $("#id").val()};
-	        $.ajax({
-	            type: "post",
-	            url: "/api/user/passwordcheck",
-	            data: data,
+		$('#face_recog').click(function() {
+		$("#recorg_form").submit();
+		});
+		$(".send_password").click(function(){
+			var password = $("#password").val()
+			if (password == ''){
+				$("#password").focus()
+				$("#password").parent('.form-group').addClass('has-error')
+				return;
+			}
+			var data = {_token: $('meta[name="csrf-token"]').attr('content') , password: password, id: $("#id").val()};
+			$.ajax({
+				type: "post",
+				url: "/api/user/passwordcheck",
+				data: data,
 
-	            beforeSend: function (xhr) {
-	                var token = $('meta[name="csrf_token"]').attr('content');
-	                if (token) {
-	                      return xhr.setRequestHeader('X-CSRF-TOKEN', token);
-	                }
-	            },
-	            success: function (response){
-	                if(response.status == 'success'){
-	                    //$("#success_form").submit();
-	                    ajaxRegTest();
-	                }else{
-	                    $("#successModal").hide();
-	                    failedDlgBox();
-	                }
-	            }
-	        })
-	    });
+				beforeSend: function (xhr) {
+					var token = $('meta[name="csrf_token"]').attr('content');
+					if (token) {
+						return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+					}
+				},
+				success: function (response){
+					if(response.status == 'success'){
+						//$("#success_form").submit();
+						ajaxRegTest();
+					}else{
+						$("#successModal").hide();
+						failedDlgBox();
+					}
+				}
+			})
+		});
 		
 		function ajaxRegTest() {
 
 			var info = {
-                book_id: $("#book_id").val(),
-                passed_quiz_count: $("#quiz_count").val(),
-                page_count: $("#page_count").val(),
-                passed_test_time: $("#passed_test_time").val(),
-                passed_point: $("#passed_point").val(),
-                answer: $("#answer").val(),
-                _token: $('meta[name="csrf-token"]').attr('content')
-            };
+				book_id: $("#book_id").val(),
+				passed_quiz_count: $("#quiz_count").val(),
+				page_count: $("#page_count").val(),
+				passed_test_time: $("#passed_test_time").val(),
+				passed_point: $("#passed_point").val(),
+				answer: $("#answer").val(),
+				_token: $('meta[name="csrf-token"]').attr('content')
+			};
 			console.log("quize-ajaxRegTest===>", info);
-            $.ajax({
-                type: "post",
-                url: "{{url('/book/regTestSuccess')}}",
-                data: info,
+			$.ajax({
+				type: "post",
+				url: "{{url('/book/regTestSuccess')}}",
+				data: info,
 
-                beforeSend: function (xhr) {
-                    var token = $('meta[name="csrf-token"]').attr('content');
-                    if (token) {
-                        return xhr.setRequestHeader('X-CSRF-TOKEN', token);
-                    }
-                },
-                success: function (response){
-                    if(response.status == 'success'){
-                       
-                        $("#success_form").submit();
-                    } else if(response.status == 'failed') {
-                    }
-                },
-                error: function (err) {
-                   
-                    $(".failed-alert").css('display','block');
-                }
-            });
-        }
+				beforeSend: function (xhr) {
+					var token = $('meta[name="csrf-token"]').attr('content');
+					if (token) {
+						return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+					}
+				},
+				success: function (response){
+					if(response.status == 'success'){
+						$("#success_form").submit();
+					} else if(response.status == 'failed') {
+					}
+				},
+				error: function (err) {
+					$(".failed-alert").css('display','block');
+				}
+			});
+		}
 
-	    $("#cancel").click(stopedDlgBox);
-	    $("#successModal .modal-close").click(failedDlgBox);
-    });
+		$("#cancel").click(stopedDlgBox);
+		$("#successModal .modal-close").click(failedDlgBox);
+	});
 </script>
 @stop

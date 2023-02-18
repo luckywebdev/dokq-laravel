@@ -2,8 +2,13 @@ $(document).ready(function(){
 	var count_index = 2;
 	$(".register-form .base_info").change(function(){
 		var ids = $(this).attr('id');
-		if(ids == 'firstname_roma' || ids == 'lastname_roma' || ids == 'gender'){
-			makeNameAndPWD();
+		var lastname_roma = $("#lastname_roma").val()
+		var gender = $("#gender").val()
+		var birthday = $("#birthday").val()
+		if(ids == 'firstname_roma' || ids == 'lastname_roma' || ids == 'gender' || ids == 'birthday'){
+			if (lastname_roma != "" && gender != "" && birthday != "") {
+				makeNameAndPWD();
+			}
 		}
 		else{
 			var isFilled = checkBaseInfoFilled(ids);

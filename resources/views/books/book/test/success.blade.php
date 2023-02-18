@@ -105,6 +105,7 @@
 @section('scripts')
     <script>
 	   $(document).ready(function(){
+			// var socket = io('http://192.168.1.51:3000');
 			// var socket = io('http://localhost:3000');
 			console.log("success page");
 			var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');

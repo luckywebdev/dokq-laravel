@@ -154,7 +154,6 @@
             
         });
         $(".quiz_edit").click(function() {
-            console.log("$$$");
             // console.log("/quiz/create?quiz=" + $(this).attr("qid") + "&act=accept");
             location.href = "/quiz/create?quiz=" + $(this).attr("qid") + "&act=accept";
         });

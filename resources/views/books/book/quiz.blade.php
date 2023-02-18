@@ -366,6 +366,8 @@
 			            extratime++;
 			        }, 600000);
 			        if(extratime < 1){
+								// var socket = io('http://192.168.1.51:3000');
+								// var socket = io('http://localhost:3000');
 			        	var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');
 		                socket.on('test-password', function(msg){
 		                    var data = JSON.parse(msg);
@@ -394,11 +396,11 @@
 	    $('#next').click(function() {
 	        if ($('#btn_yes').hasClass('active')) {
 	            $("#answer").val(1);
-	            var answer = '{!! Request::session()->put('answer', 1) !!}';
+	            var answer = "{!! Request::session()->put('answer', 1) !!}";
 	        }
 	        if ($('#btn_no').hasClass('active')) {
 	            $("#answer").val(0);
-	            var answer = '{!! Request::session()->put('answer', 0) !!}';
+	            var answer = "{!! Request::session()->put('answer', 0) !!}";
 	        }
 	        nextQuiz();
 	    });

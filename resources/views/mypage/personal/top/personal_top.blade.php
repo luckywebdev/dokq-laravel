@@ -676,11 +676,13 @@
 			window.scrollTo(100,document.lastChild.offsetHeight);
 		@endif
 		//init socket 
+		// var socket = io('http://192.168.1.51:3000');
+		// var socket = io('http://localhost:3000');
 		var socket = io('https://<?php echo config('socket')['SOCKET_SERVER']?>:3000');
 		//login view in 一括操作
-		var msgloginid = '{!! Request::session()->get('msglogin') !!}';
+		var msgloginid = "{!! Request::session()->get('msglogin') !!}";
 		if(msgloginid != '' && msgloginid !== null){
-			var msglogin = '{!! Request::session()->put('msglogin', '') !!}';
+			var msglogin = "{!! Request::session()->put('msglogin', '') !!}";
 			socket.emit('msglogin', msgloginid);
 		}
 		
