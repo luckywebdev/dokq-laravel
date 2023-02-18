@@ -43,7 +43,7 @@
                     （{{isset($book->replied_date1)? date_format(date_create($book->replied_date1),'Y.m.d'):''}}）
 
                 @else
-                    @if($book->active == 6 && Auth::user() !== null &&  !Auth::user()->isGroupSchoolMember() && Auth::user()->active==1)
+                    @if($book->active == 6 && Auth::user() !== null && !Auth::user()->isGroupSchoolMember() && Auth::user()->active==1)
                         @if(Auth::user()->getBookyear($book->id) !== null)
                             <span class="btn doq_btn btn-info age_limit">この本を受検する</span>
                         @elseif(Auth::user()->getDateTestPassedOfBook($book->id) !== null || Auth::user()->getEqualBooks($book->id) !== null)

@@ -186,7 +186,7 @@
     <script src="{{asset('js/jquery.dataTables.min.js')}}"></script>
 	<script src="{{asset('js/dataTables.bootstrap.js')}}"></script>
 	<script src="{{asset('js/data-table-search.js')}}"></script>
-	
+	<!-- 1676733165 -->
 	<script type="text/javascript">
 		$(document).ready(function(){
 			
