@@ -49,10 +49,10 @@
                         @elseif(Auth::user()->getDateTestPassedOfBook($book->id) !== null || Auth::user()->getEqualBooks($book->id) !== null)
                             <span class="btn doq_btn btn-info book_equal">この本を受検する</span>
                         @else
-                            <button type="button" id="{{$book->id}}" class="btn doq_btn btn-second test_btn">この本を受検する</button>
+                            <button type="button" id="{{$book->id}}" class="btn doq_btn btn-info test_btn">この本を受検する</button>
                         @endif
                     @else
-                        <span class="btn doq_btn btn-danger disabled">この本を受検する</span>
+                        <span class="btn doq_btn btn-info disabled">この本を受検する</span>
                     @endif<br>
                     @if($book->active >= 3)
                         <button type="button" id="{{$book->id}}" class="btn doq_btn btn-primary detail_btn">この本の詳細を見る</button>
