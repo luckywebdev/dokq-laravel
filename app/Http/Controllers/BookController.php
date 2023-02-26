@@ -2587,26 +2587,26 @@ class BookController extends Controller
             $current_season = BookController::CurrentSeaon(now());
 
         if($request->has("page_count")){
-            var_dump('page count check 1', $request->input("page_count"));
+            // var_dump('page count check 1', $request->input("page_count"));
             $page_count = (int)$request->input("page_count");
         }
         else if($request->session()->has('page_count')) {
-            var_dump('page count check 2', $request->session()->get('page_count'));
+            // var_dump('page count check 2', $request->session()->get('page_count'));
             $page_count = (int)$request->session()->get('page_count');
         }
 
-        echo ('<br>');
-        var_dump('request session check %d \n', $request->session()->get('page_count'));
-        echo ('<br>');
-        var_dump('page count check %d \n', $page_count);
-        echo ('<br>');
-        var_dump('session check %d \n', Session::get('page_count'));
-        echo ('<br>');
+        // echo ('<br>');
+        // var_dump('request session check %d \n', $request->session()->get('page_count'));
+        // echo ('<br>');
+        // var_dump('page count check %d \n', $page_count);
+        // echo ('<br>');
+        // var_dump('session check %d \n', Session::get('page_count'));
+        // echo ('<br>');
 
         if($request->session()->get('page_count') !== null){
             if($page_count != $request->session()->get('page_count')) {
-                var_dump('page count error', $page_count, $request->session()->get('page_count'));
-                exit();
+                // var_dump('page count error', $page_count, $request->session()->get('page_count'));
+                // exit();
                 return Redirect::to('/book/test/failed?book_id='.$book->id.'&page_count='.$request->session()->get('page_count'));
             }
         }
@@ -2785,7 +2785,7 @@ class BookController extends Controller
         }
         $page_count++;
         $request->session()->put('page_count', $page_count);
-        var_dump('page count check last', $page_count, $request->session()->get('page_count'));
+        // var_dump('page count check last', $page_count, $request->session()->get('page_count'));
        
         return view('books.book.test.quiz')
             ->with('page_info', $this->page_info)
