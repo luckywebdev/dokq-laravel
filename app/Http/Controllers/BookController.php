@@ -2586,9 +2586,11 @@ class BookController extends Controller
             $current_season = BookController::CurrentSeaon(now());
 
         if($request->has("page_count")){
+            var_dump('page count check 1', $request->input("page_count"));
             $page_count = $request->input("page_count");
         }
         else if($request->session()->has('page_count')) {
+            var_dump('page count check 2', $request->session()->get('page_count'));
             $page_count = $request->session()->get('page_count');
         }
 
@@ -2777,6 +2779,7 @@ class BookController extends Controller
         }
         $page_count++;
         $request->session()->put('page_count', $page_count);
+        var_dump('page count check last', $page_count, $request->session()->get('page_count'));
        
         return view('books.book.test.quiz')
             ->with('page_info', $this->page_info)
