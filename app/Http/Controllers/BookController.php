@@ -2587,18 +2587,19 @@ class BookController extends Controller
 
         if($request->has("page_count")){
             var_dump('page count check 1', $request->input("page_count"));
-            $page_count = $request->input("page_count");
+            $page_count = (int)$request->input("page_count");
         }
         else if($request->session()->has('page_count')) {
             var_dump('page count check 2', $request->session()->get('page_count'));
-            $page_count = $request->session()->get('page_count');
+            $page_count = (int)$request->session()->get('page_count');
         }
 
-        var_dump($request->session()->get('page_count'));
-        var_dump($page_count);
+        var_dump('request session check %d \n', $request->session()->get('page_count'));
+        var_dump('page count check %d \n', $page_count);
+        var_dump('session check %d \n', Session::get('page_count'));
 
         if($request->session()->get('page_count') !== null){
-            if($page_count != (int)$request->session()->get('page_count')) {
+            if($page_count != $request->session()->get('page_count')) {
                 var_dump('page count error', $page_count, $request->session()->get('page_count'));
                 exit();
                 return Redirect::to('/book/test/failed?book_id='.$book->id.'&page_count='.$request->session()->get('page_count'));
