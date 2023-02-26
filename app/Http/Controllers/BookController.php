@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Auth;
 use Redirect;
 use View;
+use Session;
 use App\User;
 use App\Model\Advertise;
 use App\Model\Angate;
@@ -2594,9 +2595,13 @@ class BookController extends Controller
             $page_count = (int)$request->session()->get('page_count');
         }
 
+        echo ('<br>');
         var_dump('request session check %d \n', $request->session()->get('page_count'));
+        echo ('<br>');
         var_dump('page count check %d \n', $page_count);
+        echo ('<br>');
         var_dump('session check %d \n', Session::get('page_count'));
+        echo ('<br>');
 
         if($request->session()->get('page_count') !== null){
             if($page_count != $request->session()->get('page_count')) {
