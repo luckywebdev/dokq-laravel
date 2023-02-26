@@ -2596,10 +2596,11 @@ class BookController extends Controller
         var_dump($page_count);
 
         if($request->session()->get('page_count') !== null){
-            if($page_count != (int)$request->session()->get('page_count'))
+            if($page_count != (int)$request->session()->get('page_count')) {
                 var_dump('page count error', $page_count, $request->session()->get('page_count'));
                 exit();
                 return Redirect::to('/book/test/failed?book_id='.$book->id.'&page_count='.$request->session()->get('page_count'));
+            }
         }
         
         if($request->has('test_time')){
