@@ -2775,7 +2775,7 @@ class BookController extends Controller
         else{
             $password = "";
         }
-        $page_count ++;
+        $page_count++;
         $request->session()->put('page_count', $page_count);
        
         return view('books.book.test.quiz')
