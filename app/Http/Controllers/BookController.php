@@ -2785,6 +2785,7 @@ class BookController extends Controller
         }
         $page_count++;
         $request->session()->put('page_count', $page_count);
+        $request->session()->save();
         // var_dump('page count check last', $page_count, $request->session()->get('page_count'));
        
         return view('books.book.test.quiz')
